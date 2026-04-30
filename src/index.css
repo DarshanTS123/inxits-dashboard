@@ -1,3 +1,55 @@
+:root {
+  /* Brand Colors */
+  --primary: #46a8dc;
+
+  /* Backgrounds */
+  --bg-page: #13172a;
+  --bg-layer-1: rgba(255, 255, 255, 0.04);
+  --bg-layer-2: rgba(255, 255, 255, 0.08);
+  --bg-popup: #1a1f33;
+  --bg-topnav: rgba(29, 29, 29, 0.24);
+  --bg-helper: #1c2033;
+
+  /* Buttons */
+  --btn-primary: #46a8dc;
+  --btn-disabled: #a6a6a6;
+
+  /* Text */
+  --text-heading: #f0f0f0;
+  --text-subheading: #cccccc;
+  --text-paragraph: #b0b0b0;
+  --text-disabled: #878787;
+  --text-enabled: #d4d2d2;
+  --text-label: #eaeaea;
+  --text-on-primary: #ffffff;
+  --text-on-disabled: #f6f6f6;
+
+  /* Strokes & Outlines */
+  --stroke-divider: #3a3a3a;
+  --btn-outline-secondary: #ffffff;
+  --outline-active: #d8d8d8;
+  --outline-disabled: #616060;
+
+  /* Icons */
+  --icon-disabled: #b0b0b0;
+  --icon-active: #f2f1f1;
+  --icon-primary: #46a8dc;
+
+  /* Feedback */
+  --success: #28c76f;
+  --warning: #eaf12d;
+  --error: #ea5455;
+  --info: #00cfe8;
+
+  /* Sidebar Specific (Derived from Palette) */
+  --sidebar-header-bg: #0f2b5c;
+  --sidebar-bg: var(--outline-disabled);
+  --sidebar-item-active-bg: rgba(255, 255, 255, 0.12);
+  --sidebar-item-active-text: var(--primary);
+  --sidebar-item-text: var(--icon-active);
+  --sidebar-width: 260px;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
