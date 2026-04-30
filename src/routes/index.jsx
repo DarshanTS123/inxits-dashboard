@@ -3,27 +3,55 @@ import { MainLayout } from '../layouts/MainLayout';
 import { AuthLayout } from '../layouts/AuthLayout';
 import { DashboardOverview } from '../pages/dashboard/DashboardOverview';
 import { LoginPage } from '../pages/auth/LoginPage';
+import { PublicRoute } from './PublicRoute';
+import { PrivateRoute } from './PrivateRoute';
+import { RoleProtectedRoute } from './RoleProtectedRoute';
 
 export const router = createBrowserRouter([
+  // 1. PUBLIC REDIRECT (Accessible to everyone)
   {
     path: '/',
     element: <Navigate to="/dashboard" replace />
   },
+
+  // 2. PUBLIC/GUEST ROUTES (Only accessible if NOT logged in)
   {
-    element: <AuthLayout />,
+    element: <PublicRoute />,
     children: [
       {
-        path: '/login',
-        element: <LoginPage />
+        element: <AuthLayout />,
+        children: [
+          {
+            path: '/login',
+            element: <LoginPage />
+          }
+        ]
       }
     ]
   },
+
+  // 3. PRIVATE ROUTES (Only accessible if logged in)
   {
-    element: <MainLayout />,
+    element: <PrivateRoute />,
     children: [
       {
-        path: '/dashboard',
-        element: <DashboardOverview />
+        element: <MainLayout />,
+        children: [
+          {
+            path: '/dashboard',
+            element: <DashboardOverview />
+          },
+          // 4. ROLE-PROTECTED ROUTE (Requires BOTH login AND 'admin' role)
+          {
+            element: <RoleProtectedRoute allowedRoles={['admin']} />,
+            children: [
+              {
+                path: '/settings',
+                element: <div>Admin Settings Page</div> // Placeholder for admin route
+              }
+            ]
+          }
+        ]
       }
     ]
   }
