@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from './Button/Button';
 
 export const PagePlaceholder = ({ title }) => {
   return (
@@ -6,12 +7,12 @@ export const PagePlaceholder = ({ title }) => {
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold tracking-tight text-text-heading">{title}</h1>
         <div className="flex gap-3">
-          <button className="px-4 py-2 bg-bg-layer-2 text-text-enabled rounded-lg hover:bg-white/10 transition-colors">
+          <Button variant="secondary">
             Export
-          </button>
-          <button className="px-4 py-2 bg-primary text-text-on-primary rounded-lg hover:opacity-90 transition-opacity">
+          </Button>
+          <Button>
             Create New
-          </button>
+          </Button>
         </div>
       </div>
 
