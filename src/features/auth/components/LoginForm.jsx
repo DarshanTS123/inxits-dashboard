@@ -5,11 +5,10 @@ import { Input } from '../../../components/ui/Input/Input';
 import { Button } from '../../../components/ui/Button/Button';
 import { Eye, EyeOff, AlertCircle } from 'lucide-react';
 import { cn } from '../../../utils/cn';
-import { authUtils } from '../../../utils/auth';
+import { useLogin } from '../api/login';
 
 export const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [loginError, setLoginError] = useState('');
   const navigate = useNavigate();
 
@@ -24,23 +23,24 @@ export const LoginForm = () => {
     },
   });
 
-  const onSubmit = async (data) => {
-    setIsLoading(true);
+  const { mutate: login, isPending: isLoading } = useLogin();
+
+  const onSubmit = (data) => {
     setLoginError('');
 
-    try {
-      const result = await authUtils.mockLogin(data.email, data.password);
-
-      if (result.success) {
-        navigate('/dashboard');
-      } else {
-        setLoginError(result.message);
+    login(
+      { email: data.email, password: data.password },
+      {
+        onSuccess: (result) => {
+          if (result.success) {
+            navigate('/dashboard');
+          }
+        },
+        onError: (error) => {
+          setLoginError(error.message || 'Invalid credentials');
+        },
       }
-    } catch (error) {
-      setLoginError('An unexpected error occurred. Please try again.');
-    } finally {
-      setIsLoading(false);
-    }
+    );
   };
 
   const PasswordToggle = ({ className }) => (
