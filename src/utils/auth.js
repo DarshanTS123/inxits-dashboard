@@ -21,9 +21,22 @@ export const authUtils = {
     localStorage.setItem(TOKEN_KEY, token);
     localStorage.setItem(ROLE_KEY, role);
   },
+
+  mockLogin: async (email, password) => {
+    // Mocking an API call delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    if (email === 'admin@gmail.com' && password === 'qwerty') {
+      authUtils.login('mock-jwt-token', 'admin');
+      return { success: true };
+    }
+    
+    return { success: false, message: 'Invalid email or password' };
+  },
   
   logout: () => {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(ROLE_KEY);
   },
 };
+

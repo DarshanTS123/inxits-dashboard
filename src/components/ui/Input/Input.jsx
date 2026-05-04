@@ -3,14 +3,12 @@ import { cn } from '../../../utils/cn';
 
 const inputSizes = {
   sm: {
-    padding: 'py-2 px-3',
-    icon: 'h-4 w-4',
-    labelOffset: '-top-2',
+    height: 'h-10',
+    icon: 'h-5 w-5',
   },
   lg: {
-    padding: 'py-3.5 px-4',
-    icon: 'h-5 w-5',
-    labelOffset: '-top-2.5',
+    height: 'h-12 sm:h-[52px]',
+    icon: 'h-6 w-6',
   },
 };
 
@@ -54,6 +52,7 @@ export const Input = React.forwardRef(({
           className={cn(
             'relative flex items-center transition-all duration-200 rounded-xl border',
             'bg-transparent w-full',
+            config.height,
             // Default/Enabled State
             'border-stroke-divider hover:border-white/40',
             // Focused State
@@ -71,7 +70,7 @@ export const Input = React.forwardRef(({
               className={cn(
                 'absolute left-3 font-medium transition-all duration-200 pointer-events-none z-10',
                 'bg-page text-[12px] px-1 leading-none',
-                config.labelOffset,
+                '-top-2',
                 'text-text-label',
                 // Interactive colors
                 'group-focus-within:text-primary',
@@ -85,8 +84,8 @@ export const Input = React.forwardRef(({
             </label>
           )}
 
-          {/* Content Wrapper (handles padding and icon spacing) */}
-          <div className={cn('flex items-center w-full min-h-full', config.padding)}>
+          {/* Content Wrapper (handles spacing) */}
+          <div className={cn('flex items-center w-full h-full px-4')}>
             {/* Left Icon */}
             {LeftIcon && (
               <div 
