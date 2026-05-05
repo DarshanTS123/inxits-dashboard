@@ -16,56 +16,73 @@ import { LoginPage } from '../pages/auth/LoginPage';
 import { PublicRoute } from './PublicRoute';
 import { PrivateRoute } from './PrivateRoute';
 import { RoleProtectedRoute } from './RoleProtectedRoute';
+import { DocumentTitle } from './DocumentTitle';
 
 export const router = createBrowserRouter([
-  // 1. PUBLIC REDIRECT (Accessible to everyone)
   {
-    path: '/',
-    element: <Navigate to="/dashboard" replace />
-  },
-
-  // 2. PUBLIC/GUEST ROUTES (Only accessible if NOT logged in)
-  {
-    element: <PublicRoute />,
+    element: <DocumentTitle />,
     children: [
+      // 1. PUBLIC REDIRECT (Accessible to everyone)
       {
-        element: <AuthLayout />,
+        path: '/',
+        element: <Navigate to="/dashboard" replace />
+      },
+
+      // 2. PUBLIC/GUEST ROUTES (Only accessible if NOT logged in)
+      {
+        element: <PublicRoute />,
         children: [
           {
-            path: '/login',
-            element: <LoginPage />
-          }
-        ]
-      }
-    ]
-  },
-
-  // 3. PRIVATE ROUTES (Only accessible if logged in)
-  {
-    element: <PrivateRoute />,
-    children: [
-      {
-        element: <MainLayout />,
-        children: [
-          { path: '/dashboard', element: <DashboardOverview /> },
-          { path: '/clients', element: <ClientsPage /> },
-          { path: '/portfolio', element: <PortfolioPage /> },
-          { path: '/support', element: <SupportPage /> },
-          { path: '/transactions', element: <TransactionsPage /> },
-          { path: '/user-management', element: <UserManagementPage /> },
-          { path: '/universe', element: <UniversePage /> },
-          { path: '/application-management', element: <ApplicationManagementPage /> },
-          { path: '/compliance', element: <CompliancePage /> },
-          { path: '/aum-reports', element: <AUMReportsPage /> },
-          { path: '/reports', element: <ReportsPage /> },
-          
-          // 4. ROLE-PROTECTED ROUTE (Requires BOTH login AND 'admin' role)
-          {
-            element: <RoleProtectedRoute allowedRoles={['admin']} />,
+            element: <AuthLayout />,
             children: [
               {
-                path: '/settings',
-                element: <div>Admin Settings Page</div>
+                path: '/login',
+                element: <LoginPage />,
+                handle: { title: 'Login' }
+              }
+            ]
+          }
+        ]
+      },
+
+      // 3. PRIVATE ROUTES (Only accessible if logged in)
+      {
+        element: <PrivateRoute />,
+        children: [
+          {
+            element: <MainLayout />,
+            children: [
+              { path: '/dashboard', element: <DashboardOverview />, handle: { title: 'Dashboard' } },
+              { path: '/clients', element: <ClientsPage />, handle: { title: 'Clients' } },
+              {
+                path: '/clients/:id',
+                element: <ClientsPage />,
+                handle: { title: ({ params }) => `Client ${params.id}` }
+              },
+              { path: '/portfolio', element: <PortfolioPage />, handle: { title: 'Portfolio Oversight' } },
+              { path: '/support', element: <SupportPage />, handle: { title: 'Support Management' } },
+              { path: '/transactions', element: <TransactionsPage />, handle: { title: 'Transactions' } },
+              { path: '/user-management', element: <UserManagementPage />, handle: { title: 'User Management' } },
+              { path: '/universe', element: <UniversePage />, handle: { title: 'Universe' } },
+              {
+                path: '/application-management',
+                element: <ApplicationManagementPage />,
+                handle: { title: 'Application Management' }
+              },
+              { path: '/compliance', element: <CompliancePage />, handle: { title: 'Compliance Report' } },
+              { path: '/aum-reports', element: <AUMReportsPage />, handle: { title: 'AUM Reports' } },
+              { path: '/reports', element: <ReportsPage />, handle: { title: 'Reports' } },
+
+              // 4. ROLE-PROTECTED ROUTE (Requires BOTH login AND 'admin' role)
+              {
+                element: <RoleProtectedRoute allowedRoles={['admin']} />,
+                children: [
+                  {
+                    path: '/settings',
+                    element: <div>Admin Settings Page</div>,
+                    handle: { title: 'Settings' }
+                  }
+                ]
               }
             ]
           }
