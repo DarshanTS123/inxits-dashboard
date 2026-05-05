@@ -41,9 +41,11 @@ export default {
         error: 'var(--error)',
         info: 'var(--info)',
         'sidebar-header': 'var(--sidebar-header-bg)',
+        sidebar: 'var(--sidebar-bg)',
       },
       width: {
         sidebar: 'var(--sidebar-width)',
+        'sidebar-collapsed': 'var(--sidebar-collapsed-width)',
       },
       backdropBlur: {
         '48': '48px',

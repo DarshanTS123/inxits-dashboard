@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   /* Brand Colors */
   --primary: #46a8dc;
@@ -43,13 +47,59 @@
 
   /* Sidebar Specific (Derived from Palette) */
   --sidebar-header-bg: #0f2b5c;
-  --sidebar-bg: var(--outline-disabled);
+  --sidebar-bg: var(--bg-page);
   --sidebar-item-active-bg: rgba(255, 255, 255, 0.12);
   --sidebar-item-active-text: var(--primary);
   --sidebar-item-text: var(--icon-active);
-  --sidebar-width: 260px;
+  --sidebar-expanded-width: 260px;
+  --sidebar-collapsed-width: 80px;
+  --sidebar-width: var(--sidebar-expanded-width);
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@layer base {
+  :root {
+    --background: var(--bg-page);
+    --foreground: var(--text-paragraph);
+    --card: var(--bg-layer-1);
+    --card-foreground: var(--text-heading);
+    --popover: var(--bg-popup);
+    --popover-foreground: var(--text-heading);
+    --primary-foreground: var(--text-on-primary);
+    --secondary: var(--bg-layer-2);
+    --secondary-foreground: var(--text-heading);
+    --muted: var(--bg-layer-1);
+    --muted-foreground: var(--text-disabled);
+    --accent: var(--bg-layer-2);
+    --accent-foreground: var(--text-heading);
+    --destructive: var(--error);
+    --destructive-foreground: #ffffff;
+    --border: var(--stroke-divider);
+    --input: var(--stroke-divider);
+    --ring: var(--primary);
+    --radius: 0.5rem;
+  }
+  
+  body {
+    @apply bg-page text-paragraph;
+  }
+}
+
+@layer utilities {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
