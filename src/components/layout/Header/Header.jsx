@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { useMatches, useNavigate } from 'react-router-dom';
 import { LogOut, Menu } from 'lucide-react';
-import { authUtils } from '../../../utils/auth';
 import { getCurrentRouteTitle } from '../../../routes/routeTitles';
+import { useAuth } from '../../../features/auth/store/useAuth';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,15 +13,18 @@ import {
 export const Header = ({ onMenuClick }) => {
   const matches = useMatches();
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
 
   const title = useMemo(() => {
     return getCurrentRouteTitle(matches);
   }, [matches]);
 
   const handleLogout = () => {
-    authUtils.logout();
+    logout();
     navigate('/login', { replace: true });
   };
+
+  const avatarLabel = user?.name?.charAt(0) || user?.email?.charAt(0) || 'U';
 
   return (
     <header className="sticky top-0 z-10 flex h-16 items-center justify-between gap-3 border-b border-stroke-divider bg-topnav px-4 backdrop-blur-48 sm:px-5">
@@ -47,7 +50,7 @@ export const Header = ({ onMenuClick }) => {
             aria-label="Open account menu"
             className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-white bg-[#dff3fb] text-sm font-semibold text-primary shadow-[0_0_0_1px_rgba(70,168,220,0.35)] transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-primary/35"
           >
-            A
+            {avatarLabel.toUpperCase()}
           </button>
         </DropdownMenuTrigger>
 

@@ -1,6 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
 import { publicApi } from '../../../lib/axios';
-import { authUtils } from '../../../utils/auth';
 import { toast } from 'sonner';
 
 /**
@@ -10,25 +9,20 @@ import { toast } from 'sonner';
 export const useLogin = () => {
   return useMutation({
     mutationFn: async ({ email, password }) => {
-      try {
-        const users = await publicApi.get('/mock/user.json', {
-          baseURL: '/',
-        });
-        
-        const user = users.users.find(
-          (u) => u.email === email && u.password === password
-        );
+      const users = await publicApi.get('/mock/user.json', {
+        baseURL: '/',
+      });
 
-        if (user) {
-          authUtils.login(user.token, user.role);
-          toast.success('Login successful! Redirecting...');
-          return { success: true, user };
-        }
+      const user = users.users.find(
+        (u) => u.email === email && u.password === password
+      );
 
-        throw new Error('Invalid email or password');
-      } catch (error) {
-        throw error;
+      if (user) {
+        toast.success('Login successful! Redirecting...');
+        return { success: true, user };
       }
+
+      throw new Error('Invalid email or password');
     },
     onError: (error) => {
       // If it's a manual error (not from axios), show the toast here

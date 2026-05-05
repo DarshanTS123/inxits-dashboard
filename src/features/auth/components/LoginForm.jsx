@@ -6,11 +6,13 @@ import { Button } from '../../../components/ui/Button/Button';
 import { Eye, EyeOff, AlertCircle } from 'lucide-react';
 import { cn } from '../../../utils/cn';
 import { useLogin } from '../api/login';
+import { useAuth } from '../store/useAuth';
 
 export const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState('');
   const navigate = useNavigate();
+  const { login: setAuthSession } = useAuth();
 
   const {
     register,
@@ -33,6 +35,7 @@ export const LoginForm = () => {
       {
         onSuccess: (result) => {
           if (result.success) {
+            setAuthSession(result.user);
             navigate('/dashboard');
           }
         },

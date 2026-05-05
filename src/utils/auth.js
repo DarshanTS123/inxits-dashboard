@@ -4,11 +4,33 @@
 
 const TOKEN_KEY = 'token';
 const ROLE_KEY = 'role';
+const USER_KEY = 'user';
+
+const parseStoredUser = () => {
+  const user = localStorage.getItem(USER_KEY);
+
+  if (!user) return null;
+
+  try {
+    return JSON.parse(user);
+  } catch {
+    localStorage.removeItem(USER_KEY);
+    return null;
+  }
+};
 
 export const authUtils = {
   getToken: () => localStorage.getItem(TOKEN_KEY),
 
   getRole: () => localStorage.getItem(ROLE_KEY),
+
+  getUser: () => parseStoredUser(),
+
+  getSession: () => ({
+    token: localStorage.getItem(TOKEN_KEY),
+    role: localStorage.getItem(ROLE_KEY),
+    user: parseStoredUser(),
+  }),
 
   isAuthenticated: () => !!localStorage.getItem(TOKEN_KEY),
 
@@ -17,14 +39,18 @@ export const authUtils = {
     return allowedRoles.includes(role);
   },
 
-  login: (token, role) => {
+  login: ({ token, role, user }) => {
     localStorage.setItem(TOKEN_KEY, token);
     localStorage.setItem(ROLE_KEY, role);
+
+    if (user) {
+      localStorage.setItem(USER_KEY, JSON.stringify(user));
+    }
   },
 
   logout: () => {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(ROLE_KEY);
+    localStorage.removeItem(USER_KEY);
   },
 };
-

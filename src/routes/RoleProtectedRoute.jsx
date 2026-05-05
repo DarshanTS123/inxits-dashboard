@@ -1,12 +1,14 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { authUtils } from '../utils/auth';
+import { useAuth } from '../features/auth/store/useAuth';
 
 export const RoleProtectedRoute = ({ allowedRoles }) => {
-  if (!authUtils.isAuthenticated()) {
+  const { isAuthenticated, hasRole } = useAuth();
+
+  if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
 
-  if (!authUtils.hasRole(allowedRoles)) {
+  if (!hasRole(allowedRoles)) {
     return <Navigate to="/dashboard" replace />;
   }
 

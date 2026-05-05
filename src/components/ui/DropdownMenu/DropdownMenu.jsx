@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Check, ChevronRight, Circle } from 'lucide-react';
 import { DropdownMenu as DropdownMenuPrimitive } from 'radix-ui';
 
