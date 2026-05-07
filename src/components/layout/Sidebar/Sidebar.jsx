@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -23,6 +23,10 @@ import {
   TooltipTrigger,
 } from '../../ui/Tooltip/Tooltip';
 import { cn } from '../../../utils/cn';
+import {
+  selectIsDesktopSidebarCollapsed,
+  toggleDesktopSidebarCollapsed,
+} from '../../../features/layout/store/layoutSlice';
 
 const navItems = [
   { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -43,7 +47,8 @@ const navItems = [
 ];
 
 export const Sidebar = ({ isMobileOpen = false, onMobileClose }) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const dispatch = useDispatch();
+  const isCollapsed = useSelector(selectIsDesktopSidebarCollapsed);
 
   return (
     <aside
@@ -76,7 +81,7 @@ export const Sidebar = ({ isMobileOpen = false, onMobileClose }) => {
       <button
         type="button"
         aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-        onClick={() => setIsCollapsed(!isCollapsed)}
+        onClick={() => dispatch(toggleDesktopSidebarCollapsed())}
         className="absolute right-0 top-[80px] z-20 hidden h-6 w-6 -translate-y-1/2 translate-x-1/2 items-center justify-center rounded-full border border-stroke-divider bg-sidebar-header text-icon-active shadow-sm transition-all duration-200 hover:bg-white/10 md:flex"
       >
         {isCollapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
