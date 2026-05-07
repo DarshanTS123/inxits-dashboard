@@ -4,7 +4,6 @@ import { router } from './routes';
 import { QueryProvider } from './providers/QueryProvider';
 import { Toaster } from 'sonner';
 import { TooltipProvider } from './components/ui/Tooltip/Tooltip';
-import { AuthProvider } from './features/auth/store/AuthContext';
 import { store } from './store';
 import './index.css';
 
@@ -12,12 +11,10 @@ function App() {
   return (
     <Provider store={store}>
       <QueryProvider>
-        <AuthProvider>
-          <Toaster position="top-right" richColors closeButton />
-          <TooltipProvider delayDuration={0}>
-            <RouterProvider router={router} />
-          </TooltipProvider>
-        </AuthProvider>
+        <Toaster position="top-right" richColors closeButton />
+        <TooltipProvider delayDuration={0}>
+          <RouterProvider router={router} />
+        </TooltipProvider>
       </QueryProvider>
     </Provider>
   );

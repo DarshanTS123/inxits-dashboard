@@ -12,7 +12,7 @@ export const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState('');
   const navigate = useNavigate();
-  const { login: setAuthSession } = useAuth();
+  const { login: saveAuthSession } = useAuth();
 
   const {
     register,
@@ -35,7 +35,7 @@ export const LoginForm = () => {
       {
         onSuccess: (result) => {
           if (result.success) {
-            setAuthSession(result.user);
+            saveAuthSession(result.user);
             navigate('/dashboard');
           }
         },

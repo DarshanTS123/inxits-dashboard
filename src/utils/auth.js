@@ -22,22 +22,11 @@ const parseStoredUser = () => {
 export const authUtils = {
   getToken: () => localStorage.getItem(TOKEN_KEY),
 
-  getRole: () => localStorage.getItem(ROLE_KEY),
-
-  getUser: () => parseStoredUser(),
-
   getSession: () => ({
     token: localStorage.getItem(TOKEN_KEY),
     role: localStorage.getItem(ROLE_KEY),
     user: parseStoredUser(),
   }),
-
-  isAuthenticated: () => !!localStorage.getItem(TOKEN_KEY),
-
-  hasRole: (allowedRoles) => {
-    const role = localStorage.getItem(ROLE_KEY);
-    return allowedRoles.includes(role);
-  },
 
   login: ({ token, role, user }) => {
     localStorage.setItem(TOKEN_KEY, token);
