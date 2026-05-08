@@ -1,5 +1,7 @@
+import { Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
+import { PageLoader } from '../components/ui/PageLoader';
 import { Sidebar } from '../components/layout/Sidebar/Sidebar';
 import { Header } from '../components/layout/Header/Header';
 import {
@@ -32,7 +34,9 @@ export const MainLayout = () => {
         <Header onMenuClick={() => dispatch(openMobileSidebar())} />
 
         <main className="min-h-0 flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar">
-          <Outlet />
+          <Suspense fallback={<PageLoader />}>
+            <Outlet />
+          </Suspense>
         </main>
       </div>
     </div>

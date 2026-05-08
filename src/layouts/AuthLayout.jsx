@@ -1,4 +1,6 @@
+import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
+import { PageLoader } from '../components/ui/PageLoader';
 import InxitsLogo from '../assets/Inxits.svg';
 import UnionPattern from '../assets/Union.png';
 
@@ -33,7 +35,9 @@ export const AuthLayout = () => {
         </div>
 
         <div className="w-full max-w-[420px] relative z-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
-          <Outlet />
+          <Suspense fallback={<PageLoader />}>
+            <Outlet />
+          </Suspense>
         </div>
       </div>
     </div>

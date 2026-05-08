@@ -2,6 +2,8 @@ import axios from 'axios';
 import { toast } from 'sonner';
 import envConfig from '../config/envConfig';
 import { authUtils } from '../utils/auth';
+import { logoutSuccess } from '../features/auth/store/authSlice';
+import { store } from '../store';
 
 const BASE_URL = envConfig.apiBaseUrl || 'http://localhost:3000/api';
 
@@ -51,7 +53,7 @@ privateApi.interceptors.response.use(
 
     // Handle 401 - Unauthorized (Token expired or invalid)
     if (status === 401) {
-      authUtils.logout();
+      store.dispatch(logoutSuccess());
       if (!skipToast) toast.error('Session expired. Please login again.');
       window.location.href = '/login';
     }

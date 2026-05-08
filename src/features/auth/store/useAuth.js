@@ -1,6 +1,5 @@
 import { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { authUtils } from '../../../utils/auth';
 import {
   createAuthSession,
   loginSuccess,
@@ -18,14 +17,12 @@ export const useAuth = () => {
     (user) => {
       const nextSession = createAuthSession(user);
 
-      authUtils.login(nextSession);
       dispatch(loginSuccess(nextSession));
     },
     [dispatch]
   );
 
   const logout = useCallback(() => {
-    authUtils.logout();
     dispatch(logoutSuccess());
   }, [dispatch]);
 
