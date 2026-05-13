@@ -1,2 +1,5 @@
-import { PagePlaceholder } from '../../components/ui/PagePlaceholder';
-export const ClientsPage = () => <PagePlaceholder title="Clients" />;
+import { Clients } from '@features/clients';
+
+export const ClientsPage = () => {
+  return <Clients />;
+};

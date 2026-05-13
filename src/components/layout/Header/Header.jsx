@@ -3,12 +3,7 @@ import { useMatches, useNavigate } from 'react-router-dom';
 import { LogOut, Menu } from 'lucide-react';
 import { getCurrentRouteTitle } from '../../../routes/routeTitles';
 import { useAuth } from '../../../features/auth/store/useAuth';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '../../ui/DropdownMenu/DropdownMenu';
+import { DropdownMenuList } from '../../ui/DropdownMenu/DropdownMenu';
 
 export const Header = ({ onMenuClick }) => {
   const matches = useMatches();
@@ -43,8 +38,9 @@ export const Header = ({ onMenuClick }) => {
         </h1>
       </div>
 
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
+      <DropdownMenuList
+        contentClassName="min-w-[88px]"
+        trigger={
           <button
             type="button"
             aria-label="Open account menu"
@@ -52,15 +48,16 @@ export const Header = ({ onMenuClick }) => {
           >
             {avatarLabel.toUpperCase()}
           </button>
-        </DropdownMenuTrigger>
-
-        <DropdownMenuContent className="min-w-[88px]">
-          <DropdownMenuItem onSelect={handleLogout}>
-            <LogOut className="h-3.5 w-3.5" />
-            Logout
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+        }
+        items={[
+          {
+            id: 'logout',
+            label: 'Logout',
+            icon: LogOut,
+            onSelect: handleLogout,
+          },
+        ]}
+      />
     </header>
   );
 };

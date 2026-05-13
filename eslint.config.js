@@ -19,5 +19,13 @@ export default defineConfig([
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
   },
+  // Router configuration files export non-components (e.g. `router`),
+  // which intentionally violates react-refresh's component-only export heuristic.
+  {
+    files: ['src/routes/index.jsx'],
+    rules: {
+      'react-refresh/only-export-components': 'off',
+    },
+  },
   eslintConfigPrettier,
 ])
