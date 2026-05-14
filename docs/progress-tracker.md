@@ -42,6 +42,7 @@ This file is updated on every feature change. It helps humans and AI agents quic
 - Done criteria:
   - Primitives are presentational
   - Components support composition through `className` and props
+  - **NEW**: Higher-level data-driven APIs (e.g., `items` prop in `Tabs`) simplify common usage patterns.
   - Interactive controls include keyboard focus states
 
 ### Clients Feature
@@ -140,6 +141,19 @@ This file is updated on every feature change. It helps humans and AI agents quic
 - Decision: All route pages are lazy-loaded in router with named exports.
 - Location: `src/routes/index.jsx`
 - Rationale: Keeps initial bundle smaller and enforces page boundaries.
+
+### AD-004: Environment-Driven Configuration
+
+- Decision: Use `.env` and `src/config/envConfig.js` for all environment-specific values (API base URLs, app names).
+- Location: `.env`, `src/config/envConfig.js`, `src/lib/axios.js`
+- Rationale: Avoids hardcoding URLs in code and simplifies switching between local mock servers and real backend environments.
+
+### AD-005: Data-Driven Shared Components
+
+- Decision: Enhance shared UI primitives with data-driven props (like `items` or `options`) while preserving manual composition capabilities.
+- Location: `src/components/ui/Tabs/Tabs.jsx`, `src/components/ui/Select/Select.jsx`
+- Rationale: Reduces boilerplate in feature components and ensures consistent rendering logic (e.g., badges, labels) across the application.
+
 
 ## Blockers
 

@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useDebounce } from '@hooks/useDebounce';
 import { useClients } from '../api/clients';
 
 export const useClientsManager = () => {
@@ -11,8 +12,10 @@ export const useClientsManager = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
+  const debouncedQuery = useDebounce(query, 300);
+
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
+    const q = debouncedQuery.trim().toLowerCase();
     const byTab = activeTab === 'all' ? clients : clients.filter((c) => c.state === activeTab);
 
     if (!q) return byTab;
@@ -40,7 +43,7 @@ export const useClientsManager = () => {
 
     const fn = matchers[searchColumn] || matchers.all;
     return byTab.filter(fn);
-  }, [activeTab, clients, query, searchColumn]);
+  }, [activeTab, clients, debouncedQuery, searchColumn]);
 
   const counts = useMemo(() => {
     const all = clients.length;

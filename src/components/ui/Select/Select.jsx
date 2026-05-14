@@ -3,14 +3,43 @@ import { Select as SelectPrimitive } from 'radix-ui';
 
 import { cn } from '@/utils/cn';
 
-function Select(props) {
-  return <SelectPrimitive.Root data-slot="select" {...props} />;
+function Select({
+  options,
+  placeholder,
+  triggerClassName,
+  contentClassName,
+  align = 'start',
+  children,
+  ...props
+}) {
+  return (
+    <SelectPrimitive.Root data-slot="select" {...props}>
+      {options ? (
+        <>
+          <SelectTrigger className={triggerClassName}>
+            <SelectValue placeholder={placeholder} />
+          </SelectTrigger>
+          <SelectContent className={contentClassName} align={align}>
+            {options.map((option) => (
+              <SelectItem
+                key={option.value}
+                value={option.value}
+                disabled={option.disabled}
+              >
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </>
+      ) : (
+        children
+      )}
+    </SelectPrimitive.Root>
+  );
 }
-
 function SelectGroup(props) {
   return <SelectPrimitive.Group data-slot="select-group" {...props} />;
 }
-
 function SelectValue(props) {
   return <SelectPrimitive.Value data-slot="select-value" {...props} />;
 }

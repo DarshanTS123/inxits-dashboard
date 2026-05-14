@@ -170,8 +170,29 @@ Patterns used:
 ### Selects and tabs
 
 - Use `Select` for option sets such as search scope, page size, status, and ownership filters.
+- The `Select` component supports an `options` prop for data-driven rendering:
+  ```jsx
+  const options = [
+    { label: 'All Columns', value: 'all' },
+    { label: 'Client Name', value: 'clientName' }
+  ];
+
+  <Select options={options} placeholder="Select column" value={val} onValueChange={setVal} align="end" />
+  ```
+
+
 - Use `Tabs` for mutually exclusive views of the same data surface, not for main navigation.
-- Tab labels may include count badges using a child with `data-slot="tabs-badge"`.
+- The `Tabs` component supports an `items` prop for data-driven rendering:
+  ```jsx
+  const tabs = [
+    { label: 'Overview', value: 'overview', content: <Overview /> },
+    { label: 'Activity', value: 'activity', content: <Activity />, badge: 12 }
+  ];
+
+  <Tabs items={tabs} defaultValue="overview" />
+  ```
+- Tab labels may include count badges using a child with `data-slot="tabs-badge"` or the `badge` property in the `items` array.
+
 
 ### Forms
 

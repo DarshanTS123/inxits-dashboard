@@ -5,7 +5,7 @@ import { authUtils } from '../utils/auth';
 import { logoutSuccess } from '../features/auth/store/authSlice';
 import { store } from '../store';
 
-const BASE_URL = envConfig.apiBaseUrl || 'http://localhost:3000/api';
+const BASE_URL = envConfig.apiBaseUrl;
 
 /**
  * Public API Instance

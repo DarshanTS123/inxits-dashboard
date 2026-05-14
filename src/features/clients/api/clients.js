@@ -3,9 +3,7 @@ import { privateApi } from '@lib/axios';
 
 // Simulated API fetcher
 const fetchClients = async () => {
-  return privateApi.get('/mock/clients.json', {
-    baseURL: '/',
-  });
+  return privateApi.get('/mock/clients.json');
 };
 
 export const useClients = () => {

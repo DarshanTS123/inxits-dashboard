@@ -22,6 +22,16 @@ npm run dev
 
 Mock login users live in `public/mock/user.json`.
 
+## Environment Configuration
+
+The project uses environment variables for configuration. Create a `.env.local` file for your local overrides.
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `VITE_API_BASE_URL` | Base URL for API requests | `/` |
+| `VITE_APP_NAME` | Application name | `inXits Dashboard` |
+| `VITE_PAGINATION_LIMIT` | Default items per page | `10` |
+
 ## Scripts
 
 ```bash

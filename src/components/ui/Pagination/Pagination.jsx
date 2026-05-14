@@ -2,13 +2,7 @@ import { useMemo } from 'react';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 
 import { cn } from '@/utils/cn';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/Select/Select';
+import { Select } from '@/components/ui/Select/Select';
 
 function clamp(n, min, max) {
   return Math.min(max, Math.max(min, n));
@@ -134,18 +128,15 @@ export function Pagination({
         <Select
           value={String(pageSize)}
           onValueChange={(v) => onPageSizeChange?.(Number(v))}
-        >
-          <SelectTrigger className="h-9 rounded-md bg-layer1 px-3 text-xs font-medium text-heading">
-            <SelectValue placeholder="Rows per page" />
-          </SelectTrigger>
-          <SelectContent align="end">
-            {pageSizeOptions.map((opt) => (
-              <SelectItem key={opt} value={String(opt)}>
-                {opt} per page
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          placeholder="Rows per page"
+          triggerClassName="h-9 rounded-md bg-layer1 px-3 text-xs font-medium text-heading"
+          align="end"
+          options={pageSizeOptions.map((opt) => ({
+            label: `${opt} per page`,
+            value: String(opt),
+          }))}
+        />
+
       </div>
     </div>
   );

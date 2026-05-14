@@ -87,9 +87,11 @@ Measurable:
 Rules:
 - Queries/mutations must live under `src/features/<domain>/api/*` (or an equivalent domain module), not inside pages.
 - Must use `publicApi` for unauthenticated endpoints and `privateApi` for authenticated endpoints.
+- **No hardcoded base URLs**: API endpoints in features must be relative (e.g., `/clients`) and rely on the instance `baseURL` configured via environment variables.
 
 Measurable:
 - No direct `axios.get(...)` calls inside `src/pages/*` or `src/components/*`.
+- No `baseURL` property overrides inside individual feature API hooks.
 
 ## API response format expectations
 

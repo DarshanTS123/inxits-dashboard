@@ -2,8 +2,43 @@ import { Tabs as TabsPrimitive } from 'radix-ui';
 
 import { cn } from '@/utils/cn';
 
-function Tabs(props) {
-  return <TabsPrimitive.Root data-slot="tabs" {...props} />;
+function Tabs({ items, children, ...props }) {
+  return (
+    <TabsPrimitive.Root data-slot="tabs" {...props}>
+      {items ? (
+        <>
+          <TabsList>
+            {items.map((item) => (
+              <TabsTrigger
+                key={item.value}
+                value={item.value}
+                disabled={item.disabled}
+              >
+                {typeof item.label === 'string' ? (
+                  <span className="text-sm font-semibold">{item.label}</span>
+                ) : (
+                  item.label
+                )}
+                {item.badge !== undefined && (
+                  <span data-slot="tabs-badge">{item.badge}</span>
+                )}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+          {items.map(
+            (item) =>
+              item.content && (
+                <TabsContent key={item.value} value={item.value}>
+                  {item.content}
+                </TabsContent>
+              )
+          )}
+        </>
+      ) : (
+        children
+      )}
+    </TabsPrimitive.Root>
+  );
 }
 
 function TabsList({ className, ...props }) {

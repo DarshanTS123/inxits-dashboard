@@ -14,6 +14,20 @@ This document defines **non-negotiable architectural constraints** for the inXit
 - **Icons**: `lucide-react`
 - **Toasts**: `sonner`
 
+## Configuration & Environment Variables
+
+The application uses Vite's built-in support for environment variables. All environment-specific variables must be prefixed with `VITE_`.
+
+- **Shared Variables** (`.env`): Shared across all environments (dev, prod, test).
+- **Development Variables** (`.env.development`): Local development overrides.
+- **Production Variables** (`.env.production`): Production environment values.
+
+**Key Variables**:
+- `VITE_API_BASE_URL`: The base URL for all API requests (used by `axios.js`).
+- `VITE_APP_NAME`: The display name of the application.
+
+**Invariant CFG1**: Do not hardcode API base URLs or environment-specific flags in source code. Use `src/config/envConfig.js` as the central access point.
+
 ## Path Aliases (Import Shortcuts)
 
 To avoid deep relative paths (e.g., `../../../../`), use the following aliases:

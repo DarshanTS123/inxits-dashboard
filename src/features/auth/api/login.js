@@ -9,9 +9,7 @@ import { toast } from 'sonner';
 export const useLogin = () => {
   return useMutation({
     mutationFn: async ({ email, password }) => {
-      const users = await publicApi.get('/mock/user.json', {
-        baseURL: '/',
-      });
+      const users = await publicApi.get('/mock/user.json');
 
       const user = users.users.find(
         (u) => u.email === email && u.password === password

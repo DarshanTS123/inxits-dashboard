@@ -11,7 +11,7 @@ function App() {
   return (
     <Provider store={store}>
       <QueryProvider>
-        <Toaster position="top-right" richColors closeButton />
+        <Toaster position="top-right" richColors />
         <TooltipProvider delayDuration={0}>
           <RouterProvider router={router} />
         </TooltipProvider>
