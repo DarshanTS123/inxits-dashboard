@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useDebounce } from '@hooks/useDebounce';
+import { usePagination } from '@hooks/usePagination';
 import { useClients } from '../api/clients';
 
 export const useClientsManager = () => {
@@ -9,8 +10,6 @@ export const useClientsManager = () => {
   const [activeTab, setActiveTab] = useState('all');
   const [searchColumn, setSearchColumn] = useState('all');
   const [query, setQuery] = useState('');
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
 
   const debouncedQuery = useDebounce(query, 300);
 
@@ -45,6 +44,15 @@ export const useClientsManager = () => {
     return byTab.filter(fn);
   }, [activeTab, clients, debouncedQuery, searchColumn]);
 
+  const {
+    page,
+    setPage,
+    pageSize,
+    setPageSize,
+    paginatedData,
+    resetPage,
+  } = usePagination(filtered);
+
   const counts = useMemo(() => {
     const all = clients.length;
     const invited = clients.filter((c) => c.state === 'invited').length;
@@ -53,28 +61,18 @@ export const useClientsManager = () => {
     return { all, invited, ageing, inactive };
   }, [clients]);
 
-  const pageCount = Math.max(1, Math.ceil(filtered.length / pageSize));
-  const safePage = Math.min(page, pageCount);
-  const startIdx = (safePage - 1) * pageSize;
-  const pageRows = filtered.slice(startIdx, startIdx + pageSize);
-
   const handleTabChange = (v) => {
     setActiveTab(v);
-    setPage(1);
-  };
-
-  const handlePageSizeChange = (n) => {
-    setPageSize(n);
-    setPage(1);
+    resetPage();
   };
 
   const handleQueryChange = (q) => {
     setQuery(q);
-    setPage(1);
+    resetPage();
   };
 
   return {
-    clients: pageRows,
+    clients: paginatedData,
     totalCount: filtered.length,
     counts,
     isLoading,
@@ -85,9 +83,9 @@ export const useClientsManager = () => {
     setSearchColumn,
     query,
     handleQueryChange,
-    page: safePage,
+    page,
     setPage,
     pageSize,
-    handlePageSizeChange,
+    handlePageSizeChange: setPageSize,
   };
 };
