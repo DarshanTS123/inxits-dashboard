@@ -22,9 +22,21 @@ function columnSelector(index) {
 }
 
 function buildStickyColumnStyles(scopeClassName, stickyColumns) {
-  if (!stickyColumns) return '';
-
   const rules = [];
+
+  // Add general row hover and selected styles for the table scope
+  // This ensures that when we have sticky columns (which have their own background),
+  // the hover/selected effect is still visible across the entire row.
+  rules.push(`
+    .${scopeClassName} tbody tr:hover > * {
+      background: #303244 !important;
+    }
+    .${scopeClassName} tbody tr[data-selected=true] > * {
+      background: var(--bg-layer-1) !important;
+    }
+  `);
+
+  if (!stickyColumns) return rules.join('\n');
 
   const addRules = (side, columns = []) => {
     let offset = 0;
@@ -46,10 +58,6 @@ function buildStickyColumnStyles(scopeClassName, stickyColumns) {
         .${scopeClassName} thead tr > *:${columnSelector(config.index)} {
           z-index: 40;
           background: var(--bg-helper);
-        }
-
-        .${scopeClassName} tbody tr:hover > *:${columnSelector(config.index)} {
-          background: #303244;
         }
       `);
 
