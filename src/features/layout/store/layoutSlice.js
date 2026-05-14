@@ -1,9 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { layoutPreferences } from '../../../utils/layoutPreferences';
 
 const initialState = {
   isMobileSidebarOpen: false,
-  isDesktopSidebarCollapsed: layoutPreferences.getDesktopSidebarCollapsed(),
+  isDesktopSidebarCollapsed: false,
 };
 
 const layoutSlice = createSlice({

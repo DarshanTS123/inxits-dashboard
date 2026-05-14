@@ -6,7 +6,7 @@ This document defines **non-negotiable architectural constraints** for the inXit
 
 - **Build/runtime**: Vite 8, React 19 (`vite`, `react`, `react-dom`)
 - **Router**: React Router DOM 7 data router (`createBrowserRouter`, `RouterProvider`)
-- **Client state**: Redux Toolkit + React Redux (`@reduxjs/toolkit`, `react-redux`)
+- **Client state**: Redux Toolkit + React Redux + Redux Persist (`@reduxjs/toolkit`, `react-redux`, `redux-persist`)
 - **Server state**: TanStack React Query 5 (`@tanstack/react-query`)
 - **HTTP**: Axios with split clients (`axios`)
 - **UI**: TailwindCSS + Radix primitives (via `radix-ui`) + local UI components
@@ -45,6 +45,7 @@ To avoid deep relative paths (e.g., `../../../../`), use the following aliases:
 - `src/main.jsx`: mounts `<App />`
 - `src/App.jsx`: wraps providers in this order:
   - Redux `Provider` using `src/store/index.js`
+  - Redux Persist `PersistGate` (loading: null, persistor: {persistor})
   - `<QueryProvider>` using `src/providers/QueryProvider.jsx`
   - Sonner `<Toaster />`
   - `<TooltipProvider />`
@@ -100,15 +101,12 @@ Examples present today:
 
 ### `src/lib/*` (infrastructure)
 
-- `src/lib/axios.js`: `publicApi` / `privateApi` axios clients + interceptors
+- `src/lib/axios.js`: `publicApi` / `privateApi` axios clients + interceptors (reads token from Redux store)
 - `src/lib/react-query.js`: shared `queryClient`
 
 ### `src/utils/*` (pure helpers)
 
-- `utils/auth.js`: `authUtils` for localStorage session (token/role/user)
-- `utils/layoutPreferences.js`: localStorage preference helpers
-
-**Invariant U1**: `src/utils/*` must be side-effect minimal and never import React.
+- `utils/cn.js`: Tailwind class merging utility
 
 ## Dependency rules (import boundaries)
 
@@ -156,7 +154,7 @@ For any non-trivial domain `X`:
 ## State management strategy
 
 - **Redux**: session (`auth`) + UI layout (`layout`) + any future UI state needing global coordination.
-  - Persisted via listener middleware in `src/store/index.js` (auth session + sidebar collapse).
+  - Persisted via **Redux Persist** in `src/store/index.js` (auth session + sidebar collapse).
 - **React Query**: all server reads/writes.
 
 **Invariant S1**: Do not store server responses in Redux. Cache server data in React Query.
@@ -178,8 +176,7 @@ Defined in `src/lib/axios.js`:
 ## Auth model
 
 - Session model: `{ token, role, user }`
-- Storage: `localStorage` keys:
-  - `token`, `role`, `user`
+- Storage: Managed by **Redux Persist** using `localStorage` (key: `persist:root`).
 - Guards:
   - `PrivateRoute`: requires `isAuthenticated`
   - `PublicRoute`: blocks authenticated users from `/login`
@@ -192,7 +189,7 @@ Defined in `src/lib/axios.js`:
 - `localStorage` only (session + sidebar preference)
 - No cookies/session storage usage currently.
 
-**Invariant ST1**: All `localStorage` access must be centralized in `src/utils/*` (or Redux listener middleware reading/writing via those utils).
+**Invariant ST1**: Direct `localStorage` access is discouraged. Use Redux state for persistent data, allowing Redux Persist to manage the underlying storage.
 
 ## Caching strategy
 

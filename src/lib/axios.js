@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { toast } from 'sonner';
 import envConfig from '../config/envConfig';
-import { authUtils } from '../utils/auth';
 import { logoutSuccess } from '../features/auth/store/authSlice';
 import { store } from '../store';
 
@@ -34,7 +33,7 @@ export const privateApi = axios.create({
 // Request Interceptor: Attach Token to Private API
 privateApi.interceptors.request.use(
   (config) => {
-    const token = authUtils.getToken();
+    const token = store.getState().auth.token;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

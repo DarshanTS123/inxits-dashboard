@@ -1,7 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { authUtils } from '../../../utils/auth';
 
-const initialState = authUtils.getSession();
+const initialState = {
+  token: null,
+  role: null,
+  user: null,
+};
 
 export const createAuthSession = (user) => ({
   token: user.token,

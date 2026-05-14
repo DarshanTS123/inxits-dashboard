@@ -14,7 +14,7 @@ This file is updated on every feature change. It helps humans and AI agents quic
 - Status: Completed
 - Scope:
   - Login page and form
-  - Session persistence in `localStorage`
+  - Session persistence via **Redux Persist**
   - Guest and private route guards
 - Done criteria:
   - Login works with mock users in `public/mock/user.json`
@@ -27,7 +27,7 @@ This file is updated on every feature change. It helps humans and AI agents quic
 - Status: Completed
 - Scope:
   - `MainLayout` with sidebar, header, and suspense loader
-  - Sidebar collapse preference persistence
+  - Sidebar collapse preference persistence via **Redux Persist**
   - Header title derived from route `handle.title`
 - Done criteria:
   - Sidebar nav routes match router paths
@@ -130,11 +130,11 @@ This file is updated on every feature change. It helps humans and AI agents quic
 - Location: `src/lib/axios.js`
 - Rationale: Centralizes auth header injection and 401 behavior.
 
-### AD-002: Session Stored in localStorage
+### AD-002: Session and Preference Persistence via Redux Persist
 
-- Decision: Persist `{ token, role, user }` in localStorage via `authUtils` and Redux listener middleware.
-- Location: `src/utils/auth.js`, `src/store/index.js`
-- Rationale: Simple SPA session persistence for current scope.
+- Decision: Use `redux-persist` to automatically manage the persistence of the `auth` (session) and `layout` (UI preferences) slices in `localStorage`.
+- Location: `src/store/index.js`, `src/App.jsx`
+- Rationale: Replaces manual `localStorage` listeners and utility functions with a standardized, scalable solution that ensures state hydration before the app renders.
 
 ### AD-003: Route-Level Code Splitting
 
@@ -165,8 +165,7 @@ This file is updated on every feature change. It helps humans and AI agents quic
 - Router: `src/routes/index.jsx`
 - Layouts: `src/layouts/MainLayout.jsx`, `src/layouts/AuthLayout.jsx`
 - Auth store: `src/features/auth/store/*`
-- Axios infra: `src/lib/axios.js`
-- React Query client: `src/lib/react-query.js`
+- Axios infra: `src/lib/axios.js` (accesses store for tokens)
 - Tokens: `src/index.css`, Tailwind mapping in `tailwind.config.js`
 - Clients page: `src/pages/clients/ClientsPage.jsx`
 - Shared list UI: `src/components/ui/Table/Table.jsx`, `src/components/ui/Pagination/Pagination.jsx`, `src/components/ui/Select/Select.jsx`, `src/components/ui/Tabs/Tabs.jsx`, `src/components/ui/DropdownMenu/DropdownMenu.jsx`

@@ -1,44 +1,41 @@
-import { configureStore, createListenerMiddleware } from '@reduxjs/toolkit';
-import authReducer, {
-  loginSuccess,
-  logoutSuccess,
-} from '../features/auth/store/authSlice';
-import layoutReducer, {
-  toggleDesktopSidebarCollapsed,
-} from '../features/layout/store/layoutSlice';
-import { authUtils } from '../utils/auth';
-import { layoutPreferences } from '../utils/layoutPreferences';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
+import storage from 'redux-persist/es/storage';
+import authReducer from '../features/auth/store/authSlice';
+import layoutReducer from '../features/layout/store/layoutSlice';
 
-const listenerMiddleware = createListenerMiddleware();
-
-listenerMiddleware.startListening({
-  actionCreator: toggleDesktopSidebarCollapsed,
-  effect: (_, listenerApi) => {
-    const { isDesktopSidebarCollapsed } = listenerApi.getState().layout;
-
-    layoutPreferences.setDesktopSidebarCollapsed(isDesktopSidebarCollapsed);
-  },
+const rootReducer = combineReducers({
+  auth: authReducer,
+  layout: layoutReducer,
 });
 
-listenerMiddleware.startListening({
-  actionCreator: loginSuccess,
-  effect: (action) => {
-    authUtils.login(action.payload);
-  },
-});
+const persistConfig = {
+  key: 'root',
+  version: 1,
+  storage,
+  // We can whitelist or blacklist specific reducers here
+  whitelist: ['auth', 'layout'],
+};
 
-listenerMiddleware.startListening({
-  actionCreator: logoutSuccess,
-  effect: () => {
-    authUtils.logout();
-  },
-});
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: {
-    auth: authReducer,
-    layout: layoutReducer,
-  },
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().prepend(listenerMiddleware.middleware),
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
+
+export const persistor = persistStore(store);
