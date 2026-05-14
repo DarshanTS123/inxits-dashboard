@@ -16,6 +16,7 @@ It is optimized for **AI-assisted development**:
 - **Code standards (measurable rules + anti-patterns)**: `docs/code-standards.md`
 - **AI workflow rules (execution contract)**: `docs/ai-workflow-rules.md`
 - **Chart architecture (AmCharts 5 integration)**: `docs/chart-architecture.md`
+- **Pie & Donut chart components**: `docs/pie-donut-charts.md`
 - **Progress tracker (living status + decisions)**: `docs/progress-tracker.md`
 
 ## Required read order (for AI agents)
@@ -26,7 +27,8 @@ It is optimized for **AI-assisted development**:
 4. `docs/ui-context.md`
 5. `docs/ai-workflow-rules.md`
 6. `docs/chart-architecture.md`
-7. `docs/progress-tracker.md` (update on every feature change)
+7. `docs/pie-donut-charts.md`
+8. `docs/progress-tracker.md` (update on every feature change)
 
 ## New to the repo?
 

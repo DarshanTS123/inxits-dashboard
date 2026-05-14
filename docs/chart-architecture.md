@@ -33,8 +33,8 @@ We follow a **layered approach** to chart implementation to ensure reusability w
 
 | Component Type | Location | Description |
 | :--- | :--- | :--- |
-| **Shared Base Components** | `src/components/charts` | Generic, reusable chart types (e.g., `CommonPieChart`). |
-| **Feature Components** | `src/features/dashboard/components` | Domain-specific wrappers (e.g., `RiskSegmentationChart`). |
+| **Shared Base Components** | `src/components/charts` | Purpose-built chart components (`DonutChart`, `PieChart`). |
+| **Feature Components** | `src/features/dashboard/components` | Domain-specific wrappers (e.g., `ChartsShowcase`). |
 | **Chart Utilities** | `src/utils/charts` | Data formatters, adapters, and AmCharts configuration helpers. |
 | **Chart Hooks** | `src/hooks` | Shared hooks for chart lifecycle, resizing, and data fetching. |
 | **Theme & Colors** | `src/styles` | Centralized AmCharts theme definitions and color palettes. |
@@ -109,31 +109,67 @@ export const ChartWrapper = ({ children, title, subtitle, isLoading, isEmpty }) 
 };
 ```
 
-### CommonPieChart (`src/components/charts/CommonPieChart.jsx`)
-A generic Pie chart component that accepts data and configuration.
+### Shared Reusable Components
 
-### CommonDonutChart (`src/components/charts/CommonDonutChart.jsx`)
-Extends Pie chart with `innerRadius` configuration.
+#### Props API (Common for Pie & Donut)
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `data` | `Array` | `[]` | `[{ category: string, value: number }]` |
+| `title` | `string` | `undefined` | Card title (rendered with premium underline decoration) |
+| `colors` | `string[]` | Built-in palette | Custom hex colors for slices |
+| `loading` | `boolean` | `false` | Show skeleton loading state |
+| `height` | `number \| string` | `300` | Card height in px |
+| `className` | `string` | `undefined` | Tailwind overrides for the card |
+
+#### DonutChart (`src/components/charts/DonutChart.jsx`)
+- **Visuals**: Ring chart with `innerRadius: 70%` for a modern, thin profile.
+- **Labels**: Smart integer formatting (`#.##%`) shown inside the ring.
+- **Legend**: Unified format `Category - Value` (e.g., `Conservative - 78`).
+- **Colors**: Vibrant risk-based palette (Orange, Blue, Dark Blue, Red, Steel Blue).
+
+#### PieChart (`src/components/charts/PieChart.jsx`)
+- **Visuals**: Full pie chart (`innerRadius: 0%`).
+- **Labels**: Smart integer formatting (`#.##%`) shown inside slices.
+- **Legend**: Specialized format `Category : Value%` (e.g., `Equity Fund : 30%`).
+- **Colors**: Asset-based palette (Coral, Steel Blue, Amber, Sage, Lavender).
+
+#### GaugeChart (`src/components/charts/GaugeChart.jsx`)
+- **Visuals**: Semi-circular gauge chart for scores or risk levels.
+- **Features**: Supports segmented colored bands (Low, Mid, High) and a dynamic pointer needle.
+- **Usage**: Best for single-metric visualizations like "Portfolio Risk Score".
+
+#### SunburstChart (`src/components/charts/SunburstChart.jsx`)
+- **Visuals**: Hierarchical circular chart (Sunburst) for nested data structures.
+- **Features**: Deeply nested data support, automatic branch-based coloring, and intelligent label fitting.
+- **Usage**: Perfect for complex asset allocation or multi-level category distribution (e.g., "Mutual Fund > Equity > Large Cap").
+
+> All chart components generate their own unique `chartId` internally via `useRef` — no external ID is needed.
 
 ---
 
 ## Feature-Level Implementations
 
-### RiskSegmentationChart (`src/features/dashboard/components/RiskSegmentationChart.jsx`)
-Uses `CommonPieChart` or a custom implementation to show risk levels.
+### ChartsShowcase (`src/features/dashboard/components/ChartsShowcase.jsx`)
+Demonstrates components side-by-side with data matching the high-fidelity design.
 
 ```javascript
-import { CommonPieChart } from '@components/charts';
+import { DonutChart, PieChart } from '@components/charts';
 
-export const RiskSegmentationChart = ({ data }) => {
-  const transformedData = transformRiskData(data);
-  return (
-    <div className="risk-chart-container">
-      <h3>Risk Segmentation</h3>
-      <CommonPieChart data={transformedData} />
-    </div>
-  );
-};
+export const ChartsShowcase = () => (
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-[#0d1526]">
+    <DonutChart
+      title="Client Segmentation by Risk"
+      data={riskData}
+      height={380}
+    />
+    <PieChart
+      title="AUM by category"
+      data={aumData}
+      height={380}
+    />
+  </div>
+);
 ```
 
 ---
@@ -142,82 +178,69 @@ export const RiskSegmentationChart = ({ data }) => {
 
 ### 1. Reusable Chart Components
 
-#### `src/components/charts/CommonPieChart.jsx`
+#### `src/components/charts/DonutChart.jsx`
 ```javascript
-import React, { useLayoutEffect, useRef } from 'react';
-import * as am5 from "@amcharts/amcharts5";
-import * as am5percent from "@amcharts/amcharts5/percent";
-import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
-
-export const CommonPieChart = React.memo(({ 
-  data, 
-  chartId = "pie-chart",
-  valueField = "value",
-  categoryField = "category",
-  innerRadius = 0 
-}) => {
-  const chartRef = useRef(null);
+const DonutChart = ({ data, title, colors, loading, height = 300 }) => {
+  const chartIdRef = useRef(`donut-chart-${Math.random().toString(36).substr(2, 9)}`);
 
   useLayoutEffect(() => {
-    const root = am5.Root.new(chartId);
+    if (loading || !data?.length) return;
+    const root = am5.Root.new(chartIdRef.current);
     
-    root.setThemes([am5themes_Animated.new(root)]);
-
     const chart = root.container.children.push(
-      am5percent.PieChart.new(root, {
-        layout: root.verticalLayout,
-        innerRadius: am5.percent(innerRadius)
+      am5percent.PieChart.new(root, { 
+        innerRadius: am5.percent(70), 
+        layout: root.horizontalLayout 
       })
     );
 
     const series = chart.series.push(
       am5percent.PieSeries.new(root, {
-        valueField,
-        categoryField
+        valueField: "value",
+        categoryField: "category",
+        alignLabels: false,
       })
     );
 
+    // Labels inside the ring with smart decimal logic
+    series.labels.template.setAll({
+      inside: true,
+      text: "{valuePercentTotal.formatNumber('#.##')}%",
+      fill: am5.color("#ffffff"),
+      fontSize: 14
+    });
+
+    // Unified legend format: "Category - Value"
+    const legend = chart.children.push(am5.Legend.new(root, {
+      layout: root.verticalLayout,
+      paddingLeft: 20
+    }));
+
+    legend.labels.template.setAll({
+      text: "{category} - {value.formatNumber('#.##')}",
+      fill: am5.color("#cbd5e1")
+    });
+
     series.data.setAll(data);
+    legend.data.setAll(series.dataItems);
     
-    // Legend setup, tooltips, etc.
-    
-    chartRef.current = root;
-
     return () => root.dispose();
-  }, [chartId, data, innerRadius, valueField, categoryField]);
+  }, [data, loading]);
 
-  return <div id={chartId} style={{ width: "100%", height: "350px" }} />;
-});
-```
-
-#### `src/components/charts/CommonDonutChart.jsx`
-```javascript
-import { CommonPieChart } from './CommonPieChart';
-
-export const CommonDonutChart = (props) => (
-  <CommonPieChart {...props} innerRadius={50} />
-);
-```
-
-### 2. Dashboard Integration
-
-#### `src/features/dashboard/components/DashboardCharts.jsx`
-```javascript
-import { RiskSegmentationChart } from './RiskSegmentationChart';
-import { useDashboardData } from '../hooks/useDashboardData';
-
-export const DashboardCharts = () => {
-  const { data, isLoading } = useDashboardData();
-
-  if (isLoading) return <ChartLoader />;
-
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <RiskSegmentationChart data={data.riskSegments} />
-      {/* Other charts */}
-    </div>
-  );
+  return <div id={chartIdRef.current} className="w-full h-full" />;
 };
+```
+
+#### `src/components/charts/PieChart.jsx`
+Same pattern as `DonutChart` but without `innerRadius` and with `legendValueText: ': {valuePercentTotal.formatNumber(\'0.00\')}%'`.
+
+### 2. Barrel Export
+
+#### `src/components/charts/index.js`
+```javascript
+export { default as DonutChart } from './DonutChart';
+export { default as PieChart }   from './PieChart';
+export { default as GaugeChart } from './GaugeChart';
 ```
 
 ---

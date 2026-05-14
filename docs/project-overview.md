@@ -54,6 +54,7 @@ The inXits Dashboard is a role-based internal web console for investment and ope
 - Route guards: `PublicRoute`, `PrivateRoute`, and `RoleProtectedRoute`.
 - Global document title management: `DocumentTitle` and route `handle.title`.
 - UI primitives: `Button`, `Input`, `Tooltip`, `DropdownMenu`, `Tabs`, `Select`, `Table`, `Pagination`, `PageLoader`, and `PagePlaceholder`.
+- Analytics Charts: High-fidelity `DonutChart`, `PieChart`, and `GaugeChart` with smart decimal labels, custom legends, and skeleton loading.
 - Clients list capabilities: state tabs with counts, column-scoped search, paginated rows, sticky first/action columns, row action menu, and empty state messaging.
 
 ## In Scope

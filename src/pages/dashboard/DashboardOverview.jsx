@@ -1,5 +1,9 @@
-import { PagePlaceholder } from '../../components/ui/PagePlaceholder';
+import ChartsShowcase from '../../features/dashboard/components/ChartsShowcase';
 
 export const DashboardOverview = () => {
-  return <PagePlaceholder title="Dashboard Overview" />;
+  return (
+    <div className="flex flex-col gap-6">
+      <ChartsShowcase />
+    </div>
+  );
 };

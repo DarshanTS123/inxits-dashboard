@@ -59,6 +59,21 @@ This file is updated on every feature change. It helps humans and AI agents quic
   - Hook logic resides in `src/features/clients/api/clients.js`
   - Data structure matches backend-ready patterns
 
+### Chart Components
+
+- Status: Completed (High-Fidelity Update)
+- Scope:
+  - `DonutChart` — Thinner ring (70%), smart decimal integer labels, unified `Category - Value` legend.
+  - `PieChart` — Synchronized design with `Category : Value%` legend format.
+  - `GaugeChart` — Semi-circular gauge for single-metric risk scoring.
+  - `ChartsShowcase` — Side-by-side demo matching latest design specifications.
+- Done criteria:
+  - Components accept `[{ category, value }]` with no extra config required.
+  - Smart decimal formatting (`#.##%`) shows integers by default, max 2 decimals if needed.
+  - Design matches premium UI reference (slate-300 titles, rounded markers, updated palettes).
+  - amCharts root properly disposed on unmount.
+  - Barrel export at `src/components/charts/index.js`.
+
 ## In-Progress Work
 
 ### Business Modules
@@ -141,6 +156,8 @@ This file is updated on every feature change. It helps humans and AI agents quic
 - Tokens: `src/index.css`, Tailwind mapping in `tailwind.config.js`
 - Clients page: `src/pages/clients/ClientsPage.jsx`
 - Shared list UI: `src/components/ui/Table/Table.jsx`, `src/components/ui/Pagination/Pagination.jsx`, `src/components/ui/Select/Select.jsx`, `src/components/ui/Tabs/Tabs.jsx`, `src/components/ui/DropdownMenu/DropdownMenu.jsx`
+- Chart components: `src/components/charts/DonutChart.jsx`, `src/components/charts/PieChart.jsx`
+- Charts doc: `docs/chart-architecture.md`
 
 ## Known Issues
 
