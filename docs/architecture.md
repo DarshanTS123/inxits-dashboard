@@ -24,6 +24,7 @@ The application uses Vite's built-in support for environment variables. All envi
 
 **Key Variables**:
 - `VITE_API_BASE_URL`: The base URL for all API requests (used by `axios.js`).
+- `VITE_AUTH_API_BASE_URL`: The base URL for public authentication APIs hosted outside the mock API base.
 - `VITE_APP_NAME`: The display name of the application.
 
 **Invariant CFG1**: Do not hardcode API base URLs or environment-specific flags in source code. Use `src/config/envConfig.js` as the central access point.
@@ -212,4 +213,3 @@ Defined in `src/lib/axios.js`:
 - Keep shared UI primitives pure (prevents global coupling).
 - Keep domain logic in `features/*` (prevents pages becoming "god files").
 - Centralize network concerns in React Query + Axios layer (prevents inconsistent error handling).
-

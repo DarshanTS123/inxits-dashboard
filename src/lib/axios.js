@@ -19,6 +19,17 @@ export const publicApi = axios.create({
 });
 
 /**
+ * Public Auth API Instance
+ * Used for unauthenticated auth endpoints hosted outside the mock API base.
+ */
+export const publicAuthApi = axios.create({
+  baseURL: envConfig.authApiBaseUrl,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+/**
  * Private API Instance
  * Used for all protected/internal APIs.
  * Automatically attaches Authorization header.
@@ -82,6 +93,21 @@ publicApi.interceptors.response.use(
     const skipToast = error.config?.skipToast;
 
     // Global error toast for authentication/public requests
+    if (!skipToast) {
+      toast.error(message);
+    }
+
+    return Promise.reject({ ...error, message });
+  }
+);
+
+publicAuthApi.interceptors.response.use(
+  (response) => response.data,
+  (error) => {
+    const message =
+      error.response?.data?.message || error.message || 'Authentication failed';
+    const skipToast = error.config?.skipToast;
+
     if (!skipToast) {
       toast.error(message);
     }

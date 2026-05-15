@@ -22,7 +22,7 @@ The inXits Dashboard is a role-based internal web console for investment and ope
 
 ### Authentication
 
-- Login uses mock data from `public/mock/user.json` for local and development flows.
+- Login uses the real admin API through `VITE_AUTH_API_BASE_URL`.
 - Session data persists in `localStorage` as token, role, and user.
 - Guest users can access `/login`.
 - Authenticated users are redirected away from `/login`.

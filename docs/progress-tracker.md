@@ -9,15 +9,17 @@ This file is updated on every feature change. It helps humans and AI agents quic
 
 ## Completed Features
 
-### Authentication (Mock)
+### Authentication
 
 - Status: Completed
 - Scope:
   - Login page and form
+  - Real login API integration via `VITE_AUTH_API_BASE_URL`
   - Session persistence via **Redux Persist**
   - Guest and private route guards
 - Done criteria:
-  - Login works with mock users in `public/mock/user.json`
+  - Login posts credentials to the admin API
+  - Access token is persisted as the auth token
   - Authenticated users cannot access `/login`
   - Unauthenticated users cannot access private routes
   - 401 from `privateApi` logs out and redirects to `/login`
@@ -133,7 +135,7 @@ This file is updated on every feature change. It helps humans and AI agents quic
 ## Open Questions
 
 - Backend contract: What are the real API endpoints and response formats for each module?
-- Auth model: Will mock users move to a real login endpoint? If yes, what token format and refresh strategy?
+- Auth model: Refresh-token handling is still pending; the token is stored for future support.
 - Roles and permissions: Is `role` the only permission primitive, or are granular permissions required?
 
 ## Technical Debt
@@ -173,6 +175,12 @@ This file is updated on every feature change. It helps humans and AI agents quic
 - Location: `src/components/ui/Tabs/Tabs.jsx`, `src/components/ui/Select/Select.jsx`
 - Rationale: Reduces boilerplate in feature components and ensures consistent rendering logic (e.g., badges, labels) across the application.
 
+### AD-007: Separate Real Auth API From Mock Data API
+
+- Decision: Keep `VITE_API_BASE_URL=/` for mock-backed module APIs and introduce `VITE_AUTH_API_BASE_URL` for the real admin login endpoint.
+- Location: `.env*`, `src/config/envConfig.js`, `src/lib/axios.js`, `src/features/auth/api/login.js`
+- Rationale: Allows login to use the available real backend without breaking existing mock-backed dashboard and module APIs.
+
 ### AD-006: Feature-First Page Orchestration
 
 - Decision: Move all domain-specific composition and state management from `src/pages` into `src/features`. Pages must be "Lean" targets for the router.
@@ -190,7 +198,7 @@ This file is updated on every feature change. It helps humans and AI agents quic
 
 ## Quick References
 
-- Mock users: `public/mock/user.json`
+- Login API: `VITE_AUTH_API_BASE_URL` + `/api/user/login`
 - Router: `src/routes/index.jsx`
 - Layouts: `src/layouts/MainLayout.jsx`, `src/layouts/AuthLayout.jsx`
 - Auth store: `src/features/auth/store/*`
