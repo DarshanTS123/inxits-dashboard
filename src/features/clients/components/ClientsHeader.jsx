@@ -20,6 +20,7 @@ export const ClientsHeader = ({
   onSearchColumnChange,
   query,
   onQueryChange,
+  onAddClient,
 }) => {
   return (
     <div className="space-y-4">
@@ -67,7 +68,12 @@ export const ClientsHeader = ({
           </div>
         </div>
 
-        <Button type="button" leftIcon={Plus} className="h-10 shrink-0">
+        <Button
+          type="button"
+          leftIcon={Plus}
+          className="h-10 shrink-0"
+          onClick={onAddClient}
+        >
           Add Client
         </Button>
       </div>

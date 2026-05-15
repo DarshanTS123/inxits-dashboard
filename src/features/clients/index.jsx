@@ -1,11 +1,15 @@
+import { useState } from 'react';
+
 import { Pagination } from '@components/ui/Pagination/Pagination';
 import { Tabs, TabsContent } from '@components/ui/Tabs/Tabs';
 
 import { ClientsHeader } from './components/ClientsHeader';
 import { ClientsTable } from './components/ClientsTable';
+import { CreateClientDrawer } from './components/CreateClientDrawer';
 import { useClientsManager } from './hooks/useClientsManager';
 
 export const Clients = () => {
+  const [isCreateDrawerOpen, setIsCreateDrawerOpen] = useState(false);
   const {
     clients,
     totalCount,
@@ -33,6 +37,7 @@ export const Clients = () => {
         onSearchColumnChange={setSearchColumn}
         query={query}
         onQueryChange={handleQueryChange}
+        onAddClient={() => setIsCreateDrawerOpen(true)}
       />
 
       <div className="rounded-xl border border-stroke-divider bg-layer1 overflow-hidden">
@@ -53,6 +58,11 @@ export const Clients = () => {
           />
         </div>
       </div>
+
+      <CreateClientDrawer
+        open={isCreateDrawerOpen}
+        onOpenChange={setIsCreateDrawerOpen}
+      />
     </div>
   );
 };

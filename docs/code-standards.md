@@ -34,6 +34,11 @@ Measurable:
   - App, layout, feature, page, and UI composition code must import and render `Button` from `src/components/ui/Button/Button.jsx` for every button-like control.
   - Raw `<button>` is allowed only inside the shared `Button` primitive implementation.
   - Icon-only buttons must pass `aria-label`; form-submit buttons must explicitly use `type="submit"`.
+- **Forms must follow the form design guide**
+  - See `docs/form-design-guide.md` for comprehensive form patterns, validation, accessibility, and state management.
+  - Use `react-hook-form` for all non-trivial forms (more than 2 fields).
+  - All form inputs must use `components/ui/Input/Input.jsx` or `components/ui/Select/Select.jsx`.
+  - Forms in drawers must reset state on close.
 - **No derived state in `useEffect`**
   - If you can compute it from props/state, use `useMemo` or inline computation.
 - **No side effects in render**

@@ -4,6 +4,7 @@ import { Select as SelectPrimitive } from 'radix-ui';
 import { cn } from '@/utils/cn';
 
 function Select({
+  id,
   options,
   placeholder,
   triggerClassName,
@@ -16,7 +17,7 @@ function Select({
     <SelectPrimitive.Root data-slot="select" {...props}>
       {options ? (
         <>
-          <SelectTrigger className={triggerClassName}>
+          <SelectTrigger id={id} className={triggerClassName}>
             <SelectValue placeholder={placeholder} />
           </SelectTrigger>
           <SelectContent className={contentClassName} align={align}>

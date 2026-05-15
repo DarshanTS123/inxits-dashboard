@@ -40,12 +40,13 @@ This file is updated on every feature change. It helps humans and AI agents quic
 
 - Status: Completed for current dashboard needs
 - Scope:
-  - `Button`, `Input`, `Tooltip`, `DropdownMenu`, `Tabs`, `Select`, `Table`, `Pagination`, `PageLoader`, `PagePlaceholder`, `Card`, `Badge`
+  - `Button`, `Input`, `Tooltip`, `DropdownMenu`, `Tabs`, `Select`, `Table`, `Pagination`, `PageLoader`, `PagePlaceholder`, `Card`, `Badge`, `Drawer`
 - Done criteria:
   - Primitives are presentational
   - Components support composition through `className` and props
   - **NEW**: Higher-level data-driven APIs (e.g., `items` prop in `Tabs`) simplify common usage patterns.
   - **NEW**: `Card` system (Root, Header, Title, Content, Footer) provides unified container aesthetics.
+  - **NEW**: `Drawer` provides a reusable Radix-backed side panel with title, close action, composable content, and footer actions.
   - **NEW**: All app-level button controls render through the shared `Button` primitive; raw `<button>` is reserved for the primitive implementation.
   - Interactive controls include keyboard focus states
 
@@ -59,10 +60,12 @@ This file is updated on every feature change. It helps humans and AI agents quic
   - Row action menu through `DropdownMenuList`
   - Empty state for no filtered results
   - **NEW**: Fetches data from `public/mock/clients.json` using `privateApi` via React Query hooks.
+  - **NEW**: Add Client opens a reusable drawer-based create form with invite action wiring.
 - Done criteria:
   - API calls use `privateApi` and include auth headers
   - Hook logic resides in `src/features/clients/api/clients.js`
   - Data structure matches backend-ready patterns
+  - Drawer content is owned by the clients feature while the shared `Drawer` primitive remains presentational.
 
 ### Chart Components
 
@@ -96,7 +99,35 @@ This file is updated on every feature change. It helps humans and AI agents quic
   - All containers use the shared `Card` system
   - Mock data is fully integrated from `public/mock/dashboard.json`
 
+### Core Logic & Hooks
+
+- Status: Completed
+- Scope:
+  - `usePagination`: Extracted reusable logic for handling array-based pagination, including page size management and state resets.
+  - `useDebounce`: Implemented generic debounce hook to optimize high-frequency updates (e.g., search inputs).
+  - `useClientsManager`: Refactored to leverage shared hooks, improving code modularity and performance through debounced filtering.
+- Done criteria:
+  - Hooks are located in `src/hooks` for global reuse.
+  - `useClientsManager` logic is simplified by delegating pagination and debouncing.
+  - Search query changes trigger a page reset to ensure consistent UX.
+
+
 ## In-Progress Work
+
+### Documentation Enhancements
+
+- Status: Completed
+- Scope:
+  - Comprehensive Drawer component documentation in `docs/ui-context.md`
+  - New `docs/form-design-guide.md` with complete form patterns and best practices
+  - Updated `docs/code-standards.md` to reference form design guide
+  - Updated `docs/README.md` to include form design guide in quick links
+- Done criteria:
+  - Drawer props, features, and usage patterns fully documented
+  - Form design guide covers Input patterns, validation, error handling, accessibility, and complete examples
+  - LoginForm and CreateClientDrawer patterns documented as reference implementations
+  - All accessibility rules (A11Y Rule FRM1-5) enforced
+  - Form state management patterns clarified
 
 ### Business Modules
 
@@ -190,6 +221,13 @@ This file is updated on every feature change. It helps humans and AI agents quic
   - **Page**: `src/pages/module/MyPage.jsx` -> renders `<MyFeature />`. No API calls or logic allowed here.
   - **Feature**: `src/features/module/MyFeature.jsx` -> handles `useQuery`, state, and sub-component assembly.
   - **Export**: `src/features/module/index.js` -> `export * from './MyFeature'` to keep imports clean.
+
+### AD-008: Reusable Hooks Strategy
+
+- Decision: Extract common stateful logic (pagination, debouncing, form resets) into generic hooks located in `src/hooks`.
+- Location: `src/hooks/usePagination.js`, `src/hooks/useDebounce.js`
+- Rationale: Promotes code reuse across different feature modules and ensures consistent behavior for common UI patterns like paginated tables and filtered lists.
+
 
 
 ## Blockers

@@ -226,3 +226,107 @@ Patterns used:
 ### Modals
 
 - If modals are introduced, they must be built on Radix primitives for focus management and keyboard handling.
+
+### Drawers
+
+The `Drawer` component (`src/components/ui/Drawer/Drawer.jsx`) is a **full-height or full-width slide-out panel** backed by Radix UI's Dialog primitive. Use drawers for:
+
+- **Creation/editing flows** (CreateClientDrawer pattern)
+- **Secondary actions** (e.g., bulk operations, detailed forms)
+- **Mobile-friendly modals** that preserve context by sliding in from the edge
+
+#### Props
+
+- `open` (boolean): Controls drawer visibility; required
+- `onOpenChange` (function): Called when open state changes (e.g., on close button click)
+- `title` (string): Drawer header title; required
+- `description` (string, optional): Subtitle below title
+- `children` (ReactNode): Main content area
+- `footer` (ReactNode, optional): Action buttons footer (typically Cancel/Submit pair)
+- `headerAction` (ReactNode, optional): Additional control in header (right of title, left of close)
+- `side` (string): One of `'right'` (default), `'left'`, `'bottom'`
+- `size` (string): One of `'sm'`, `'md'`, `'lg'` (default), `'xl'`, `'full'`
+  - Maps to max widths: `sm:max-w-md`, `md:max-w-2xl`, `lg:max-w-4xl`, `xl:max-w-6xl`
+- `closeLabel` (string): Screen reader label for close button; default `'Close drawer'`
+- `className` (string): Custom outer wrapper class
+- `contentClassName` (string): Custom class for scrollable content area
+- `footerClassName` (string): Custom class for footer wrapper
+
+#### Features
+
+- **Backdrop overlay** with blur effect; clicking closes the drawer
+- **Header**: Contains title, description, optional header action, and close button
+- **Scrollable content**: Uses custom scrollbar with `overflow-y-auto`
+- **Footer slot**: Sticky at bottom; typically contains action buttons
+- **Animations**: Slide-in/out transitions; overlay fade animations
+- **Mobile responsive**:
+  - Full viewport height/width on mobile
+  - `side=bottom` useful for mobile breakdowns
+  - Rounded corners on desktop (`sm:rounded-l-[20px]` for right-side, etc.)
+- **Focus management**: Dialog primitive handles focus trap
+
+#### Usage pattern
+
+```jsx
+import { Drawer } from '@components/ui/Drawer/Drawer';
+import { Button } from '@components/ui/Button/Button';
+
+export const MyFeatureDrawer = ({ open, onOpenChange }) => {
+  const handleSubmit = (data) => {
+    // perform action
+    onOpenChange(false);
+  };
+
+  return (
+    <Drawer
+      open={open}
+      onOpenChange={onOpenChange}
+      title="Create New Item"
+      description="Fill in the form below to create a new item"
+      size="lg"
+      footer={
+        <>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => onOpenChange(false)}
+          >
+            Cancel
+          </Button>
+          <Button type="submit" form="my-form">
+            Create
+          </Button>
+        </>
+      }
+    >
+      <form id="my-form" onSubmit={handleSubmit}>
+        {/* form fields */}
+      </form>
+    </Drawer>
+  );
+};
+```
+
+#### Best practices
+
+1. **Header actions**: Use `headerAction` for secondary controls (e.g., a help icon).
+2. **Form integration**: Place `<form>` inside drawer content; use `form="form-id"` on footer buttons to link them to the form.
+3. **Reset on close**: If using `react-hook-form`, call `reset()` when drawer closes to clear state:
+   ```jsx
+   const handleOpenChange = (nextOpen) => {
+     if (!nextOpen) reset();
+     onOpenChange(nextOpen);
+   };
+   ```
+4. **Size selection**:
+   - `sm`: For simple 1-2 field forms
+   - `md`/`lg`: For multi-field forms (default choice)
+   - `xl`: For complex multi-step or wide content
+   - `full`: Rare; use only for full-width content
+5. **Side placement**:
+   - `right` (default): Intuitive for form entry
+   - `left`: Use for filter panels or secondary contexts
+   - `bottom`: Excellent for mobile; full-width slides up
+6. **Mobile-first**: Test all drawers at mobile breakpoint; consider switching `side` via responsive utilities if needed.
+
+**UI Rule D1**: Drawers containing forms must reset `react-hook-form` state on close to avoid stale data on re-open.
