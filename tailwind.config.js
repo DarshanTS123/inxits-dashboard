@@ -42,6 +42,18 @@ export default {
         info: 'var(--info)',
         'sidebar-header': 'var(--sidebar-header-bg)',
         sidebar: 'var(--sidebar-bg)',
+
+        /* Sector Colors */
+        'sector-it': 'var(--sector-it)',
+        'sector-banking': 'var(--sector-banking)',
+        'sector-healthcare': 'var(--sector-healthcare)',
+        'sector-energy': 'var(--sector-energy)',
+        'sector-consumer-goods': 'var(--sector-consumer-goods)',
+        'sector-infrastructure': 'var(--sector-infrastructure)',
+        'sector-metals': 'var(--sector-metals)',
+        'sector-telecom': 'var(--sector-telecom)',
+        'sector-agriculture': 'var(--sector-agriculture)',
+        'sector-gold': 'var(--sector-gold)',
       },
       width: {
         sidebar: 'var(--sidebar-width)',

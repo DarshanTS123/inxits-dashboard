@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { MoreVertical } from 'lucide-react';
 
+import { Button } from '@components/ui/Button/Button';
 import { DropdownMenuList } from '@components/ui/DropdownMenu/DropdownMenu';
 import { DataTable } from '@components/ui/Table/Table';
 import { cn } from '@utils/cn';
@@ -90,16 +91,18 @@ export const ClientsTable = ({ data, isLoading }) => {
             contentClassName="min-w-[144px] p-0"
             itemClassName="rounded-none px-3.5 py-3 first:rounded-t-md last:rounded-b-md [&:not(:first-child)]:border-t [&:not(:first-child)]:border-stroke-divider"
             trigger={
-              <button
+              <Button
                 type="button"
+                variant="ghost"
+                size="sm"
                 aria-label="Row actions"
                 className={cn(
-                  'inline-flex h-9 w-9 items-center justify-center rounded-lg border border-transparent bg-helper transition',
+                  'h-9 w-9 border border-transparent bg-helper p-0',
                   'hover:bg-layer2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20'
                 )}
               >
                 <MoreVertical className="h-4 w-4 text-paragraph" />
-              </button>
+              </Button>
             }
             items={[
               {

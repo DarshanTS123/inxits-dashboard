@@ -38,11 +38,13 @@ This file is updated on every feature change. It helps humans and AI agents quic
 
 - Status: Completed for current dashboard needs
 - Scope:
-  - `Button`, `Input`, `Tooltip`, `DropdownMenu`, `Tabs`, `Select`, `Table`, `Pagination`, `PageLoader`, `PagePlaceholder`
+  - `Button`, `Input`, `Tooltip`, `DropdownMenu`, `Tabs`, `Select`, `Table`, `Pagination`, `PageLoader`, `PagePlaceholder`, `Card`, `Badge`
 - Done criteria:
   - Primitives are presentational
   - Components support composition through `className` and props
   - **NEW**: Higher-level data-driven APIs (e.g., `items` prop in `Tabs`) simplify common usage patterns.
+  - **NEW**: `Card` system (Root, Header, Title, Content, Footer) provides unified container aesthetics.
+  - **NEW**: All app-level button controls render through the shared `Button` primitive; raw `<button>` is reserved for the primitive implementation.
   - Interactive controls include keyboard focus states
 
 ### Clients Feature
@@ -67,13 +69,30 @@ This file is updated on every feature change. It helps humans and AI agents quic
   - `DonutChart` — Thinner ring (70%), smart decimal integer labels, unified `Category - Value` legend.
   - `PieChart` — Synchronized design with `Category : Value%` legend format.
   - `GaugeChart` — Semi-circular gauge for single-metric risk scoring.
+  - `SunburstChart` — Hierarchical circular chart for multi-level asset allocation.
   - `ChartsShowcase` — Side-by-side demo matching latest design specifications.
 - Done criteria:
-  - Components accept `[{ category, value }]` with no extra config required.
+  - Components accept appropriate data shapes (flat for Pie/Donut, hierarchical for Sunburst).
   - Smart decimal formatting (`#.##%`) shows integers by default, max 2 decimals if needed.
   - Design matches premium UI reference (slate-300 titles, rounded markers, updated palettes).
   - amCharts root properly disposed on unmount.
   - Barrel export at `src/components/charts/index.js`.
+
+### Dashboard Feature
+
+- Status: Completed (Feature-First Pattern)
+- Scope:
+  - Dynamic `StatsGrid` with linked metrics
+  - Multi-chart row (Risk Donut + AUM Pie)
+  - Layout-integrated Transaction Status Pie with raw value legends
+  - Regulatory Announcements list with category-aware `Badge` indicators
+  - Comprehensive Business Update and RM Performance summary tables
+  - Paginated Ongoing Transactions list with loading skeletons
+- Done criteria:
+  - Orchestration resides in `src/features/dashboard/Dashboard.jsx`
+  - Page at `src/pages/dashboard/DashboardOverview.jsx` is lean (delegates to feature)
+  - All containers use the shared `Card` system
+  - Mock data is fully integrated from `public/mock/dashboard.json`
 
 ## In-Progress Work
 
@@ -105,7 +124,7 @@ This file is updated on every feature change. It helps humans and AI agents quic
      - Add client flow
      - View client route/detail state
      - Edit client flow
-3. Module implementations
+2. Module implementations
    - Status: Not started
    - Done criteria:
      - Replace remaining placeholders with real module-specific screens
@@ -153,6 +172,16 @@ This file is updated on every feature change. It helps humans and AI agents quic
 - Decision: Enhance shared UI primitives with data-driven props (like `items` or `options`) while preserving manual composition capabilities.
 - Location: `src/components/ui/Tabs/Tabs.jsx`, `src/components/ui/Select/Select.jsx`
 - Rationale: Reduces boilerplate in feature components and ensures consistent rendering logic (e.g., badges, labels) across the application.
+
+### AD-006: Feature-First Page Orchestration
+
+- Decision: Move all domain-specific composition and state management from `src/pages` into `src/features`. Pages must be "Lean" targets for the router.
+- Location: All new screens (e.g., `DashboardOverview.jsx`, `ClientsPage.jsx`).
+- Rationale: Enforces a clean separation between routing and business logic. Pages handle *where* you are; Features handle *what* you do.
+- Implementation Pattern:
+  - **Page**: `src/pages/module/MyPage.jsx` -> renders `<MyFeature />`. No API calls or logic allowed here.
+  - **Feature**: `src/features/module/MyFeature.jsx` -> handles `useQuery`, state, and sub-component assembly.
+  - **Export**: `src/features/module/index.js` -> `export * from './MyFeature'` to keep imports clean.
 
 
 ## Blockers

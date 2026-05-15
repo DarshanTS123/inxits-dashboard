@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef } from "react";
+import { memo, useId, useLayoutEffect } from "react";
 import * as am5 from "@amcharts/amcharts5";
 import * as am5hierarchy from "@amcharts/amcharts5/hierarchy";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
@@ -31,14 +31,12 @@ const SunburstChart = ({
   className,
   height = 600,
 }) => {
-  const chartIdRef = useRef(
-    `sunburst-chart-${Math.random().toString(36).substr(2, 9)}`
-  );
+  const chartId = `sunburst-chart-${useId().replaceAll(":", "")}`;
 
   useLayoutEffect(() => {
     if (loading || !data) return;
 
-    const root = am5.Root.new(chartIdRef.current);
+    const root = am5.Root.new(chartId);
     if (root._logo) root._logo.dispose();
 
     root.setThemes([am5themes_Animated.new(root)]);
@@ -124,7 +122,7 @@ const SunburstChart = ({
     series.appear(1000, 100);
 
     return () => root.dispose();
-  }, [data, loading]);
+  }, [data, loading, chartId]);
 
   return (
     <div
@@ -151,7 +149,7 @@ const SunburstChart = ({
                 No data available
               </div>
             ) : (
-              <div id={chartIdRef.current} className="w-full h-full" />
+              <div id={chartId} className="w-full h-full" />
             )}
           </div>
         </div>
@@ -160,4 +158,4 @@ const SunburstChart = ({
   );
 };
 
-export default React.memo(SunburstChart);
+export default memo(SunburstChart);

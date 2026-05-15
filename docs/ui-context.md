@@ -75,8 +75,11 @@ Rules:
   - Radix-backed `DropdownMenu`, `Select`, and `Tabs`
   - `Table`/`DataTable` and `Pagination` for dense list surfaces
   - `PageLoader` and `PagePlaceholder` for route states
+  - `Card` system for unified container aesthetics
+  - `Badge` for categorical and status indicators
 
 **UI Rule C1 (enforceable)**: A file under `components/ui/*` may import only:
+
 - React
 - `cn` util
 - other `components/ui/*`
@@ -88,6 +91,7 @@ It may NOT import from `features/*`, `lib/*`, `store/*`, or `routes/*`.
 
 For interactive components (buttons, nav items, inputs):
 
+- Use the shared `Button` component from `src/components/ui/Button/Button.jsx` for every button-like control in app code. Do not render raw `<button>` elements outside the `Button` primitive implementation.
 - Must include:
   - hover state
   - active state
@@ -95,6 +99,7 @@ For interactive components (buttons, nav items, inputs):
   - keyboard focus state (`focus-visible` or `focus` ring)
 
 Examples:
+
 - `Button`: `focus:ring-2 focus:ring-primary/20`, `active:scale-[0.98]`
 - `Input`: `focus-within:ring-1 focus-within:ring-primary/20`, error and disabled variants
 
@@ -108,9 +113,10 @@ Examples:
 - Buttons must have:
   - `type="button"` unless they submit a form
   - `aria-label` when icon-only
+  - shared behavior through the `Button` component
 - Navigation toggles must have `aria-label` (see sidebar/menu close buttons).
 
-**UI Rule A11Y1**: Any icon-only `<button>` must have `aria-label`.
+**UI Rule A11Y1**: Any icon-only `Button` must have `aria-label`.
 **UI Rule A11Y2**: Form validation errors must be rendered in the DOM and referenced via `aria-describedby`.
 
 ## Responsive breakpoints
@@ -123,6 +129,7 @@ We use Tailwind defaults:
 - `xl` >= 1280px
 
 Patterns used:
+
 - Sidebar is **sticky** on desktop, **overlay** on mobile (`md:hidden` toggles).
 - Auth layout shows brand panel at `lg` and above.
 
@@ -161,9 +168,11 @@ Patterns used:
 
 ### Tables
 
+- Use the shared table system from `src/components/ui/Table/Table.jsx` for every table surface. Do not render native `<table>`, `<thead>`, `<tbody>`, `<tr>`, `<th>`, or `<td>` directly in feature/page components.
 - If a table renders >100 rows, implement pagination and/or virtualization.
 - Table actions (row menus) must use `DropdownMenu` primitives.
-- Prefer `DataTable` for simple column definitions. Columns may define `accessorKey`, `header`, `cell`, `className`, and `cellClassName`.
+- Prefer `DataTable` for simple column definitions, including custom cells and loading skeleton rows. Columns may define `accessorKey`, `header`, `cell`, `className`, `headerClassName`, and `cellClassName`.
+- Use the lower-level `Table`, `TableHeader`, `TableBody`, `TableRow`, `TableHead`, and `TableCell` primitives only when `DataTable` cannot express the table behavior.
 - Use `stickyColumns` only for dense horizontal tables where keeping identity/actions visible improves scanning.
 - Pair paginated tables with `Pagination`, including page size options and a total row count.
 
@@ -171,28 +180,43 @@ Patterns used:
 
 - Use `Select` for option sets such as search scope, page size, status, and ownership filters.
 - The `Select` component supports an `options` prop for data-driven rendering:
+
   ```jsx
   const options = [
     { label: 'All Columns', value: 'all' },
-    { label: 'Client Name', value: 'clientName' }
+    { label: 'Client Name', value: 'clientName' },
   ];
 
-  <Select options={options} placeholder="Select column" value={val} onValueChange={setVal} align="end" />
+  <Select
+    options={options}
+    placeholder="Select column"
+    value={val}
+    onValueChange={setVal}
+    align="end"
+  />;
   ```
-
 
 - Use `Tabs` for mutually exclusive views of the same data surface, not for main navigation.
 - The `Tabs` component supports an `items` prop for data-driven rendering:
+
   ```jsx
   const tabs = [
     { label: 'Overview', value: 'overview', content: <Overview /> },
-    { label: 'Activity', value: 'activity', content: <Activity />, badge: 12 }
+    { label: 'Activity', value: 'activity', content: <Activity />, badge: 12 },
   ];
 
-  <Tabs items={tabs} defaultValue="overview" />
+  <Tabs items={tabs} defaultValue="overview" />;
   ```
+
 - Tab labels may include count badges using a child with `data-slot="tabs-badge"` or the `badge` property in the `items` array.
 
+### Cards and Badges
+
+- **Card**: Use the `Card` component for all primary layout containers.
+  - Supports `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, and `CardFooter`.
+  - `CardTitle` includes a premium underline variant (on by default) to match the project's design language.
+- **Badge**: Use for categorical labels (e.g., "Corporate", "Regulatory") or status pills.
+  - Supports variants: `default`, `outline`, `success`, `warning`, `danger`, `info`.
 
 ### Forms
 

@@ -144,6 +144,9 @@ export const ChartWrapper = ({ children, title, subtitle, isLoading, isEmpty }) 
 - **Features**: Deeply nested data support, automatic branch-based coloring, and intelligent label fitting.
 - **Usage**: Perfect for complex asset allocation or multi-level category distribution (e.g., "Mutual Fund > Equity > Large Cap").
 
+> [!NOTE]
+> All chart components now utilize the shared **`Card`** system for their outer containers. This ensures unified rounding, borders, and premium title underlining across all visualizations.
+
 > All chart components generate their own unique `chartId` internally via `useRef` — no external ID is needed.
 
 ---
@@ -157,7 +160,7 @@ Demonstrates components side-by-side with data matching the high-fidelity design
 import { DonutChart, PieChart } from '@components/charts';
 
 export const ChartsShowcase = () => (
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-[#0d1526]">
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
     <DonutChart
       title="Client Segmentation by Risk"
       data={riskData}

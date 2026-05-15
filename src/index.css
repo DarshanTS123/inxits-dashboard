@@ -40,10 +40,22 @@
   --icon-primary: #46a8dc;
 
   /* Feedback */
-  --success: #28c76f;
-  --warning: #eaf12d;
+  --success: #2bc76f;
+  --warning: #eaf120;
   --error: #ea5455;
   --info: #00cfe8;
+
+  /* Sector Colors */
+  --sector-it: #4a90e2;
+  --sector-banking: #50c878;
+  --sector-healthcare: #9b59b6;
+  --sector-energy: #e67e22;
+  --sector-consumer-goods: #f1c40f;
+  --sector-infrastructure: #8e735b;
+  --sector-metals: #95a5a6;
+  --sector-telecom: #1abc9c;
+  --sector-agriculture: #27ae60;
+  --sector-gold: #d4af37;
 
   /* Sidebar Specific (Derived from Palette) */
   --sidebar-header-bg: #0f2b5c;

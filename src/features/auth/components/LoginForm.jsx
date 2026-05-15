@@ -47,16 +47,18 @@ export const LoginForm = () => {
   };
 
   const PasswordToggle = ({ className }) => (
-    <button
+    <Button
       type="button"
+      variant="ghost"
+      size="sm"
       onClick={() => setShowPassword(!showPassword)}
       className={cn(
-        'hover:text-primary transition-colors focus:outline-none flex items-center justify-center',
+        'p-0 hover:bg-transparent hover:text-primary focus:outline-none',
         className
       )}
     >
       {showPassword ? <EyeOff /> : <Eye />}
-    </button>
+    </Button>
   );
 
   return (
@@ -110,13 +112,15 @@ export const LoginForm = () => {
             })}
           />
           <div className="flex justify-end">
-            <button
+            <Button
               type="button"
-              className="text-xs text-paragraph hover:text-primary transition-colors font-medium py-1"
+              variant="ghost"
+              size="sm"
+              className="px-0 py-1 text-xs font-medium text-paragraph hover:bg-transparent hover:text-primary"
             >
               <span className="text-text-disabled mr-1">Forgot Password?</span>{' '}
               Reset
-            </button>
+            </Button>
           </div>
         </div>
 

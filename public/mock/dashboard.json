@@ -1,0 +1,241 @@
+{
+  "stats": [
+    { "label": "Total Clients", "value": "248" },
+    { "label": "Total AUM", "value": "₹ 185 Cr", "link": "View all" },
+    { "label": "SIP Investors", "value": "120" },
+    { "label": "SIP Amount", "value": "₹ 20 lacs" },
+    { "label": "SIP Count", "value": "40" },
+    { "label": "Open Support Tickets", "value": "28" }
+  ],
+  "transactionStatus": [
+    { "category": "Failed", "value": 4 },
+    { "category": "Successful", "value": 10 },
+    { "category": "In progress", "value": 15 },
+    { "category": "Cancelled", "value": 2 }
+  ],
+  "announcements": [
+    {
+      "id": 1,
+      "title": "Board Approves Quarterly Dividend",
+      "date": "23 Oct 2024",
+      "type": "Corporate Action",
+      "typeColor": "blue"
+    },
+    {
+      "id": 2,
+      "title": "RBI Clarification on Digital Lending Guidelines",
+      "date": "20 Oct 2024",
+      "type": "Regulatory",
+      "typeColor": "cyan"
+    },
+    {
+      "id": 3,
+      "title": "SEBI Seeks Clarification on Insider Trading Allegation",
+      "date": "18 Oct 2024",
+      "type": "Compliance",
+      "typeColor": "purple"
+    }
+  ],
+  "businessUpdate": [
+    {
+      "particulars": "Investment",
+      "debt": "1.47 Cr",
+      "equity": "0.15 Cr",
+      "hybrid": "1.14 Cr",
+      "cash": "0.03 Cr",
+      "other": "7 Lac",
+      "total": "21 Lac"
+    },
+    {
+      "particulars": "Redemption",
+      "debt": "41 lac",
+      "equity": "1.6 Cr",
+      "hybrid": "12 lac",
+      "cash": "6 Cr",
+      "other": "1.12 Cr",
+      "total": "0.65 Cr"
+    },
+    {
+      "particulars": "Net Investment",
+      "debt": "1.05 Cr",
+      "equity": "7 Cr",
+      "hybrid": "1 Cr",
+      "cash": "3 Cr",
+      "other": "-1 Cr",
+      "total": "11 Cr"
+    }
+  ],
+  "rmPerformance": [
+    {
+      "name": "Priya Sharma",
+      "role": "RM",
+      "clients": 43,
+      "aum": 38,
+      "leadsProgress": 12,
+      "leadsClosed": 12
+    },
+    {
+      "name": "Mamta Lodhi",
+      "role": "RM Asst",
+      "clients": 50,
+      "aum": 14,
+      "leadsProgress": 20,
+      "leadsClosed": 20
+    },
+    {
+      "name": "Sharmin Jaiswal",
+      "role": "RM",
+      "clients": 54,
+      "aum": 45,
+      "leadsProgress": 12,
+      "leadsClosed": 12
+    },
+    {
+      "name": "Bhavna Goyal",
+      "role": "RM",
+      "clients": 52,
+      "aum": 58,
+      "leadsProgress": 20,
+      "leadsClosed": 20
+    },
+    {
+      "name": "Shruti Kulkarni",
+      "role": "RM Asst",
+      "clients": 45,
+      "aum": 12,
+      "leadsProgress": 12,
+      "leadsClosed": 12
+    }
+  ],
+  "transactions": {
+    "total": 56,
+    "items": [
+      {
+        "id": 1,
+        "orderId": "SR-1021",
+        "orderDate": "15 Dec, 2024 11:11 am",
+        "clientName": "Aman Mehta",
+        "transactionId": "TR-24024",
+        "status": "Order Placed",
+        "scheme": "Axis Bluechip Fund",
+        "orderType": "Lumpsum",
+        "units": "250",
+        "amount": "15,000",
+        "navDate": "15 Dec, 2024",
+        "settlementDate": "15 Dec, 2024"
+      },
+      {
+        "id": 2,
+        "orderId": "SR-1021",
+        "orderDate": "15 Dec, 2024 11:11 am",
+        "clientName": "Mamta Lodhi",
+        "transactionId": "TR-24024",
+        "status": "In progress",
+        "scheme": "HDFC Short Term Debt",
+        "orderType": "Redemption",
+        "units": "200",
+        "amount": "25,000",
+        "navDate": "15 Dec, 2024",
+        "settlementDate": "15 Dec, 2024"
+      },
+      {
+        "id": 3,
+        "orderId": "SR-1021",
+        "orderDate": "15 Dec, 2024 11:11 am",
+        "clientName": "Bhavna Goyal",
+        "transactionId": "TR-24024",
+        "status": "In progress",
+        "scheme": "Mirae Asset large cap",
+        "orderType": "SIP",
+        "units": "125",
+        "amount": "32,000",
+        "navDate": "15 Dec, 2024",
+        "settlementDate": "15 Dec, 2024"
+      },
+      {
+        "id": 4,
+        "orderId": "SR-1021",
+        "orderDate": "15 Dec, 2024 11:11 am",
+        "clientName": "M. S. Subramaniam",
+        "transactionId": "TR-24024",
+        "status": "Settled",
+        "scheme": "Axis Bluechip Fund",
+        "orderType": "Lumpsum",
+        "units": "238",
+        "amount": "5,000",
+        "navDate": "15 Dec, 2024",
+        "settlementDate": "15 Dec, 2024"
+      },
+      {
+        "id": 5,
+        "orderId": "SR-1021",
+        "orderDate": "15 Dec, 2024 11:11 am",
+        "clientName": "Nandini Raikwar",
+        "transactionId": "TR-24024",
+        "status": "Settled",
+        "scheme": "Request for redemption",
+        "orderType": "Lumpsum",
+        "units": "432",
+        "amount": "10,000",
+        "navDate": "15 Dec, 2024",
+        "settlementDate": "15 Dec, 2024"
+      },
+      {
+        "id": 6,
+        "orderId": "SR-1021",
+        "orderDate": "15 Dec, 2024 11:11 am",
+        "clientName": "M. S. Subramaniam",
+        "transactionId": "TR-24024",
+        "status": "Order Placed",
+        "scheme": "Axis Bluechip Fund",
+        "orderType": "Lumpsum",
+        "units": "432",
+        "amount": "10,000",
+        "navDate": "15 Dec, 2024",
+        "settlementDate": "15 Dec, 2024"
+      },
+      {
+        "id": 7,
+        "orderId": "SR-1021",
+        "orderDate": "15 Dec, 2024 11:11 am",
+        "clientName": "Rahul Choudhary",
+        "transactionId": "TR-24024",
+        "status": "Settled",
+        "scheme": "Mirae Asset large cap",
+        "orderType": "Lumpsum",
+        "units": "432",
+        "amount": "32,000",
+        "navDate": "15 Dec, 2024",
+        "settlementDate": "15 Dec, 2024"
+      },
+      {
+        "id": 8,
+        "orderId": "SR-1021",
+        "orderDate": "15 Dec, 2024 11:11 am",
+        "clientName": "Shalini Jain",
+        "transactionId": "TR-24024",
+        "status": "Failed",
+        "scheme": "HDFC Short Term Debt",
+        "orderType": "SIP",
+        "units": "467",
+        "amount": "15,000",
+        "navDate": "15 Dec, 2024",
+        "settlementDate": "15 Dec, 2024"
+      },
+      {
+        "id": 9,
+        "orderId": "SR-1021",
+        "orderDate": "15 Dec, 2024 11:11 am",
+        "clientName": "M. S. Subramaniam",
+        "transactionId": "TR-24024",
+        "status": "Units Allotted",
+        "scheme": "Mirae Asset large cap",
+        "orderType": "SIP",
+        "units": "304",
+        "amount": "25,000",
+        "navDate": "15 Dec, 2024",
+        "settlementDate": "15 Dec, 2024"
+      }
+    ]
+  }
+}

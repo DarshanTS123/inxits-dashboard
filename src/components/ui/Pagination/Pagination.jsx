@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 
 import { cn } from '@/utils/cn';
+import { Button } from '@/components/ui/Button/Button';
 import { Select } from '@/components/ui/Select/Select';
 
 function clamp(n, min, max) {
@@ -62,35 +63,41 @@ export function Pagination({
       </div>
 
       <div className="flex items-center justify-center gap-1.5 justify-self-center">
-        <button
+        <Button
           type="button"
+          variant="ghost"
+          size="sm"
           disabled={!canPrev}
           aria-label="First page"
           onClick={() => onPageChange?.(1)}
-          className={paginationButtonClass}
+          className={cn(paginationButtonClass, 'p-0')}
         >
           <ChevronsLeft className="h-4 w-4" />
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
+          variant="ghost"
+          size="sm"
           disabled={!canPrev}
           aria-label="Previous page"
           onClick={() => onPageChange?.(safePage - 1)}
-          className={paginationButtonClass}
+          className={cn(paginationButtonClass, 'p-0')}
         >
           <ChevronLeft className="h-4 w-4" />
-        </button>
+        </Button>
 
         <div className="flex items-center gap-1">
           {pages.map((p) => {
             const isActive = p === safePage;
             return (
-              <button
+              <Button
                 key={p}
                 type="button"
+                variant="ghost"
+                size="sm"
                 onClick={() => onPageChange?.(p)}
                 className={cn(
-                  'h-10 w-10 rounded-md border text-sm font-semibold transition',
+                  'h-10 w-10 rounded-md border p-0 text-sm font-semibold',
                   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25',
                   isActive
                     ? 'border-primary bg-primary text-text-on-primary shadow-[0_0_0_1px_rgba(70,168,220,0.18)]'
@@ -99,29 +106,33 @@ export function Pagination({
                 aria-current={isActive ? 'page' : undefined}
               >
                 {p}
-              </button>
+              </Button>
             );
           })}
         </div>
 
-        <button
+        <Button
           type="button"
+          variant="ghost"
+          size="sm"
           disabled={!canNext}
           aria-label="Next page"
           onClick={() => onPageChange?.(safePage + 1)}
-          className={paginationButtonClass}
+          className={cn(paginationButtonClass, 'p-0')}
         >
           <ChevronRight className="h-4 w-4" />
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
+          variant="ghost"
+          size="sm"
           disabled={!canNext}
           aria-label="Last page"
           onClick={() => onPageChange?.(pageCount)}
-          className={paginationButtonClass}
+          className={cn(paginationButtonClass, 'p-0')}
         >
           <ChevronsRight className="h-4 w-4" />
-        </button>
+        </Button>
       </div>
 
       <div className="w-full justify-self-end sm:w-[128px]">

@@ -1,8 +1,9 @@
-import React, { useLayoutEffect, useRef } from "react";
+import { useId, useLayoutEffect } from "react";
 import * as am5 from "@amcharts/amcharts5";
 import * as am5percent from "@amcharts/amcharts5/percent";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import { cn } from "@/utils/cn";
+import { Card } from "@/components/ui/Card/Card";
 
 const DEFAULT_PIE_COLORS = [
   "#C06161", // red/coral
@@ -51,15 +52,14 @@ const PieChart = ({
   loading = false,
   className,
   height = 300,
+  legendValueText,
 }) => {
-  const chartIdRef = useRef(
-    `pie-chart-${Math.random().toString(36).substr(2, 9)}`
-  );
+  const chartId = `pie-chart-${useId().replaceAll(":", "")}`;
 
   useLayoutEffect(() => {
     if (loading || !data || data.length === 0) return;
 
-    const root = am5.Root.new(chartIdRef.current);
+    const root = am5.Root.new(chartId);
     if (root._logo) root._logo.dispose();
     root.setThemes([am5themes_Animated.new(root)]);
 
@@ -81,7 +81,7 @@ const PieChart = ({
         categoryField: "category",
         alignLabels: false,
         legendLabelText: "{category}",
-        legendValueText: ": {value.formatNumber('#.##')}%",
+        legendValueText: legendValueText || ": {valuePercentTotal.formatNumber('#.##')}%",
       })
     );
 
@@ -179,39 +179,27 @@ const PieChart = ({
     chart.appear(1000, 100);
 
     return () => root.dispose();
-  }, [data, loading, colors]);
+  }, [data, loading, colors, legendValueText, chartId]);
 
   return (
-    <div
-      className={cn(
-        "rounded-2xl border border-slate-700/60 bg-[#0d1526] p-5 shadow-xl transition-all hover:border-slate-600/80",
-        className
-      )}
+    <Card
+      padding="md"
+      hoverable
+      title={!loading ? title : undefined}
+      loading={loading}
+      loadingFallback={<PieSkeleton />}
+      className={cn("flex flex-col", className)}
+      contentClassName="flex-1 relative"
       style={{ height: typeof height === "number" ? `${height}px` : height }}
     >
-      {loading ? (
-        <PieSkeleton />
-      ) : (
-        <div className="flex flex-col h-full">
-          {title && (
-            <div className="mb-4">
-              <h3 className="text-[17px] font-medium text-slate-300 underline underline-offset-[6px] decoration-slate-400/30 tracking-tight">
-                {title}
-              </h3>
-            </div>
-          )}
-          <div className="flex-1 relative">
-            {!data || data.length === 0 ? (
-              <div className="absolute inset-0 flex items-center justify-center text-slate-500 text-sm italic">
-                No data available
-              </div>
-            ) : (
-              <div id={chartIdRef.current} className="w-full h-full" />
-            )}
-          </div>
+      {!data || data.length === 0 ? (
+        <div className="absolute inset-0 flex items-center justify-center text-slate-500 text-sm italic">
+          No data available
         </div>
+      ) : (
+        <div id={chartId} className="w-full h-full" />
       )}
-    </div>
+    </Card>
   );
 };
 

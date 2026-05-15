@@ -30,6 +30,10 @@ Measurable:
 
 - **Route pages** must export a **named export** used by router lazy imports.
   - Example pattern in router: `.then((m) => ({ default: m.ClientsPage }))`
+- **Buttons must use the shared primitive**
+  - App, layout, feature, page, and UI composition code must import and render `Button` from `src/components/ui/Button/Button.jsx` for every button-like control.
+  - Raw `<button>` is allowed only inside the shared `Button` primitive implementation.
+  - Icon-only buttons must pass `aria-label`; form-submit buttons must explicitly use `type="submit"`.
 - **No derived state in `useEffect`**
   - If you can compute it from props/state, use `useMemo` or inline computation.
 - **No side effects in render**
@@ -40,6 +44,7 @@ Measurable:
 Measurable:
 - Any new page must have a router entry with `handle.title`.
 - Any useEffect added must be justified as a true side effect (not derivation).
+- `rg "<button|</button>" src` should only match `src/components/ui/Button/Button.jsx`.
 
 ## Naming & file conventions
 

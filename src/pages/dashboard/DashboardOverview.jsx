@@ -1,9 +1,5 @@
-import ChartsShowcase from '../../features/dashboard/components/ChartsShowcase';
+import { Dashboard } from '@/features/dashboard';
 
 export const DashboardOverview = () => {
-  return (
-    <div className="flex flex-col gap-6">
-      <ChartsShowcase />
-    </div>
-  );
+  return <Dashboard />;
 };

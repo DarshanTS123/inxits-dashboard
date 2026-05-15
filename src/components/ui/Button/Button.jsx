@@ -52,7 +52,7 @@ export const Button = React.forwardRef(({
       {!isLoading && LeftIcon && <LeftIcon className="h-4 w-4" />}
 
       {/* Button Text */}
-      <span>{children}</span>
+      {children && <span>{children}</span>}
 
       {/* Right Icon */}
       {!isLoading && RightIcon && <RightIcon className="h-4 w-4" />}

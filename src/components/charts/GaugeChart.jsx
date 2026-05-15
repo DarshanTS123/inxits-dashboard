@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef } from "react";
+import { memo, useId, useLayoutEffect } from "react";
 import * as am5 from "@amcharts/amcharts5";
 import * as am5xy from "@amcharts/amcharts5/xy";
 import * as am5radar from "@amcharts/amcharts5/radar";
@@ -38,14 +38,12 @@ const GaugeChart = ({
   className,
   height = 380,
 }) => {
-  const chartIdRef = useRef(
-    `gauge-chart-${Math.random().toString(36).substr(2, 9)}`
-  );
+  const chartId = `gauge-chart-${useId().replaceAll(":", "")}`;
 
   useLayoutEffect(() => {
     if (loading) return;
 
-    const root = am5.Root.new(chartIdRef.current);
+    const root = am5.Root.new(chartId);
     if (root._logo) root._logo.dispose();
 
     root.setThemes([am5themes_Animated.new(root)]);
@@ -101,7 +99,7 @@ const GaugeChart = ({
       strokeOpacity: 0,
     });
 
-    const bullet = axisDataItem.set(
+    axisDataItem.set(
       "bullet",
       am5xy.AxisBullet.new(root, {
         sprite: clockHand,
@@ -148,7 +146,7 @@ const GaugeChart = ({
     chart.appear(1000, 100);
 
     return () => root.dispose();
-  }, [value, loading]);
+  }, [value, loading, chartId]);
 
   return (
     <div
@@ -170,7 +168,7 @@ const GaugeChart = ({
             </div>
           )}
           <div className="flex-1 relative flex flex-col items-center justify-center">
-            <div id={chartIdRef.current} className="w-full h-full max-h-[220px]" />
+            <div id={chartId} className="w-full h-full max-h-[220px]" />
             {label && (
               <div className="mt-4 text-center">
                 <span className="text-xl font-bold text-slate-200 tracking-wide">
@@ -185,4 +183,4 @@ const GaugeChart = ({
   );
 };
 
-export default React.memo(GaugeChart);
+export default memo(GaugeChart);
