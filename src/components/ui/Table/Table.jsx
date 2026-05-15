@@ -51,7 +51,7 @@ function buildStickyColumnStyles(scopeClassName, stickyColumns) {
           position: sticky;
           ${side}: ${offset}px;
           z-index: 20;
-          background: var(--bg-helper);
+          background: var(--bg-page);
           ${borderSide}: 1px solid var(--stroke-divider);
         }
 
@@ -92,7 +92,7 @@ function Table({
       {stickyColumnStyles ? <style>{stickyColumnStyles}</style> : null}
       <table
         className={cn(
-          'w-full caption-bottom border-separate border-spacing-0 text-sm',
+          'w-full caption-bottom border-separate border-spacing-0 text-[14px]',
           scopeClassName,
           className
         )}
@@ -126,11 +126,11 @@ function TableHead({ className, sticky, stickyOffset = 0, style, ...props }) {
   return (
     <th
       className={cn(
-        'h-11 border-b border-stroke-divider px-4 text-left align-middle text-xs font-semibold uppercase tracking-wide text-subheading',
+        'h-11 border-b border-stroke-divider bg-helper px-4 text-left align-middle text-xs font-semibold uppercase tracking-wide text-subheading whitespace-nowrap',
         sticky === 'left' &&
-          'sticky left-[var(--table-cell-sticky-offset)] z-40 border-r border-stroke-divider bg-helper',
+          'sticky left-[var(--table-cell-sticky-offset)] z-40 border-r border-stroke-divider',
         sticky === 'right' &&
-          'sticky right-[var(--table-cell-sticky-offset)] z-40 border-l border-stroke-divider bg-helper',
+          'sticky right-[var(--table-cell-sticky-offset)] z-40 border-l border-stroke-divider',
         className
       )}
       style={{ '--table-cell-sticky-offset': `${stickyOffset}px`, ...style }}
@@ -143,11 +143,11 @@ function TableCell({ className, sticky, stickyOffset = 0, style, ...props }) {
   return (
     <td
       className={cn(
-        'border-b border-stroke-divider px-4 py-3 align-middle text-sm text-paragraph',
+        'border-b border-stroke-divider bg-page px-4 py-3 align-middle text-[14px] text-paragraph',
         sticky === 'left' &&
-          'sticky left-[var(--table-cell-sticky-offset)] z-20 border-r border-stroke-divider bg-helper',
+          'sticky left-[var(--table-cell-sticky-offset)] z-20 border-r border-stroke-divider',
         sticky === 'right' &&
-          'sticky right-[var(--table-cell-sticky-offset)] z-20 border-l border-stroke-divider bg-helper',
+          'sticky right-[var(--table-cell-sticky-offset)] z-20 border-l border-stroke-divider',
         className
       )}
       style={{ '--table-cell-sticky-offset': `${stickyOffset}px`, ...style }}
@@ -194,7 +194,7 @@ function DataTable({
       <TableBody className={className}>
         {data.length === 0 ? (
           <TableRow>
-            <TableCell colSpan={colSpan} className="py-10 text-center text-sm text-paragraph">
+            <TableCell colSpan={colSpan} className="py-10 text-center text-[14px] text-paragraph">
               {emptyMessage}
             </TableCell>
           </TableRow>

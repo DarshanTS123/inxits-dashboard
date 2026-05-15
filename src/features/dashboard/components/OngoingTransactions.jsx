@@ -22,18 +22,20 @@ export const OngoingTransactions = ({ data, loading }) => {
     {
       header: 'Order ID',
       accessorKey: 'orderId',
-      cell: ({ value }) => <span className="text-[13px] font-medium text-slate-300">{value || '-'}</span>,
+      className: 'min-w-[120px]',
+      cell: ({ value }) => <span className="font-medium text-slate-300">{value || '-'}</span>,
     },
     {
       header: 'Order Date',
       accessorKey: 'orderDate',
+      className: 'min-w-[170px]',
       cell: ({ value }) => {
         if (!value) return <span className="text-[12px] text-slate-300">-</span>;
         const parts = value.split(' ');
         return (
           <div className="flex flex-col">
-            <span className="text-[12px] text-slate-300">{parts[0]} {parts[1]}</span>
-            <span className="text-[10px] text-slate-500">{parts.slice(2).join(' ')}</span>
+            <span className="text-slate-300">{parts[0]} {parts[1]}</span>
+            <span className="text-[12px] text-slate-500">{parts.slice(2).join(' ')}</span>
           </div>
         );
       },
@@ -41,14 +43,14 @@ export const OngoingTransactions = ({ data, loading }) => {
     {
       header: 'Client Name',
       accessorKey: 'clientName',
-      cell: ({ value }) => <span className="text-[13px] font-medium text-blue-400 cursor-pointer hover:underline">{value || '-'}</span>,
+      className: 'min-w-[160px]',
+      cell: ({ value }) => <span className="font-medium text-blue-400 cursor-pointer hover:underline">{value || '-'}</span>,
     },
     {
       header: 'Transaction ID',
       accessorKey: 'transactionId',
-      cell: ({ value }) => <span className="text-[12px] text-slate-400">{value || '-'}</span>,
-    },
-    {
+      cell: ({ value }) => <span className="text-slate-400">{value || '-'}</span>,
+    },    {
       header: 'Status',
       accessorKey: 'status',
       cell: ({ value }) => {
@@ -75,9 +77,9 @@ export const OngoingTransactions = ({ data, loading }) => {
         };
 
         return (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 whitespace-nowrap">
             <div className={cn("w-1.5 h-1.5 rounded-full", getDotStyles(value))} />
-            <span className={cn("text-[12px] font-medium", getStatusStyles(value))}>{value}</span>
+            <span className={cn("font-medium", getStatusStyles(value))}>{value}</span>
           </div>
         );
       },
@@ -85,32 +87,38 @@ export const OngoingTransactions = ({ data, loading }) => {
     {
       header: 'Scheme',
       accessorKey: 'scheme',
-      cell: ({ value }) => <span className="text-[12px] text-slate-300">{value || '-'}</span>,
+      cell: ({ value }) => <span className="text-slate-300 whitespace-nowrap">{value || '-'}</span>,
     },
     {
       header: 'Order Type',
       accessorKey: 'orderType',
-      cell: ({ value }) => <span className="text-[12px] text-slate-400">{value || '-'}</span>,
+      cell: ({ value }) => <span className="text-slate-400">{value || '-'}</span>,
     },
     {
       header: 'Units',
       accessorKey: 'units',
-      cell: ({ value }) => <span className="text-[12px] text-slate-300">{value || '-'}</span>,
+      cell: ({ value }) => <span className="text-slate-300">{value || '-'}</span>,
     },
     {
       header: 'Amount (₹)',
       accessorKey: 'amount',
-      cell: ({ value }) => <span className="text-[12px] font-semibold text-slate-200">{value || '-'}</span>,
+      cell: ({ value }) => <span className="font-semibold text-slate-200">{value || '-'}</span>,
     },
     {
       header: 'NAV Date',
       accessorKey: 'navDate',
-      cell: ({ value }) => <span className="text-[11px] text-slate-500">{value || '-'}</span>,
+      cell: ({ value }) => <span className="text-slate-500 whitespace-nowrap">{value || '-'}</span>,
     },
     {
       header: 'Settlement Date',
       accessorKey: 'settlementDate',
-      cell: ({ value }) => <span className="text-[11px] text-slate-500">{value || '-'}</span>,
+      cell: ({ value }) => <span className="text-slate-500">{value || '-'}</span>,
+    },
+    {
+      header: 'RM',
+      accessorKey: 'rm',
+      className: 'min-w-[160px]',
+      cell: ({ value }) => <span className="text-slate-300">{value || '-'}</span>,
     },
   ];
 
@@ -144,10 +152,11 @@ export const OngoingTransactions = ({ data, loading }) => {
           <DataTable
             columns={columns}
             data={paginatedData}
+            stickyColumns={{ left: [{ index: 0, width: 120 }, { index: 1, width: 170 }, { index: 2, width: 160 }] }}
             tableClassName="border-none"
             containerClassName="max-h-[500px]"
             rowClassName="hover:bg-slate-800/30 transition-colors border-b border-slate-800/40 last:border-0"
-          />
+            />
         )}
       </div>
 

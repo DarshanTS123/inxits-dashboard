@@ -1,17 +1,48 @@
 {
   "stats": [
-    { "label": "Total Clients", "value": "248" },
-    { "label": "Total AUM", "value": "₹ 185 Cr", "link": "View all" },
-    { "label": "SIP Investors", "value": "120" },
-    { "label": "SIP Amount", "value": "₹ 20 lacs" },
-    { "label": "SIP Count", "value": "40" },
-    { "label": "Open Support Tickets", "value": "28" }
+    {
+      "label": "Total Clients",
+      "value": "248"
+    },
+    {
+      "label": "Total AUM",
+      "value": "₹ 185 Cr",
+      "link": "View all"
+    },
+    {
+      "label": "SIP Investors",
+      "value": "120"
+    },
+    {
+      "label": "SIP Amount",
+      "value": "₹ 20 lacs"
+    },
+    {
+      "label": "SIP Count",
+      "value": "40"
+    },
+    {
+      "label": "Open Support Tickets",
+      "value": "28"
+    }
   ],
   "transactionStatus": [
-    { "category": "Failed", "value": 4 },
-    { "category": "Successful", "value": 10 },
-    { "category": "In progress", "value": 15 },
-    { "category": "Cancelled", "value": 2 }
+    {
+      "category": "Failed",
+      "value": 4
+    },
+    {
+      "category": "Successful",
+      "value": 10
+    },
+    {
+      "category": "In progress",
+      "value": 15
+    },
+    {
+      "category": "Cancelled",
+      "value": 2
+    }
   ],
   "announcements": [
     {
@@ -122,7 +153,8 @@
         "units": "250",
         "amount": "15,000",
         "navDate": "15 Dec, 2024",
-        "settlementDate": "15 Dec, 2024"
+        "settlementDate": "15 Dec, 2024",
+        "rm": "Sunil Bhadouriya"
       },
       {
         "id": 2,
@@ -136,7 +168,8 @@
         "units": "200",
         "amount": "25,000",
         "navDate": "15 Dec, 2024",
-        "settlementDate": "15 Dec, 2024"
+        "settlementDate": "15 Dec, 2024",
+        "rm": "Bhavna Goyal"
       },
       {
         "id": 3,
@@ -150,7 +183,8 @@
         "units": "125",
         "amount": "32,000",
         "navDate": "15 Dec, 2024",
-        "settlementDate": "15 Dec, 2024"
+        "settlementDate": "15 Dec, 2024",
+        "rm": "Mohd Hadi"
       },
       {
         "id": 4,
@@ -164,7 +198,8 @@
         "units": "238",
         "amount": "5,000",
         "navDate": "15 Dec, 2024",
-        "settlementDate": "15 Dec, 2024"
+        "settlementDate": "15 Dec, 2024",
+        "rm": "Navjot Kaur"
       },
       {
         "id": 5,
@@ -178,7 +213,8 @@
         "units": "432",
         "amount": "10,000",
         "navDate": "15 Dec, 2024",
-        "settlementDate": "15 Dec, 2024"
+        "settlementDate": "15 Dec, 2024",
+        "rm": "Mohd Hadi"
       },
       {
         "id": 6,
@@ -192,7 +228,8 @@
         "units": "432",
         "amount": "10,000",
         "navDate": "15 Dec, 2024",
-        "settlementDate": "15 Dec, 2024"
+        "settlementDate": "15 Dec, 2024",
+        "rm": "Navjot Kaur"
       },
       {
         "id": 7,
@@ -206,7 +243,8 @@
         "units": "432",
         "amount": "32,000",
         "navDate": "15 Dec, 2024",
-        "settlementDate": "15 Dec, 2024"
+        "settlementDate": "15 Dec, 2024",
+        "rm": "Bhavna Goyal"
       },
       {
         "id": 8,
@@ -220,7 +258,8 @@
         "units": "467",
         "amount": "15,000",
         "navDate": "15 Dec, 2024",
-        "settlementDate": "15 Dec, 2024"
+        "settlementDate": "15 Dec, 2024",
+        "rm": "Mohd Hadi"
       },
       {
         "id": 9,
@@ -234,7 +273,8 @@
         "units": "304",
         "amount": "25,000",
         "navDate": "15 Dec, 2024",
-        "settlementDate": "15 Dec, 2024"
+        "settlementDate": "15 Dec, 2024",
+        "rm": "Bhavna Goyal"
       }
     ]
   }

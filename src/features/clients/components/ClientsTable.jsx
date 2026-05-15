@@ -69,7 +69,7 @@ export const ClientsTable = ({ data, isLoading }) => {
         cell: ({ value }) => (
           <div className="flex items-center gap-2">
             <span className={cn('h-2 w-2 rounded-full', statusToDot(value))} />
-            <span className="text-sm font-semibold text-paragraph">{value}</span>
+            <span className="font-semibold text-paragraph">{value}</span>
           </div>
         ),
       },

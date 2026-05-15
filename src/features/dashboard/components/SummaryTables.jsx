@@ -8,7 +8,7 @@ const containerClassName =
 const headerClassName =
   'bg-[#1a2033] border-b border-slate-600/70 px-6 py-4 text-[13px] font-medium normal-case tracking-normal text-slate-300';
 const cellClassName =
-  'border-b border-slate-600/60 px-6 py-5 text-[13px] text-slate-400';
+  'border-b border-slate-600/60 px-6 py-5 text-slate-400';
 const rowClassName = 'group hover:bg-slate-800/30 transition-colors';
 
 const loadingCell = (width = 'w-20') => (
@@ -121,10 +121,10 @@ export const RMPerformanceTable = ({ data = [], loading }) => {
           loadingCell('w-24')
         ) : (
           <div className="flex flex-col">
-            <span className="text-[13px] font-semibold text-slate-300 group-hover:text-blue-400 transition-colors cursor-pointer">
+            <span className="font-semibold text-slate-300 group-hover:text-blue-400 transition-colors cursor-pointer">
               {value || '-'}
             </span>
-            <span className="text-[10px] text-slate-500 font-medium uppercase tracking-tighter">
+            <span className="text-[12px] text-slate-500 font-medium uppercase tracking-tighter">
               {row.role || ''}
             </span>
           </div>
