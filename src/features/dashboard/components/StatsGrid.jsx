@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/Button/Button';
 import { Card } from '@/components/ui/Card/Card';
 
 export const StatsGrid = ({ stats = [], loading }) => {
-  const getStatData = (label) => stats.find(s => s.label === label);
+  const getStatData = (label) => stats.find((s) => s.label === label);
 
   const items = [
     { label: 'Total Clients', ...getStatData('Total Clients') },
@@ -18,20 +18,20 @@ export const StatsGrid = ({ stats = [], loading }) => {
         <Card
           key={index}
           padding="lg"
-          className="group cursor-default hover:border-slate-600/60"
           label={item.label}
-          labelClassName="group-hover:text-slate-400 transition-colors"
           value={item.value || '-'}
-          meta={item.link && (
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              className="p-0 font-semibold uppercase text-blue-400 hover:bg-transparent hover:text-blue-300"
-            >
-              {item.link}
-            </Button>
-          )}
+          meta={
+            item.link && (
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                className="p-0 font-semibold uppercase text-blue-400 hover:bg-transparent hover:text-blue-300"
+              >
+                {item.link}
+              </Button>
+            )
+          }
           loading={loading}
           loadingFallback={
             <div className="flex flex-col gap-2 animate-pulse">
