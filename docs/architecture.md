@@ -1,6 +1,6 @@
 # Architecture (engineering contract)
 
-This document defines **non-negotiable architectural constraints** for the inXits Dashboard frontend. AI agents and engineers must treat these as **enforceable rules**. If a change requires breaking a constraint, it must be surfaced as an explicit architecture decision (record in `docs/progress-tracker.md`).
+This document defines **non-negotiable architectural constraints** for the inXits Dashboard frontend. AI agents and engineers must treat these as **enforceable rules**. If a change requires breaking a constraint, it must be surfaced as an explicit architecture decision documented in the relevant PR or code comment.
 
 ## Tech stack (current)
 

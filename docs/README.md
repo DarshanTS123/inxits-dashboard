@@ -17,7 +17,6 @@ It is optimized for **AI-assisted development**:
 - **Form design guide (comprehensive form patterns)**: `docs/form-design-guide.md`
 - **AI workflow rules (execution contract)**: `docs/ai-workflow-rules.md`
 - **Chart architecture (AmCharts 5 integration)**: `docs/chart-architecture.md`
-- **Progress tracker (living status + decisions)**: `docs/progress-tracker.md`
 
 ## Required read order (for AI agents)
 
@@ -27,7 +26,6 @@ It is optimized for **AI-assisted development**:
 4. `docs/ui-context.md`
 5. `docs/ai-workflow-rules.md`
 6. `docs/chart-architecture.md`
-7. `docs/progress-tracker.md` (update on every feature change)
 
 ## New to the repo?
 

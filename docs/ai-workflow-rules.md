@@ -13,7 +13,6 @@ AI must follow this order for any change that touches code:
 5. Run verification:
    - `npm run build` (required for any PR)
    - `npm run lint` (required for any PR)
-6. Update `docs/progress-tracker.md` (required for any feature work)
 
 ## 1) Scoping rules
 
@@ -22,7 +21,7 @@ AI must follow this order for any change that touches code:
 - **Architecture change**: changes boundaries, provider setup, router structure, or storage/auth model.
 
 Rules:
-- If a change is "architecture change", AI must add an entry under "Architecture decisions" in `docs/progress-tracker.md`.
+- If a change is "architecture change", document the rationale as a comment or inline note in the relevant file.
 - If a change touches **both** `src/lib/*` and `src/components/ui/*`, it must be split (prevents infrastructure leaking into UI primitives).
 
 ## 2) Feature development workflow (deterministic)
@@ -42,8 +41,6 @@ When adding a new module or feature:
    - `src/pages/<domain>/<Domain>Page.jsx` composes domain components/hooks
 6. **UI primitives**
    - Only after above, add/extend `src/components/ui/*` primitives if reuse is at least 2 places
-7. **Docs update**
-   - Update `docs/progress-tracker.md` feature entry with done criteria and current status
 
 ## 3) Boundary validation (must-check list)
 
@@ -92,7 +89,6 @@ Rules:
 ## 6) Documentation update rules
 
 - Any new feature must:
-  - add/update an entry in `docs/progress-tracker.md`
   - document new env vars in `docs/project-overview.md` if introduced
 - Any new UI token must:
   - be added to `src/index.css`

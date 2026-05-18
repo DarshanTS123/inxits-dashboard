@@ -1,6 +1,6 @@
 # Code standards (enforceable)
 
-This is a **ruleset**, not advice. New code must comply. Deviations require an explicit note in `docs/progress-tracker.md`.
+This is a **ruleset**, not advice. New code must comply. Deviations must be documented in the relevant PR description or inline code comment.
 
 ## Language & TypeScript rules
 
