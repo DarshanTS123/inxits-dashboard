@@ -221,7 +221,7 @@ Patterns used:
 ### Forms
 
 - Use `react-hook-form` for non-trivial forms.
-- Inputs must use `components/ui/Input/Input.jsx` (keeps consistent labeling and a11y).
+- Use shared UI form primitives for inputs. See `docs/form-design-guide.md` for component usage, validation, and accessibility rules.
 
 ### Modals
 

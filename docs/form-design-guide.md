@@ -14,9 +14,10 @@ This document outlines standards and best practices for designing and implementi
 
 - **Form library**: `react-hook-form` (handles state, validation, submission)
 - **Input primitives**: `src/components/ui/Input/Input.jsx` for text inputs
+- **Textarea primitives**: `src/components/ui/Textarea/Textarea.jsx` for multi-line text fields
 - **Select/multi-select**: `src/components/ui/Select/Select.jsx` for dropdowns
 - **Buttons**: `src/components/ui/Button/Button.jsx` for submit/reset/cancel
-- **Validation**: `react-hook-form` validators + custom patterns
+- **Validation**: `zod` schemas via `@hookform/resolvers/zod` and `react-hook-form`
 - **Async validation** (if needed): `react-hook-form` `validate` callback with React Query
 
 ## Form structure
@@ -99,6 +100,20 @@ Use the `Input` component for text, email, password, tel, and number fields:
     },
   })}
   error={errors.email?.message}
+/>
+```
+
+### Multi-line textarea fields
+
+Use the `Textarea` component for descriptions, comments, notes, and other multi-line text content:
+
+```jsx
+<Textarea
+  label="Description"
+  rows={5}
+  placeholder="Enter description"
+  {...register('description')}
+  error={errors.description?.message}
 />
 ```
 
@@ -219,6 +234,35 @@ When building forms inside **drawers** or other containers with custom spacing/l
     message: 'Enter a valid 10-digit mobile number',
   },
 })}
+```
+
+### Zod schema validation
+
+For form validation, prefer a `zod` schema with `zodResolver` when using `react-hook-form`. This centralizes rules, improves reuse, and keeps field registration clean.
+
+```jsx
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+
+const announcementSchema = z.object({
+  name: z.string().trim().min(3, 'Name is required'),
+  email: z.string().trim().email('Enter a valid email'),
+  link: z
+    .string()
+    .trim()
+    .optional()
+    .refine((value) => value === '' || /^https?:\/\//.test(value), {
+      message: 'Please enter a valid URL',
+    }),
+});
+
+const form = useForm({
+  resolver: zodResolver(announcementSchema),
+  defaultValues: { name: '', email: '', link: '' },
+});
+
+<Input {...register('name')} error={errors.name?.message} />
 ```
 
 #### Custom async validation
@@ -603,7 +647,265 @@ export const CreateItemDrawer = ({ open, onOpenChange }) => {
 
 **Important**: Drawer forms use explicit `<label>` elements, not the Input `label` prop. This provides better control over spacing and styling within the drawer layout.
 
-### Search / filter form
+## Drawer Form Pattern with Reusable Components
+
+When creating forms that open in drawers for both **add** and **edit** operations, follow this reusable component architecture pattern. This ensures consistency and maintainability across the application.
+
+### Architecture Overview
+
+1. **Form Component** (`*Form.jsx`): Pure presentational, form fields only, no buttons
+2. **Container Component** (`*Drawer.jsx` or within feature): State management, drawer UI, buttons in footer
+3. **Clear separation**: Form receives data via props, returns form ID for button submission
+
+### Step 1: Create Reusable Form Component
+
+Create a form component that exports the form fields only. The form must have an `id` for linking to external submit buttons.
+
+```jsx
+// RegulatoryAnnouncementForm.jsx
+import { useForm } from 'react-hook-form';
+import { Input } from '@/components/ui/Input/Input';
+import { AlertCircle } from 'lucide-react';
+import { cn } from '@/utils/cn';
+
+export const RegulatoryAnnouncementForm = ({
+  onSubmit,
+  initialData = null,
+  error = null,
+  isSubmitting = false,
+}) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    mode: 'onBlur',
+    defaultValues: initialData || {
+      name: '',
+      tag: '',
+      link: '',
+      description: '',
+    },
+  });
+
+  const handleFormSubmit = async (data) => {
+    await onSubmit(data);
+  };
+
+  return (
+    <form id="announcement-form" onSubmit={handleSubmit(handleFormSubmit)}>
+      {/* Error banner */}
+      {error && (
+        <div className="mb-5 flex items-center gap-3 border border-error/20 bg-error/10 px-4 py-3 rounded-xl">
+          <AlertCircle className="h-5 w-5 flex-shrink-0 text-error" />
+          <p className="text-sm text-error">{error}</p>
+        </div>
+      )}
+
+      {/* Form section header */}
+      <h2 className="mb-5 text-lg font-semibold text-subheading sm:mb-6">
+        Announcement Details
+      </h2>
+
+      {/* Form fields in grid - use explicit labels */}
+      <div className="grid gap-5 md:grid-cols-2">
+        <div className="flex flex-col gap-1.5">
+          <label
+            htmlFor="announcement-name"
+            className="px-1 text-xs font-medium text-text-label"
+          >
+            Name <span className="text-error">*</span>
+          </label>
+          <Input
+            id="announcement-name"
+            type="text"
+            placeholder="Board Approves Quarterly Dividend"
+            {...register('name', {
+              required: 'Name is required',
+              minLength: {
+                value: 3,
+                message: 'Name must be at least 3 characters',
+              },
+            })}
+            error={errors.name?.message}
+            disabled={isSubmitting}
+          />
+        </div>
+
+        {/* Additional fields follow same pattern */}
+      </div>
+    </form>
+  );
+};
+```
+
+**Form Component Rules**:
+- ✅ Form has `id="form-id"` for external button linking
+- ✅ Receives data via `initialData`, `error`, `isSubmitting` props
+- ✅ Uses explicit `<label>` elements (not Input `label` prop)
+- ✅ Form fields only, no action buttons
+- ✅ Handles form submission via `onSubmit` callback
+- ✅ Supports both add and edit modes via `initialData`
+
+### Step 2: Manage State in Container Component
+
+Create a container component (in the feature) that handles drawer state, form data, and API calls.
+
+```jsx
+// RegulatoryAnnouncements.jsx (feature component)
+import { useState } from 'react';
+import { Drawer } from '@/components/ui/Drawer/Drawer';
+import { Button } from '@/components/ui/Button/Button';
+import { RegulatoryAnnouncementForm } from './RegulatoryAnnouncementForm';
+
+export const RegulatoryAnnouncements = ({ announcements = [] }) => {
+  // Drawer state
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
+  
+  // Form state
+  const [formError, setFormError] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Open drawer for add
+  const handleOpenAdd = () => {
+    setSelectedAnnouncement(null);
+    setFormError(null);
+    setIsDrawerOpen(true);
+  };
+
+  // Open drawer for edit
+  const handleOpenEdit = (announcement) => {
+    setSelectedAnnouncement(announcement);
+    setFormError(null);
+    setIsDrawerOpen(true);
+  };
+
+  // Close drawer and reset state
+  const handleCloseDrawer = (nextOpen) => {
+    if (!nextOpen) {
+      setIsDrawerOpen(false);
+      setSelectedAnnouncement(null);
+      setFormError(null);
+    }
+  };
+
+  // Form submission handler
+  const handleFormSubmit = async (data) => {
+    setIsSubmitting(true);
+    setFormError(null);
+
+    try {
+      // API call: create or update
+      // const response = await selectedAnnouncement
+      //   ? updateAnnouncement(selectedAnnouncement.id, data)
+      //   : createAnnouncement(data);
+      
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      
+      handleCloseDrawer(false);
+    } catch (error) {
+      setFormError(error?.message || 'Failed to save');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <>
+      {/* Card with Add button */}
+      <Card>
+        <Button onClick={handleOpenAdd}>Add</Button>
+      </Card>
+
+      {/* Drawer with form footer */}
+      <Drawer
+        open={isDrawerOpen}
+        onOpenChange={handleCloseDrawer}
+        title={selectedAnnouncement ? 'Edit Announcement' : 'Add Regulatory Announcement'}
+        size="lg"
+        footer={
+          <Button
+            type="submit"
+            form="announcement-form"
+            className="h-11 w-full sm:w-auto"
+            isLoading={isSubmitting}
+          >
+            Save
+          </Button>
+        }
+      >
+        {/* Wrap form in bg-layer1 container for styling */}
+        <div className="rounded-xl bg-layer1 p-4 sm:p-6">
+          <RegulatoryAnnouncementForm
+            onSubmit={handleFormSubmit}
+            initialData={
+              selectedAnnouncement
+                ? {
+                    name: selectedAnnouncement.title,
+                    tag: selectedAnnouncement.type,
+                    link: selectedAnnouncement.link || '',
+                    description: selectedAnnouncement.description || '',
+                  }
+                : null
+            }
+            error={formError}
+            isSubmitting={isSubmitting}
+          />
+        </div>
+      </Drawer>
+    </>
+  );
+};
+```
+
+**Container Component Rules**:
+- ✅ Manages drawer open/close state
+- ✅ Manages form submission state (loading, errors)
+- ✅ Handles data prefilling for edit mode via `initialData`
+- ✅ Drawer `footer` contains submit button only (no cancel)
+- ✅ Submit button uses `form="announcement-form"` to link to form
+- ✅ Form is wrapped in `bg-layer1 p-4 sm:p-6` for consistent drawer styling
+- ✅ API calls happen in submission handler, not in form component
+- ✅ Form resets via `handleCloseDrawer` on success
+
+### Key Differences: Drawer vs Modal Forms
+
+| Aspect | Drawer Forms | Modal Forms |
+|--------|--------------|------------|
+| Button placement | Footer (via `footer` prop) | Inside form or below form |
+| Form ID linking | ✅ Required (`form="id"`) | ✅ Same pattern |
+| Close button | Drawer header X | Inside form/modal |
+| Styling | Wrapped in `bg-layer1` | Card or modal background |
+| Label style | Explicit labels (no Input `label` prop) | Can use Input `label` prop |
+| Drawer behavior | Slide from right, preserves context | Center overlay, blocks interaction |
+
+### Real-World Example
+
+See the complete implementation:
+- Form: [src/features/dashboard/components/RegulatoryAnnouncementForm.jsx](../src/features/dashboard/components/RegulatoryAnnouncementForm.jsx)
+- Container: [src/features/dashboard/components/RegulatoryAnnouncements.jsx](../src/features/dashboard/components/RegulatoryAnnouncements.jsx)
+- Reference pattern: [src/features/clients/components/CreateClientDrawer.jsx](../src/features/clients/components/CreateClientDrawer.jsx)
+
+### Checklist for New Drawer Forms
+
+When creating a new drawer form, verify:
+- ✅ Form component is presentational, no buttons
+- ✅ Form has `id` attribute for button linking
+- ✅ Form uses explicit labels (`<label>` elements)
+- ✅ Container manages drawer state
+- ✅ Container manages form submission state
+- ✅ Submit button uses `form="announcement-form"` linking
+- ✅ Form wrapped in `bg-layer1 p-4 sm:p-6` in drawer content
+- ✅ Edit mode prefills data via `initialData` prop
+- ✅ Add mode has empty `initialData={null}`
+- ✅ Drawer title changes based on add/edit mode
+- ✅ Footer button text is simple (e.g., "Save", not "Add/Update")
+- ✅ No cancel button in footer
+- ✅ Form closes on `handleCloseDrawer(false)` after success
+- ✅ Error state renders error banner in form
+
 
 ```jsx
 export const SearchForm = ({ onSearch }) => {
@@ -732,6 +1034,7 @@ test('shows error for invalid email', async () => {
 
 - [react-hook-form docs](https://react-hook-form.com/)
 - [Input component](../src/components/ui/Input/Input.jsx)
+- [Textarea component](../src/components/ui/Textarea/Textarea.jsx)
 - [Select component](../src/components/ui/Select/Select.jsx)
 - [Button component](../src/components/ui/Button/Button.jsx)
 - [LoginForm example](../src/features/auth/components/LoginForm.jsx)

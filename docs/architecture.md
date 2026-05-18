@@ -10,7 +10,7 @@ This document defines **non-negotiable architectural constraints** for the inXit
 - **Server state**: TanStack React Query 5 (`@tanstack/react-query`)
 - **HTTP**: Axios with split clients (`axios`)
 - **UI**: TailwindCSS + Radix primitives (via `radix-ui`) + local UI components
-- **Forms**: `react-hook-form`
+- **Forms**: `react-hook-form` — see `docs/form-design-guide.md` for usage patterns and shared primitives
 - **Icons**: `lucide-react`
 - **Toasts**: `sonner`
 

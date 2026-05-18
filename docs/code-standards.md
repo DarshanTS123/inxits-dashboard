@@ -37,7 +37,7 @@ Measurable:
 - **Forms must follow the form design guide**
   - See `docs/form-design-guide.md` for comprehensive form patterns, validation, accessibility, and state management.
   - Use `react-hook-form` for all non-trivial forms (more than 2 fields).
-  - All form inputs must use `components/ui/Input/Input.jsx` or `components/ui/Select/Select.jsx`.
+  - Use shared UI form primitives as defined in `docs/form-design-guide.md`.
   - Forms in drawers must reset state on close.
 - **No derived state in `useEffect`**
   - If you can compute it from props/state, use `useMemo` or inline computation.
