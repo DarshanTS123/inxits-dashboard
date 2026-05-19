@@ -74,9 +74,25 @@ export const LoginForm = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         {loginError && (
-          <div className="bg-error/10 border border-error/20 text-error px-4 py-3 rounded-xl flex items-center gap-3 text-sm animate-in fade-in slide-in-from-top-2">
-            <AlertCircle className="h-6 w-6 flex-shrink-0" />
-            <p>{loginError}</p>
+          <div className="flex items-start gap-3 rounded-xl border border-white/10 bg-primary/5 px-4 py-3 text-sm">
+            <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+
+            <div className="space-y-1">
+              <p className="font-medium text-primary">Demo Credentials</p>
+
+              <div className="text-muted-foreground space-y-0.5">
+                <p>
+                  Email:{' '}
+                  <span className="font-medium text-foreground">
+                    admin@gmail.com
+                  </span>
+                </p>
+                <p>
+                  Password:{' '}
+                  <span className="font-medium text-foreground">qwerty</span>
+                </p>
+              </div>
+            </div>
           </div>
         )}
 
