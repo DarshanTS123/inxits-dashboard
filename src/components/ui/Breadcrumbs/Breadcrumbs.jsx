@@ -1,6 +1,5 @@
 import { ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 export const Breadcrumbs = ({ items }) => {
   return (
@@ -35,13 +34,4 @@ export const Breadcrumbs = ({ items }) => {
       </ol>
     </nav>
   );
-};
-
-Breadcrumbs.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      href: PropTypes.string,
-    })
-  ).isRequired,
 };
