@@ -30,6 +30,7 @@ Measurable:
 
 - **Route pages** must export a **named export** used by router lazy imports.
   - Example pattern in router: `.then((m) => ({ default: m.ClientsPage }))`
+  - Detail routes reuse the **section** title in `handle.title` (e.g. client detail: `handle: { title: 'Clients' }`). Put the entity name in breadcrumbs and the page `h1`, not in the app bar.
 - **Buttons must use the shared primitive**
   - App, layout, feature, page, and UI composition code must import and render `Button` from `src/components/ui/Button/Button.jsx` for every button-like control.
   - Raw `<button>` is allowed only inside the shared `Button` primitive implementation.
@@ -121,6 +122,7 @@ Measurable:
   - `publicApi`: toast + throw enriched error containing `message`
 - Feature-level error handling:
   - Use inline errors for form validation/business errors (LoginForm pattern).
+  - Detail pages may throw domain errors with a `code` property (e.g. `NOT_FOUND`) and branch in the page layer (`ClientDetailPage` pattern).
 
 Measurable:
 - Any `catch` that swallows errors (empty catch) is forbidden.
@@ -185,4 +187,4 @@ Measurable:
   - `@lib/*` for infrastructure
   - `@store/*` for Redux
   - `@hooks/*` for global hooks
-- Keep route titles in router `handle.title` and rely on `getCurrentRouteTitle`.
+- Keep route titles in router `handle.title` and rely on `getCurrentRouteTitle`. Use dynamic `handle.title` functions only when the app bar must reflect loaded entity data; never use raw route params (e.g. IDs) as the header title.

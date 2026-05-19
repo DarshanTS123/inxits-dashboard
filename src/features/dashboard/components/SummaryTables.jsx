@@ -34,7 +34,7 @@ const TableWrapper = ({ title, subtitle, children, viewAll }) => (
     className="overflow-hidden"
     title={title}
     subtitle={subtitle}
-    headerClassName="mb-6"
+    headerClassName="mb-4"
     action={viewAll && (
         <Button
           type="button"

@@ -53,7 +53,11 @@ const AnnouncementItem = ({ title, date, type, typeColor, index, onEdit }) => (
   </div>
 );
 
-export const RegulatoryAnnouncements = ({ announcements = [], loading }) => {
+export const RegulatoryAnnouncements = ({
+  announcements = [],
+  loading,
+  height = 400,
+}) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
   const [formError, setFormError] = useState(null);
@@ -104,17 +108,19 @@ export const RegulatoryAnnouncements = ({ announcements = [], loading }) => {
   return (
     <>
       <Card
-        className="h-full flex flex-col"
-        padding="lg"
+        hoverable
+        padding="md"
         title="Regulatory Announcements"
-        headerClassName="pb-0"
-        contentClassName="flex-1 overflow-y-auto custom-scrollbar flex flex-col pb-0"
+        className="flex h-full flex-col"
+        style={{ height: typeof height === 'number' ? `${height}px` : height }}
+        headerClassName="items-center"
+        contentClassName="flex min-h-0 flex-1 flex-col overflow-y-auto custom-scrollbar"
         action={
           <Button
             type="button"
             variant="ghost"
             size="sm"
-            className="p-0 font-semibold uppercase text-blue-400 hover:bg-transparent hover:text-blue-300"
+            className="p-0 text-[11px] font-semibold uppercase tracking-wide text-blue-400 hover:bg-transparent hover:text-blue-300"
           >
             View all
           </Button>

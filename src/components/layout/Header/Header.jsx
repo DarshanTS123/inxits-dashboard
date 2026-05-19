@@ -1,15 +1,22 @@
 import { useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useMatches, useNavigate } from 'react-router-dom';
-import { LogOut, Menu } from 'lucide-react';
+import { LogOut, Menu, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+import {
+  selectIsDesktopSidebarCollapsed,
+  toggleDesktopSidebarCollapsed,
+} from '../../../features/layout/store/layoutSlice';
 import { getCurrentRouteTitle } from '../../../routes/routeTitles';
 import { useAuth } from '../../../features/auth/store/useAuth';
 import { Button } from '../../ui/Button/Button';
 import { DropdownMenuList } from '../../ui/DropdownMenu/DropdownMenu';
 
 export const Header = ({ onMenuClick }) => {
+  const dispatch = useDispatch();
   const matches = useMatches();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const isSidebarCollapsed = useSelector(selectIsDesktopSidebarCollapsed);
 
   const title = useMemo(() => {
     return getCurrentRouteTitle(matches);
@@ -35,6 +42,19 @@ export const Header = ({ onMenuClick }) => {
         >
           <Menu className="h-5 w-5" />
         </Button>
+
+        <button
+          type="button"
+          aria-label={isSidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          className="hidden size-8 shrink-0 items-center justify-center rounded-md text-paragraph transition-colors hover:text-subheading focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 md:inline-flex"
+          onClick={() => dispatch(toggleDesktopSidebarCollapsed())}
+        >
+          {isSidebarCollapsed ? (
+            <PanelLeftOpen className="size-[18px]" strokeWidth={1.75} />
+          ) : (
+            <PanelLeftClose className="size-[18px]" strokeWidth={1.75} />
+          )}
+        </button>
 
         <h1 className="truncate text-base font-semibold text-subheading sm:text-lg">
           {title}

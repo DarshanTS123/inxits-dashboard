@@ -127,8 +127,8 @@ export const OngoingTransactions = ({ data, loading }) => {
       padding="lg"
       className="flex flex-col"
       title="Ongoing transactions (MTD)"
-      headerClassName="mb-4"
-      contentClassName="flex flex-col gap-4"
+      headerClassName="mb-3"
+      contentClassName="flex flex-col gap-3"
       action={
         <Button
           type="button"

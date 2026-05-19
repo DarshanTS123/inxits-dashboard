@@ -30,17 +30,20 @@ When adding a new module or feature:
 
 1. **Define the route**
    - Add a lazy import to `src/routes/index.jsx`
-   - Add `handle.title`
+   - Add `handle.title` (usually the section name; detail routes reuse the list title — entity name goes in breadcrumbs + page `h1`, not the app bar)
 2. **Define domain boundary**
    - If feature requires API/state/hooks, create `src/features/<domain>/...`
 3. **Define API hooks**
    - `src/features/<domain>/api/*` uses React Query + `publicApi/privateApi`
+   - Use query key factories (e.g. `clientDetailKeys`) for cache identity
 4. **Define state**
    - If global UI/session state is required, add a Redux slice, selectors, and listener middleware persistence if needed
 5. **Compose page**
-   - `src/pages/<domain>/<Domain>Page.jsx` composes domain components/hooks
+   - `src/pages/<domain>/<Domain>Page.jsx` is a lean wrapper that renders the feature component and owns loading/error/not-found branching
 6. **UI primitives**
    - Only after above, add/extend `src/components/ui/*` primitives if reuse is at least 2 places
+
+**Reference implementation**: Clients module — list (`ClientsPage` → `Clients`) and detail (`ClientDetailPage` → `ClientDetail`).
 
 ## 3) Boundary validation (must-check list)
 
@@ -93,6 +96,10 @@ Rules:
 - Any new UI token must:
   - be added to `src/index.css`
   - be referenced via Tailwind alias if used broadly
+- Any new UI layout, spacing, or typography pattern must:
+  - follow `docs/ui-context.md` (Typography + Spacing, layout & density sections)
+  - extend `docs/ui-context.md` if the pattern is reusable (do not leave one-off `gap-*` / `text-[Npx]` only in feature code)
+- UI-only changes (no content/copy changes) must still use the canonical scale: default section `gap-5`, card grids `gap-4` or `gap-5`, paired cards `items-stretch` + shared height
 
 ## 7) When to split work (hard thresholds)
 
@@ -111,7 +118,7 @@ Splitting pattern:
 AI must keep these in sync:
 
 - Router paths (`src/routes/index.jsx`) and sidebar nav items (`src/components/layout/Sidebar/Sidebar.jsx`)
-- Route titles (`handle.title`) and header title derivation (`getCurrentRouteTitle`)
+- Route titles (`handle.title`) and header title derivation (`getCurrentRouteTitle`) — detail pages: section title in app bar, entity name in page content only
 - Session shape (`authSlice`), storage (`authUtils`), and guards (`useAuth`)
 
 If any of the above changes, the change must include updates to all linked areas.

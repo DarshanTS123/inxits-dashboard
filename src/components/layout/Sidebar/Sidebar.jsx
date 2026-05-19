@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -12,8 +12,6 @@ import {
   FileCheck,
   CircleGauge,
   FileText,
-  ChevronLeft,
-  ChevronRight,
   X,
 } from 'lucide-react';
 import logo from '../../../assets/Inxits.svg';
@@ -25,10 +23,7 @@ import {
 } from '../../ui/Tooltip/Tooltip';
 import { Button } from '../../ui/Button/Button';
 import { cn } from '../../../utils/cn';
-import {
-  selectIsDesktopSidebarCollapsed,
-  toggleDesktopSidebarCollapsed,
-} from '../../../features/layout/store/layoutSlice';
+import { selectIsDesktopSidebarCollapsed } from '../../../features/layout/store/layoutSlice';
 
 const navItems = [
   { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -49,7 +44,6 @@ const navItems = [
 ];
 
 export const Sidebar = ({ isMobileOpen = false, onMobileClose }) => {
-  const dispatch = useDispatch();
   const isCollapsed = useSelector(selectIsDesktopSidebarCollapsed);
 
   return (
@@ -95,17 +89,6 @@ export const Sidebar = ({ isMobileOpen = false, onMobileClose }) => {
           <X className="h-5 w-5" />
         </Button>
       </div>
-
-      <Button
-        type="button"
-        variant="ghost"
-        size="sm"
-        aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-        onClick={() => dispatch(toggleDesktopSidebarCollapsed())}
-        className="absolute right-0 top-[80px] z-20 hidden h-6 w-6 -translate-y-1/2 translate-x-1/2 rounded-full border border-stroke-divider bg-sidebar-header p-0 text-icon-active shadow-sm hover:bg-white/10 md:flex"
-      >
-        {isCollapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
-      </Button>
 
       <nav className="custom-scrollbar flex flex-1 flex-col gap-1 overflow-y-auto overflow-x-visible p-3 sm:p-4">
         {navItems.map((item) => (

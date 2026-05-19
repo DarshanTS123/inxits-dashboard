@@ -2,6 +2,20 @@
 
 This document defines how UI is built in this repo: tokens, Tailwind usage, component conventions, and enforceable UX/accessibility rules.
 
+### Quick reference (UI consistency)
+
+| Topic | Section |
+|-------|---------|
+| Colors & tokens | [Design system foundation](#design-system-foundation) |
+| Font sizes & weights | [Typography](#typography) |
+| `gap`, page layout, card padding | [Spacing, layout & density](#spacing-layout--density) |
+| Buttons, inputs, focus | [Interaction states](#interaction-states) |
+| `Card`, `Badge`, tables, tabs | [Component conventions](#component-conventions-repo-patterns) |
+| Forms | `docs/form-design-guide.md` |
+| Charts | `docs/chart-architecture.md` |
+
+**Default page rhythm**: `flex flex-col gap-5` inside `MainLayout`’s `p-6` main area. **Default card title**: `text-[17px]` via `Card`. **Default paired row**: `lg:grid-cols-2 gap-5 items-stretch`.
+
 ## Design system foundation
 
 ### Token source of truth
@@ -44,19 +58,158 @@ New tokens must follow:
 
 ## Typography
 
-- Use Tailwind utility classes for sizing and weight.
-- Prefer semantic mappings:
-  - page titles: `text-3xl font-bold tracking-tight text-text-heading` (see `PagePlaceholder`)
-  - section titles: `text-base font-semibold text-subheading` (see `Header`)
+Use Tailwind utilities only. Do not add arbitrary `font-size` in CSS for app UI.
 
-**UI Rule T1**: Do not introduce custom `font-size` literals in CSS for app UI. Use Tailwind text utilities.
+**UI Rule T1**: Prefer the scale below. New screens must reuse an existing role before inventing a new size.
 
-## Spacing & radius
+### Type scale (canonical)
 
-- Spacing via Tailwind scale (`p-4`, `gap-3`, etc.).
-- Radius: prefer `rounded-lg` and `rounded-xl` in components; global radius token exists (`--radius: 0.5rem`).
+| Role | Classes | Where used |
+|------|---------|------------|
+| **Page title** (`h1`) | `text-3xl font-bold tracking-tight text-text-heading` | Entity detail pages, major page headings |
+| **App bar title** | `text-base font-semibold text-subheading` | `Header` route title (section name, e.g. **Clients** on list and detail) |
+| **Card / section title** | `text-[17px] font-medium tracking-tight text-slate-300` + default underline | `Card` `title` prop (charts, tables, lists) |
+| **Card subtitle** | `text-[11px] font-medium text-slate-500` | `Card` `subtitle` (e.g. “- Current Month”) |
+| **Metric label** | `text-[11px] font-semibold uppercase tracking-widest text-slate-500` | `Card` `label` (dashboard KPIs) |
+| **Metric value** | `text-[26px] font-bold tracking-tight text-slate-100` | `Card` `value` |
+| **Body** | `text-sm text-slate-300` or `text-slate-400` | Table cells, descriptions |
+| **Table header** | `text-[13px] font-medium normal-case tracking-normal text-slate-300` | `DataTable` column headers (dashboard tables) |
+| **Secondary line** | `text-[12px] text-slate-500` | Dates, RM role under name, stacked cell sub-lines |
+| **Emphasis in cell** | `font-semibold text-slate-200` or `font-semibold text-slate-300` | Totals, primary column values |
+| **Interactive text** | `font-medium text-blue-400` (+ `hover:underline` for links) | Client name links, announcement titles |
+| **Micro / filter label** | `text-[11px] font-medium text-slate-400` | Chart filters (Lumpsum/SIP), compact controls |
+| **Text link action** | `text-[11px] font-semibold uppercase tracking-wide text-blue-400` | “View all” in card headers |
+| **Badge / tag** | `text-[10px]`–`text-[11px] font-medium` | `Badge`, announcement type pills |
+| **Error / helper** | `text-xs` | Form labels and inline errors (see `form-design-guide.md`) |
 
-**UI Rule SR1**: New UI primitives must expose spacing via composition (className) rather than hardcoding multiple layout variants unless explicitly needed.
+### Font weight
+
+| Weight | Use |
+|--------|-----|
+| `font-medium` | Titles, labels, default emphasis |
+| `font-semibold` | Table values, buttons, “View all”, KPI meta |
+| `font-bold` | Page titles, metric values |
+
+**UI Rule T2**: Detail section cards may override title with `titleClassName="text-base text-heading"` and `titleUnderline={false}` — do not mix other sizes on the same page without reason.
+
+**UI Rule T3**: Uppercase is reserved for **metric labels**, **compact actions** (“View all”), and **table meta** (e.g. RM role). Body copy stays sentence case.
+
+---
+
+## Spacing, layout & density
+
+Spacing uses the **Tailwind scale only**. Pick from the tables below; do not use one-off values (e.g. `gap-7`, `mb-5` on page shells) unless matching an existing documented pattern.
+
+**UI Rule S1**: Page-level vertical rhythm uses **`gap-5`** between major sections (default). Use **`gap-8`** only when a design explicitly needs looser layout (avoid mixing both on one page).
+
+**UI Rule S2**: Card grids use **`gap-4`** (dense KPI/metric rows) or **`gap-5`** (chart rows, equal-width pairs). Default sibling cards in a row: **`lg:grid-cols-2`** + **`items-stretch`**.
+
+**UI Rule S3**: Prefer **shared height constants** for side-by-side cards/charts on one row (e.g. `const ROW_CARD_HEIGHT = 400`) so paired surfaces align.
+
+### Spacing scale
+
+| Token | Class | px | Use |
+|-------|-------|-----|-----|
+| **2xs** | `gap-1` / `gap-1.5` | 4–6 | Icon + label, tight form label stacks |
+| **xs** | `gap-2` | 8 | Status dot + label, inline button groups |
+| **sm** | `gap-3` | 12 | Card body stacks, filter groups, header actions |
+| **md** | `gap-4` | 16 | KPI stat grids, detail card grids, breadcrumb follow-up |
+| **lg** | `gap-5` | 20 | **Default** between dashboard sections; 2-column chart rows |
+| **xl** | `gap-6` | 24 | Legacy / loose (prefer `gap-5` for new work) |
+| **2xl** | `gap-8` | 32 | Avoid for new pages unless specified in design |
+
+### Page & shell layout
+
+| Surface | Classes | Notes |
+|---------|---------|--------|
+| **Main content** | `p-6` on `<main>` | `MainLayout.jsx` — do not add duplicate outer padding in pages |
+| **Feature page stack** | `flex flex-col gap-5` | Dashboard, list pages (sections) |
+| **Detail page stack** | `space-y-4` or `gap-4` after breadcrumbs | Client detail, settings |
+| **2-column charts/cards** | `grid grid-cols-1 gap-5 lg:grid-cols-2 items-stretch` | Equal width + height siblings |
+| **KPI / metric row** | `grid … gap-4 sm:grid-cols-2 lg:grid-cols-5` | `StatsGrid` pattern |
+| **Detail summary cards** | `grid grid-cols-1 gap-4 md:grid-cols-2` | `ClientDetail` summary |
+
+### Card spacing
+
+| Concern | Value | Notes |
+|---------|-------|--------|
+| **Padding** `sm` / `md` / `lg` | `p-4` / `p-5` / `p-6` | Charts: `md`; KPI + tables: `lg` |
+| **Header → body** | `mb-4` (Card default when `children` present) | Tables: `headerClassName="mb-4"` |
+| **Tight header** | `mb-3` | Dense tables (e.g. ongoing transactions) |
+| **Header alignment** | `headerClassName="items-center"` | When header has filters/actions beside title |
+| **Body internal** | `contentClassName="flex flex-col gap-3"` | Scrollable table + pagination |
+
+**UI Rule C3**: Paired cards in one row must use the **same** `padding`, `hoverable`, and **explicit `height`** (via `style` or chart `height` prop) when designs show equal tiles.
+
+### Radius & borders
+
+| Element | Class |
+|---------|--------|
+| Buttons, inputs, small controls | `rounded-lg` |
+| Inner table wrappers, list rows | `rounded-xl` |
+| Outer `Card` | `rounded-2xl` |
+| Global token | `--radius: 0.5rem` in `index.css` |
+
+Card borders: `border-slate-700/60` on default surfaces; table containers may use `border-slate-600/70` (see `SummaryTables.jsx`).
+
+### Chart & visualization heights
+
+| Context | Height | Reference |
+|---------|--------|-----------|
+| Dashboard chart row (2-up) | `380` | Risk donut + AUM pie |
+| Dashboard paired row (chart + list) | `400` | Transaction status + regulatory announcements |
+| Default `PieChart` / `DonutChart` | `300` | Component default when not specified |
+
+Define row height once per row in the parent (`Dashboard.jsx`) and pass to children.
+
+### Tables (spacing)
+
+| Element | Classes |
+|---------|---------|
+| Header cell | `px-6 py-4` |
+| Body cell | `px-6 py-5` |
+| Row hover | `hover:bg-slate-800/30` |
+| Container | `overflow-hidden rounded-xl border …` |
+
+### Links & header actions
+
+“View all” and similar card actions:
+
+```jsx
+<Button
+  type="button"
+  variant="ghost"
+  size="sm"
+  className="p-0 text-[11px] font-semibold uppercase tracking-wide text-blue-400 hover:bg-transparent hover:text-blue-300"
+>
+  View all
+</Button>
+```
+
+Chart/card filters belong in the Card **`action`** slot (not absolutely positioned over the chart body).
+
+### Dark surfaces (dashboard pattern)
+
+Prefer tokens where possible; established dashboard literals (use consistently, do not introduce new hex values):
+
+| Use | Value |
+|-----|--------|
+| Page background | `bg-[#090e1a]` (`MainLayout` main) |
+| Card background | `bg-[#0d1526]` (`Card` default variant) |
+| Table surface | `bg-[#171c2f]` |
+| Table header band | `bg-[#1a2033]` |
+| Breadcrumb bar | `bg-[#1c213d]` |
+
+**UI Rule U1**: New surfaces should map to `--bg-*` tokens when a matching token exists; literals above are allowed only for established dashboard/table patterns until tokenized.
+
+### Responsive spacing
+
+- Collapse multi-column grids to **`grid-cols-1`** below `lg` unless `md` breakpoint is required (detail cards use `md:grid-cols-2`).
+- Do not reduce **horizontal** card padding on mobile below `Card` padding tokens; use scroll for wide tables instead.
+
+**UI Rule SR1**: UI primitives expose spacing via `className` / `contentClassName` composition — not hardcoded one-off layout variants inside `components/ui/*`.
+
+---
 
 ## Component conventions (repo patterns)
 
@@ -77,6 +230,7 @@ Rules:
   - `PageLoader` and `PagePlaceholder` for route states
   - `Card` system for unified container aesthetics
   - `Badge` for categorical and status indicators
+  - `Breadcrumbs` for page hierarchy navigation
 
 **UI Rule C1 (enforceable)**: A file under `components/ui/*` may import only:
 
@@ -131,6 +285,7 @@ We use Tailwind defaults:
 Patterns used:
 
 - Sidebar is **sticky** on desktop, **overlay** on mobile (`md:hidden` toggles).
+- Desktop sidebar collapse/expand is toggled from the **header** (not inside the sidebar).
 - Auth layout shows brand panel at `lg` and above.
 
 **UI Rule R1**: Any new layout must be mobile-usable; if a panel is hidden on mobile, it must have an alternative access path.
@@ -175,6 +330,7 @@ Patterns used:
 - Use the lower-level `Table`, `TableHeader`, `TableBody`, `TableRow`, `TableHead`, and `TableCell` primitives only when `DataTable` cannot express the table behavior.
 - Use `stickyColumns` only for dense horizontal tables where keeping identity/actions visible improves scanning.
 - Pair paginated tables with `Pagination`, including page size options and a total row count.
+- Row navigation to detail pages: pass `onRowClick` to `DataTable` and navigate via React Router (see `ClientsTable`).
 
 ### Selects and tabs
 
@@ -197,26 +353,183 @@ Patterns used:
   ```
 
 - Use `Tabs` for mutually exclusive views of the same data surface, not for main navigation.
-- The `Tabs` component supports an `items` prop for data-driven rendering:
+- **Do not** compose `TabsList`, `TabsTrigger`, or `TabsContent` manually. The shared `Tabs` component is **data-driven only**: pass an `items` array from the parent.
+
+  **Tab item shape**
+
+  | Field | Type | Required | Description |
+  |---|---|---|---|
+  | `value` | `string` | yes | Unique tab id |
+  | `label` | `string` \| `ReactNode` | yes | Trigger label |
+  | `content` | `ReactNode` | no | Panel body for this tab |
+  | `badge` | `ReactNode` | no | Count badge in trigger |
+  | `disabled` | `boolean` | no | Disable trigger |
+  | `contentClassName` | `string` | no | Panel class override |
+
+  **Per-tab content** (detail pages, settings sections):
 
   ```jsx
-  const tabs = [
-    { label: 'Overview', value: 'overview', content: <Overview /> },
-    { label: 'Activity', value: 'activity', content: <Activity />, badge: 12 },
-  ];
+  const tabs = useMemo(
+    () => [
+      {
+        value: 'overview',
+        label: 'Overview',
+        content: <OverviewPanel data={data} />,
+        contentClassName: 'space-y-4',
+      },
+      {
+        value: 'activity',
+        label: 'Activity',
+        content: <ActivityPanel />,
+        badge: 12,
+      },
+    ],
+    [data]
+  );
 
-  <Tabs items={tabs} defaultValue="overview" />;
+  <Tabs items={tabs} defaultValue="overview" listClassName="mb-4 flex-wrap" />;
   ```
 
-- Tab labels may include count badges using a child with `data-slot="tabs-badge"` or the `badge` property in the `items` array.
+  **Shared panel** (same body for every tab value, e.g. filtered list):
+
+  ```jsx
+  const tabItems = useMemo(
+    () =>
+      CLIENT_LIST_TABS.map((tab) => ({
+        value: tab.value,
+        label: tab.label,
+        badge: counts[tab.value],
+      })),
+    [counts]
+  );
+
+  <Tabs
+    value={activeTab}
+    onValueChange={setActiveTab}
+    items={tabItems}
+    contentClassName="p-0"
+  >
+    <ClientsTable data={clients} />
+  </Tabs>;
+  ```
+
+  **UI Rule T2**: `items` must be defined in the parent (feature/page). Do not import or use `TabsList`, `TabsTrigger`, or `TabsContent` outside `src/components/ui/Tabs/Tabs.jsx`.
+
+  **Reference**: Client list uses the shared-panel pattern in `src/features/clients/index.jsx`; client detail uses per-tab content in `src/features/clients/components/ClientDetail.jsx`.
 
 ### Cards and Badges
 
-- **Card**: Use the `Card` component for all primary layout containers.
-  - Supports `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, and `CardFooter`.
-  - `CardTitle` includes a premium underline variant (on by default) to match the project's design language.
+- **Card**: Use the `Card` component for all primary layout containers. It is **props + children only** — do not import `CardHeader`, `CardTitle`, `CardContent`, or `CardFooter`.
+- Define multiple cards as an **array of objects in the parent**, then map each entry to `<Card />`:
+
+  **Card config shape (parent array)**
+
+  | Field | Type | Description |
+  |---|---|---|
+  | `id` | `string` | Stable key for `.map()` |
+  | `title` | `ReactNode` | Header title (`Card` `title` prop) |
+  | `content` | `ReactNode` | Body passed as `children` |
+  | `action` | `ReactNode` | Header action (button, status badge) |
+  | `contentClassName` | `string` | Body wrapper classes |
+
+  ```jsx
+  const cards = useMemo(
+    () => [
+      {
+        id: 'personal',
+        title: 'Personal Details',
+        content: <PersonalFields client={client} />,
+        contentClassName: 'flex flex-col gap-6 sm:flex-row',
+      },
+      {
+        id: 'kyc',
+        title: 'KYC Status',
+        action: <StatusBadge status={client.kyc.status} />,
+        content: <KycFields kyc={client.kyc} />,
+      },
+    ],
+    [client]
+  );
+
+  return (
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      {cards.map((card) => (
+        <Card
+          key={card.id}
+          padding="lg"
+          title={card.title}
+          titleUnderline={false}
+          titleClassName="text-base text-heading"
+          action={card.action}
+          contentClassName={card.contentClassName}
+        >
+          {card.content}
+        </Card>
+      ))}
+    </div>
+  );
+  ```
+
+  **Single metric card** (dashboard stats):
+
+  ```jsx
+  <Card
+    padding="lg"
+    label="Total Clients"
+    value={stats.total}
+    meta={<Button variant="ghost" size="sm">View</Button>}
+    loading={isLoading}
+  />
+  ```
+
+  **Card props reference**
+
+  | Prop | Purpose |
+  |---|---|
+  | `title`, `subtitle`, `description` | Header text |
+  | `action` | Header right slot |
+  | `children` | Main body (required for section cards) |
+  | `label`, `value`, `meta` | Metric layout (stats) |
+  | `padding` | `none` \| `sm` \| `md` \| `lg` |
+  | `titleUnderline` | Default `true`; set `false` for detail sections |
+  | `loading`, `empty` | Loading skeleton / empty state |
+  | `contentClassName`, `headerClassName`, `titleClassName` | Layout overrides |
+
+  **UI Rule C2**: Do not import `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, or `CardFooter`. Use `Card` props and `children` only.
+
+  **UI Rule C4**: Chart cards use `padding="md"` + `hoverable`; KPI and data tables use `padding="lg"`. Header filters/actions use the `action` prop — see [Spacing, layout & density](#spacing-layout--density).
+
 - **Badge**: Use for categorical labels (e.g., "Corporate", "Regulatory") or status pills.
   - Supports variants: `default`, `outline`, `success`, `warning`, `danger`, `info`.
+
+### Breadcrumbs
+
+The `Breadcrumbs` component (`src/components/ui/Breadcrumbs/Breadcrumbs.jsx`) provides hierarchical page navigation.
+
+- **Usage**: Use on detail and nested pages below the main header (e.g. Clients → Client Name).
+- **Props**:
+  - `items` (array): Array of objects with `label` (string) and optional `href` (string). The last item is automatically styled as the active, non-clickable current page (`aria-current="page"`).
+- **Styling**: Sticky full-width bar spanning the main content area via negative margins (`bg-[#1c213d]`, border-bottom). Parent page content should account for the bar with `space-y-*` spacing after it.
+- **Accessibility**: Renders `<nav aria-label="Breadcrumb">` with an ordered list; intermediate items use React Router `Link`.
+
+### Detail pages (read-only surfaces)
+
+Use this layout for entity detail screens (reference: `src/features/clients/components/ClientDetail.jsx`):
+
+1. **Breadcrumbs** linking back to the list route.
+2. **Page title** (`h1`) with the entity name (the app bar keeps the section title from `handle.title`, e.g. **Clients** — do not show IDs or entity names there).
+3. **Summary cards** in a responsive grid (`grid-cols-1 md:grid-cols-2`) built from a parent-defined card array mapped to `<Card />`.
+4. **Tabs** with per-tab `content` for section-specific panels.
+
+**Read-only fields**: Use `DetailField` / `DetailFieldGrid` from the feature's `components/` folder for label/value pairs. Define field data as `{ label, value }[]` arrays in mock/API payloads rather than hardcoding JSX per field.
+
+**Detail page states** (handled at the page layer, not inside the main detail component):
+
+- Loading: `<PageLoader />`
+- Not found: dedicated empty state with breadcrumb + back navigation
+- Error: dedicated recovery state with retry/back actions
+
+**UI Rule DP1**: Detail pages must not fetch data inside presentational sub-components; the page or feature orchestrator owns React Query hooks and passes shaped data down.
 
 ### Forms
 

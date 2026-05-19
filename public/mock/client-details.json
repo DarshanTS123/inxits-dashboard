@@ -1,0 +1,108 @@
+{
+  "default": {
+    "avatarUrl": "https://i.pravatar.cc/150?img=11",
+    "personal": {
+      "mobile": "+91 75394 75839",
+      "gender": "Male",
+      "maritalStatus": "Single",
+      "status": "Non Resident Individual"
+    },
+    "riskProfile": {
+      "value": 65,
+      "label": "Moderate : 65/100",
+      "allocation": {
+        "largeCap": "20%",
+        "smallCap": "30%",
+        "debt": "50%"
+      }
+    },
+    "kyc": {
+      "panMasked": "A***E1234X",
+      "aadhaarMasked": "XXXX XXXX 4321"
+    },
+    "relationshipManager": {
+      "email": "-"
+    },
+    "personalTab": {
+      "identity": [
+        { "label": "PAN Card Number", "value": "******gj" },
+        { "label": "Aadhar Card Number", "value": "**** **** **92" },
+        { "label": "Father's Name", "value": "Ramesh" },
+        { "label": "Mother's Name", "value": "Rekha" }
+      ],
+      "address": {
+        "sectionTitle": "Indian Address",
+        "fields": [
+          { "label": "Address Line 1", "value": "12A Shanti Nagar" },
+          { "label": "Address Line 2", "value": "Near City Mall" },
+          { "label": "Address Line 3", "value": "Andheri East" },
+          { "label": "City", "value": "Mumbai" },
+          { "label": "State", "value": "Maharashtra" },
+          { "label": "PinCode", "value": "400089" },
+          { "label": "Country", "value": "India" },
+          { "label": "Residence Phone", "value": "022-24567890" },
+          { "label": "Resi. Fax", "value": "022-24567891" },
+          { "label": "Communication Mode", "value": "Email" },
+          { "label": "Office Phone", "value": "022-33445566" },
+          { "label": "Office Fax", "value": "022-33445567" }
+        ]
+      },
+      "nominees": [
+        {
+          "title": "Nominee 1",
+          "fields": [
+            { "label": "Name of the nominee", "value": "Shanti Mishra" },
+            { "label": "Relationship with Applicant", "value": "Mother" },
+            { "label": "Nominee's Date of Birth", "value": "09/10/1978" },
+            { "label": "Guardian Name [If Minor]", "value": "Not Applicable" },
+            { "label": "Allocation", "value": "50%" },
+            { "label": "Document Proof", "value": "Aadhar Card" },
+            { "label": "Aadhar Number", "value": "8495 8953 8494" }
+          ]
+        },
+        {
+          "title": "Nominee 2",
+          "fields": [
+            { "label": "Name of the nominee", "value": "Shantanu Mishra" },
+            { "label": "Relationship with Applicant", "value": "Father" },
+            { "label": "Nominee's Date of Birth", "value": "09/10/1978" },
+            { "label": "Guardian Name [If Minor]", "value": "Not Applicable" },
+            { "label": "Allocation", "value": "50%" },
+            { "label": "Document Proof", "value": "Aadhar Card" },
+            { "label": "Aadhar Number", "value": "8495 8953 8494" }
+          ]
+        }
+      ],
+      "fatca": [
+        { "label": "Place of Birth", "value": "Mumbai" },
+        { "label": "Gross Income", "value": "₹ 10,50,000" },
+        { "label": "Occupation", "value": "Engineer" },
+        {
+          "label": "Income Slab",
+          "value": "Between INR 10 lakhs to INR 25 lakhs"
+        },
+        { "label": "Political Exposure", "value": "Yes" },
+        {
+          "label": "Is your country of tax Residency other than India?",
+          "value": "Yes"
+        },
+        { "label": "Residential Status", "value": "Indian" },
+        { "label": "SSN Number (IFNR)", "value": "NA" }
+      ],
+      "bank": [
+        { "label": "Bank Name", "value": "HDFC Bank" },
+        { "label": "Bank Account Number", "value": "123456789000" },
+        { "label": "Bank Account Type", "value": "Current Account" },
+        { "label": "IFSC Code", "value": "IFSC0172010" },
+        { "label": "Branch", "value": "Ghatkopar" },
+        { "label": "City", "value": "Mumbai" },
+        { "label": "Pincode", "value": "400079" }
+      ],
+      "documents": [
+        { "label": "Signature", "active": true },
+        { "label": "Photo", "active": false }
+      ]
+    }
+  },
+  "overrides": {}
+}

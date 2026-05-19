@@ -167,6 +167,7 @@ function DataTable({
   containerClassName,
   tableClassName,
   rowClassName,
+  onRowClick,
 }) {
   const visibleColumns = columns.filter((column) => column.hidden !== true);
   const colSpan = Math.max(visibleColumns.length, 1);
@@ -202,7 +203,11 @@ function DataTable({
           data.map((row, rowIndex) => (
             <TableRow
               key={getRowKey ? getRowKey(row, rowIndex) : row.id || rowIndex}
-              className={typeof rowClassName === 'function' ? rowClassName(row, rowIndex) : rowClassName}
+              className={cn(
+                typeof rowClassName === 'function' ? rowClassName(row, rowIndex) : rowClassName,
+                onRowClick && 'cursor-pointer'
+              )}
+              onClick={onRowClick ? () => onRowClick(row) : undefined}
             >
               {visibleColumns.map((column) => {
                 const value = column.accessorKey ? row[column.accessorKey] : undefined;

@@ -2,7 +2,7 @@
 
 Role-based internal dashboard for inXits reporting and operations workflows. The app is a React/Vite SPA with authenticated private routes, a reusable dashboard shell, and module pages for clients, portfolio oversight, transactions, compliance, AUM reports, and related operations screens.
 
-The current implemented module is the Clients list surface, which uses local mock data with reusable table, tabs, select, dropdown, and pagination primitives. Other business modules are routed through the dashboard shell and still use placeholders until their backend contracts and workflows are defined.
+The Clients module is implemented end-to-end for list and detail flows: `/clients` (tabbed list with search and pagination) and `/clients/:id` (summary cards, personal tab, and placeholder tabs for portfolios/transactions). Both surfaces use local mock data with reusable table, tabs, card, breadcrumb, dropdown, and pagination primitives. Other business modules are routed through the dashboard shell and still use placeholders until their backend contracts and workflows are defined.
 
 ## Stack
 
@@ -52,7 +52,8 @@ The `docs/` folder is the source of truth for architecture, UI rules, coding sta
 - `docs/ui-context.md` - design tokens, component rules, accessibility, and UX patterns
 - `docs/code-standards.md` - linting, React rules, naming, state, and forbidden patterns
 - `docs/ai-workflow-rules.md` - required workflow for AI-assisted changes
-- `docs/progress-tracker.md` - current implementation status, decisions, and next tasks
+- `docs/chart-architecture.md` - AmCharts integration and chart abstractions
+- `docs/form-design-guide.md` - form architecture, validation, and accessibility
 
 ## Development Rules
 
@@ -61,4 +62,5 @@ The `docs/` folder is the source of truth for architecture, UI rules, coding sta
 - Put API hooks under `src/features/<domain>/api/*`.
 - Use React Query for server data and Redux only for session or app UI state.
 - Keep client list filtering/pagination local only while the backend contract is missing; move it to `src/features/clients/api/*` when real data is added.
+- Client detail merges list rows with `public/mock/client-details.json` template/overrides until a real detail API exists.
 - Run `npm run build` and `npm run lint` before merging changes.

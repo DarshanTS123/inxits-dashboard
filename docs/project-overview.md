@@ -36,10 +36,25 @@ The inXits Dashboard is a role-based internal web console for investment and ope
 
 ### Client Management
 
-- `/clients` provides tabbed client states, search by selected column, pagination, and row action menus.
+#### Clients list (`/clients`)
+
+- Tabbed client states (All, Invited, Ageing, Inactive), search by selected column, pagination, and row action menus.
+- Row click navigates to `/clients/:id`.
 - Data is fetched via `src/features/clients/api/clients.js` using `privateApi` from `public/mock/clients.json`.
+- Tab constants live in `src/features/clients/constants/clientTabs.js`.
 - The list is backed by shared UI primitives: `Tabs`, `Select`, `Input`, `DataTable`, `DropdownMenuList`, `Pagination`, and `Button`.
 - API integration follows the project's standard React Query patterns.
+
+#### Client detail (`/clients/:id`)
+
+- Lean page: `src/pages/clients/ClientDetailPage.jsx` loads data and delegates rendering to `src/features/clients/components/ClientDetail.jsx`.
+- Data is fetched via `src/features/clients/api/clientDetail.js` (`useClient`), merging list rows from `public/mock/clients.json` with section templates/overrides from `public/mock/client-details.json`.
+- Layout pattern: `Breadcrumbs` → page title → summary cards grid → data-driven `Tabs`.
+- Summary cards (`ClientDetailSummaryCards`) use the parent-defined card array pattern with `Card`, `DetailFieldGrid`, and `GaugeChart`.
+- Personal tab (`ClientDetailPersonalTab`) renders identity, address, nominees, FATCA, bank, and document sections as stacked cards.
+- Remaining tabs (Portfolios, Transactions, Family member, Reports) render placeholders until their workflows are implemented.
+- Loading, not-found, and error states are handled at the page layer (`PageLoader`, `ClientDetailNotFound`, `ClientDetailError`).
+- App bar / document title stays **Clients** (`handle: { title: 'Clients' }`); the entity name appears in breadcrumbs and the page `h1`, not in the header.
 
 ### AD-006: Feature-First Page Orchestration
 
@@ -70,10 +85,11 @@ The inXits Dashboard is a role-based internal web console for investment and ope
 - Public auth shell: `AuthLayout`.
 - Route guards: `PublicRoute`, `PrivateRoute`, and `RoleProtectedRoute`.
 - Global document title management: `DocumentTitle` and route `handle.title`.
-- UI primitives: `Button`, `Input`, `Tooltip`, `DropdownMenu`, `Tabs`, `Select`, `Table`, `Pagination`, `PageLoader`, `PagePlaceholder`, `Card`, and `Badge`.
+- UI primitives: `Button`, `Input`, `Tooltip`, `DropdownMenu`, `Tabs`, `Select`, `Table`, `Pagination`, `PageLoader`, `PagePlaceholder`, `Card`, `Badge`, and `Breadcrumbs`.
 - Analytics Charts: High-fidelity `DonutChart`, `PieChart`, `GaugeChart`, and `SunburstChart` with smart decimal labels, custom legends, and skeleton loading.
 - Dashboard capabilities: linked statistics, categorical announcements with badges, summary performance tables, and functional transaction pagination.
-- Clients list capabilities: state tabs with counts, column-scoped search, paginated rows, sticky first/action columns, row action menu, and empty state messaging.
+- Clients list capabilities: state tabs with counts, column-scoped search, paginated rows, sticky first/action columns, row action menu, row navigation to detail, and empty state messaging.
+- Client detail capabilities: breadcrumb navigation, summary cards (personal, risk profile gauge, KYC, relationship manager), tabbed sections with read-only field grids, and dedicated not-found/error recovery states.
 
 ## In Scope
 
@@ -92,7 +108,7 @@ To maintain a scalable and clean architecture, we follow a strict separation bet
     *   **Role**: Serves as the entry point for the router.
     *   **Responsibility**: Only handles top-level routing concerns and metadata (like `handle.title`).
     *   **Constraint**: Must be a "Lean Page". It should only import and render a single Feature Component. It should **not** handle API calls, complex state, or granular component assembly.
-    *   *Example*: `ClientsPage.jsx` simply returns `<Clients />`.
+    *   *Example*: `ClientsPage.jsx` returns `<Clients />`; `ClientDetailPage.jsx` loads via `useClient(id)` and returns `<ClientDetail />` or error states.
 
 2.  **The Feature Layer (`src/features/<domain>/*`)**:
     *   **Role**: Orchestrates the domain logic.

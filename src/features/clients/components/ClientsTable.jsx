@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { MoreVertical } from 'lucide-react';
 
 import { Button } from '@components/ui/Button/Button';
@@ -20,6 +21,8 @@ function statusToDot(status) {
 }
 
 export const ClientsTable = ({ data, isLoading }) => {
+  const navigate = useNavigate();
+
   const columns = useMemo(
     () => [
       {
@@ -130,6 +133,7 @@ export const ClientsTable = ({ data, isLoading }) => {
       getRowKey={(row) => row.id}
       emptyMessage={isLoading ? 'Loading clients...' : 'No clients found.'}
       stickyColumns={{ left: [{ index: 0, width: 180 }], right: [{ index: -1, width: 56 }] }}
+      onRowClick={(row) => navigate(`/clients/${row.id}`)}
     />
   );
 };

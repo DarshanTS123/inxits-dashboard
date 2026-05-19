@@ -53,6 +53,9 @@ const PieChart = ({
   className,
   height = 300,
   legendValueText,
+  action,
+  headerClassName,
+  actionClassName,
 }) => {
   const chartId = `pie-chart-${useId().replaceAll(":", "")}`;
 
@@ -186,10 +189,13 @@ const PieChart = ({
       padding="md"
       hoverable
       title={!loading ? title : undefined}
+      action={!loading ? action : undefined}
+      headerClassName={headerClassName}
+      actionClassName={actionClassName}
       loading={loading}
       loadingFallback={<PieSkeleton />}
-      className={cn("flex flex-col", className)}
-      contentClassName="flex-1 relative"
+      className={cn("flex flex-col h-full", className)}
+      contentClassName="flex-1 relative min-h-0"
       style={{ height: typeof height === "number" ? `${height}px` : height }}
     >
       {!data || data.length === 0 ? (

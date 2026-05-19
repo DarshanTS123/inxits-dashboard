@@ -59,7 +59,7 @@ To avoid deep relative paths (e.g., `../../../../`), use the following aliases:
 ### `src/routes/*` (routing contract)
 
 - Defines the route tree and access control wrappers (`PublicRoute`, `PrivateRoute`, `RoleProtectedRoute`).
-- Defines document title integration using `handle.title` + `DocumentTitle`.
+- Defines document title integration using `handle.title` + `DocumentTitle`. Detail routes use the parent section title in `handle.title`; entity-specific labels belong in page content (breadcrumbs, `h1`), not the app bar.
 
 **Invariant R1**: Route-level pages are **lazy-loaded** from router (`React.lazy` + `.then((m) => ({ default: m.NamedExport }))`).
 
@@ -84,7 +84,11 @@ Use `features/<domain>` when the domain has any of:
 
 Examples present today:
 - `features/auth/*`: session + login flow
-- `features/clients/*`: client listing, filtering, and management
+- `features/clients/*`: client listing, filtering, detail views, and management
+  - `api/clients.js`: list query + tab counts
+  - `api/clientDetail.js`: detail query merging list row + mock detail template/overrides
+  - `components/ClientDetail*.jsx`: detail layout, summary cards, personal tab, and error states
+  - `components/DetailField.jsx`: read-only label/value grid for detail surfaces
 - `features/layout/*`: sidebar collapse/mobile open state
 
 ### `src/components/*` (shared UI + layout atoms)
