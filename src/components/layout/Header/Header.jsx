@@ -56,7 +56,7 @@ export const Header = ({ onMenuClick }) => {
           )}
         </button>
 
-        <h1 className="truncate text-base font-semibold text-subheading sm:text-lg">
+        <h1 className="truncate text-base font-semibold text-heading sm:text-lg">
           {title}
         </h1>
       </div>
@@ -69,7 +69,7 @@ export const Header = ({ onMenuClick }) => {
             variant="ghost"
             size="sm"
             aria-label="Open account menu"
-            className="h-9 w-9 rounded-full border-2 border-white bg-[#dff3fb] p-0 text-sm font-semibold text-primary shadow-[0_0_0_1px_rgba(70,168,220,0.35)] hover:bg-white focus:ring-primary/35"
+            className="h-9 w-9 rounded-full border-2 border-white bg-avatar p-0 text-sm font-semibold text-primary shadow-[0_0_0_1px_rgba(70,168,220,0.35)] hover:bg-white focus:ring-primary/35"
           >
             {avatarLabel.toUpperCase()}
           </Button>

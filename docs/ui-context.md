@@ -27,23 +27,62 @@ This document defines how UI is built in this repo: tokens, Tailwind usage, comp
 
 ### Color tokens (current)
 
-Defined in `src/index.css`:
+Defined in `src/index.css`, aliased in `tailwind.config.js`. Values are aligned with the [inXits Figma design file](https://www.figma.com/design/SohL0RflyCWlI7UuQ6zscr/inXits--Copy-?node-id=2729-27754).
 
-- **Brand**
-  - `--primary`
+- **Brand accent** (links, icons, focus rings, active nav — not filled buttons)
+  - `--primary` → `#46A8DC` → Tailwind `text-primary`, `border-primary`, `ring-primary`
+- **Buttons**
+  - `--btn-primary` → `#1E7AB0` → Tailwind `bg-btn-primary` (accessible white text, 4.70:1)
+  - `--btn-secondary` → `#0C335D` → Tailwind `bg-btn-secondary`
+  - `--btn-disabled` → `#A6A6A6`
 - **Backgrounds**
-  - `--bg-page`, `--bg-layer-1`, `--bg-layer-2`, `--bg-popup`, `--bg-topnav`, `--bg-helper`
+  - `--bg-page` → `#13172A` → `bg-page`
+  - `--bg-layer-1` → `rgba(255,255,255,0.04)` → `bg-layer1` (cards, tables)
+  - `--bg-layer-2` → `rgba(255,255,255,0.08)` → `bg-layer2`
+  - `--bg-layer-3` → `#25293B` → `bg-layer3` (drawer header/footer, nested panels)
+  - `--bg-popup` → `#1A1F33` → `bg-popup`
+  - `--bg-topnav` → `rgba(29,29,29,0.24)` → `bg-topnav`
+  - `--bg-helper` → `#1C2033` → `bg-helper` (table headers)
+  - `--bg-table-hover` → `#1C213D` → `bg-table-hover`
+  - `--bg-table-footer` → `#1D2135` → `bg-table-footer`
+  - `--avatar-bg` → `#DFF3FB` → `bg-avatar`
 - **Text**
-  - `--text-heading`, `--text-subheading`, `--text-paragraph`, `--text-disabled`, `--text-enabled`, `--text-label`, `--text-on-primary`, `--text-on-disabled`
+  - `--text-heading` → `#FFFFFF` → `text-heading`
+  - `--text-subheading` → `#E3E3E3` → `text-subheading`
+  - `--text-paragraph` → `#C9C9C9` → `text-paragraph`
+  - `--text-disabled` → `#878787` → `text-text-disabled`
+  - `--text-enabled` → `#D4D2D2` → `text-text-enabled`
+  - `--text-label` → `#EAEAEA` → `text-text-label`
+  - `--text-on-primary` → `#FFFFFF` → `text-text-on-primary`
+  - `--text-on-disabled` → `#F6F6F6`
 - **Strokes / outlines**
-  - `--stroke-divider`, `--btn-outline-secondary`, `--outline-active`, `--outline-disabled`
+  - `--stroke-divider` → `#3A3A3A` → `border-stroke-divider`
+  - `--stroke-field-inactive` → `#383838` → `border-field-inactive`
+  - `--btn-outline-secondary` → `#FFFFFF`
+  - `--outline-active` → `#D8D8D8`
+  - `--outline-disabled` → `#616060`
 - **Icons**
-  - `--icon-disabled`, `--icon-active`, `--icon-primary`
+  - `--icon-disabled` → `#B0B0B0` → `text-icon-disabled`
+  - `--icon-active` → `#F2F1F1` → `text-icon-active`
+  - `--icon-primary` → `#46A8DC` → `text-icon-primary`
 - **Feedback**
-  - `--success`, `--warning`, `--error`, `--info`
+  - `--success` → `#28C76F` → `text-success`, `bg-success`
+  - `--warning` → `#EFBF00` → `text-warning`, `bg-warning`
+  - `--error` → `#EA5758` → `text-error`, `bg-error`
+  - `--info` → `#00CFE8` → `text-info`, `bg-info`
+- **Charts** (see `docs/chart-architecture.md`)
+  - `--chart-label-light` → `#FFFFFF`, `--chart-label-dark` → `#13172A` (adaptive slice labels inside chart components)
+  - Optional reference palette in `index.css`: `--chart-1` … `--chart-5` — copy into parent `colors` arrays; not consumed by chart components directly
+- **Sector colors** (sunburst / sector visualizations)
+  - `--sector-it`, `--sector-banking`, `--sector-healthcare`, etc.
 - **Sidebar**
-  - `--sidebar-header-bg`, `--sidebar-bg`, `--sidebar-item-active-bg`, `--sidebar-item-active-text`, `--sidebar-item-text`
+  - `--sidebar-header-bg` → `#0C335D` → `bg-sidebar-header`
+  - `--sidebar-bg`, `--sidebar-item-active-bg`, `--sidebar-item-active-text`, `--sidebar-item-text`
   - widths: `--sidebar-expanded-width`, `--sidebar-collapsed-width`, derived `--sidebar-width`
+
+**UI Rule U2**: Use `--primary` / `text-primary` for accents and links. Use `--btn-primary` / `bg-btn-primary` for filled CTAs and pagination active states. Do not use `bg-primary` for button fills — white text on `#46A8DC` fails WCAG AA (2.66:1).
+
+**UI Rule U3**: Do not use Tailwind `slate-*`, `green-*`, `amber-*`, `red-*`, or `blue-*` palette classes in feature or shared UI code. Use design tokens instead.
 
 ### CSS variable naming convention (enforced for new tokens)
 
@@ -67,18 +106,18 @@ Use Tailwind utilities only. Do not add arbitrary `font-size` in CSS for app UI.
 | Role | Classes | Where used |
 |------|---------|------------|
 | **Page title** (`h1`) | `text-3xl font-bold tracking-tight text-text-heading` | Entity detail pages, major page headings |
-| **App bar title** | `text-base font-semibold text-subheading` | `Header` route title (section name, e.g. **Clients** on list and detail) |
-| **Card / section title** | `text-[17px] font-medium tracking-tight text-slate-300` + default underline | `Card` `title` prop (charts, tables, lists) |
-| **Card subtitle** | `text-[11px] font-medium text-slate-500` | `Card` `subtitle` (e.g. “- Current Month”) |
-| **Metric label** | `text-[11px] font-semibold uppercase tracking-widest text-slate-500` | `Card` `label` (dashboard KPIs) |
-| **Metric value** | `text-[26px] font-bold tracking-tight text-slate-100` | `Card` `value` |
-| **Body** | `text-sm text-slate-300` or `text-slate-400` | Table cells, descriptions |
-| **Table header** | `text-[13px] font-medium normal-case tracking-normal text-slate-300` | `DataTable` column headers (dashboard tables) |
-| **Secondary line** | `text-[12px] text-slate-500` | Dates, RM role under name, stacked cell sub-lines |
-| **Emphasis in cell** | `font-semibold text-slate-200` or `font-semibold text-slate-300` | Totals, primary column values |
-| **Interactive text** | `font-medium text-blue-400` (+ `hover:underline` for links) | Client name links, announcement titles |
-| **Micro / filter label** | `text-[11px] font-medium text-slate-400` | Chart filters (Lumpsum/SIP), compact controls |
-| **Text link action** | `text-[11px] font-semibold uppercase tracking-wide text-blue-400` | “View all” in card headers |
+| **App bar title** | `text-base font-semibold text-heading` | `Header` route title (section name, e.g. **Clients** on list and detail) |
+| **Card / section title** | `text-[17px] font-medium tracking-tight text-heading` + default underline | `Card` `title` prop (charts, tables, lists) |
+| **Card subtitle** | `text-[11px] font-medium text-paragraph/70` | `Card` `subtitle` (e.g. “- Current Month”) |
+| **Metric label** | `text-[11px] font-semibold uppercase tracking-widest text-paragraph/70` | `Card` `label` (dashboard KPIs) |
+| **Metric value** | `text-[26px] font-bold tracking-tight text-heading` | `Card` `value` |
+| **Body** | `text-sm text-subheading` or `text-paragraph` | Table cells, descriptions |
+| **Table header** | `text-[13px] font-medium normal-case tracking-normal text-subheading` | `DataTable` column headers (dashboard tables) |
+| **Secondary line** | `text-[12px] text-paragraph/70` | Dates, RM role under name, stacked cell sub-lines |
+| **Emphasis in cell** | `font-semibold text-heading` or `font-semibold text-subheading` | Totals, primary column values |
+| **Interactive text** | `font-medium text-primary` (+ `hover:underline` for links) | Client name links, announcement titles |
+| **Micro / filter label** | `text-[11px] font-medium text-paragraph/70` | Chart filters (Lumpsum/SIP), compact controls |
+| **Text link action** | `text-[11px] font-semibold uppercase tracking-wide text-primary` | “View all” in card headers |
 | **Badge / tag** | `text-[10px]`–`text-[11px] font-medium` | `Badge`, announcement type pills |
 | **Error / helper** | `text-xs` | Form labels and inline errors (see `form-design-guide.md`) |
 
@@ -150,7 +189,7 @@ Spacing uses the **Tailwind scale only**. Pick from the tables below; do not use
 | Outer `Card` | `rounded-2xl` |
 | Global token | `--radius: 0.5rem` in `index.css` |
 
-Card borders: `border-slate-700/60` on default surfaces; table containers may use `border-slate-600/70` (see `SummaryTables.jsx`).
+Card borders: `border-stroke-divider` on default surfaces; table containers use `border-stroke-divider bg-layer1` (see `SummaryTables.jsx`).
 
 ### Chart & visualization heights
 
@@ -168,8 +207,8 @@ Define row height once per row in the parent (`Dashboard.jsx`) and pass to child
 |---------|---------|
 | Header cell | `px-6 py-4` |
 | Body cell | `px-6 py-5` |
-| Row hover | `hover:bg-slate-800/30` |
-| Container | `overflow-hidden rounded-xl border …` |
+| Row hover | `hover:bg-table-hover` |
+| Container | `overflow-hidden rounded-xl border border-stroke-divider bg-layer1` |
 
 ### Links & header actions
 
@@ -180,7 +219,7 @@ Define row height once per row in the parent (`Dashboard.jsx`) and pass to child
   type="button"
   variant="ghost"
   size="sm"
-  className="p-0 text-[11px] font-semibold uppercase tracking-wide text-blue-400 hover:bg-transparent hover:text-blue-300"
+  className="p-0 text-[11px] font-semibold uppercase tracking-wide text-primary hover:bg-transparent hover:text-primary/80"
 >
   View all
 </Button>
@@ -190,17 +229,20 @@ Chart/card filters belong in the Card **`action`** slot (not absolutely position
 
 ### Dark surfaces (dashboard pattern)
 
-Prefer tokens where possible; established dashboard literals (use consistently, do not introduce new hex values):
+Use design tokens — do not introduce new hex literals:
 
-| Use | Value |
-|-----|--------|
-| Page background | `bg-[#090e1a]` (`MainLayout` main) |
-| Card background | `bg-[#0d1526]` (`Card` default variant) |
-| Table surface | `bg-[#171c2f]` |
-| Table header band | `bg-[#1a2033]` |
-| Breadcrumb bar | `bg-[#1c213d]` |
+| Use | Token / class |
+|-----|----------------|
+| Page background | `bg-page` (`#13172A`) |
+| Card background | `bg-layer1` (`Card` default variant) |
+| Elevated / nested panel | `bg-layer3` (drawer header/footer) |
+| Table surface | `bg-layer1` |
+| Table header band | `bg-helper` |
+| Table row hover | `bg-table-hover` |
+| Table footer | `bg-table-footer` |
+| Breadcrumb bar | `bg-table-hover` or `bg-layer3` |
 
-**UI Rule U1**: New surfaces should map to `--bg-*` tokens when a matching token exists; literals above are allowed only for established dashboard/table patterns until tokenized.
+**UI Rule U1**: All new surfaces must map to `--bg-*` tokens. Hardcoded `#0d1526`, `#171c2f`, and Tailwind `slate-*` classes are deprecated — migrate to tokens when touching a file.
 
 ### Responsive spacing
 
@@ -254,8 +296,9 @@ For interactive components (buttons, nav items, inputs):
 
 Examples:
 
+- `Button` primary variant: `bg-btn-primary text-text-on-primary` (not `bg-primary`)
 - `Button`: `focus:ring-2 focus:ring-primary/20`, `active:scale-[0.98]`
-- `Input`: `focus-within:ring-1 focus-within:ring-primary/20`, error and disabled variants
+- `Input`: default `border-field-inactive`; focused `border-primary focus-within:ring-primary/20`
 
 **UI Rule I1**: Any clickable element must have a visible focus indicator (ring or outline) in keyboard navigation.
 
@@ -501,6 +544,7 @@ Patterns used:
 
 - **Badge**: Use for categorical labels (e.g., "Corporate", "Regulatory") or status pills.
   - Supports variants: `default`, `outline`, `success`, `warning`, `danger`, `info`.
+  - All variants use feedback/background tokens (`bg-success/10 text-success`, etc.) — not Tailwind semantic color scales.
 
 ### Breadcrumbs
 
@@ -509,7 +553,7 @@ The `Breadcrumbs` component (`src/components/ui/Breadcrumbs/Breadcrumbs.jsx`) pr
 - **Usage**: Use on detail and nested pages below the main header (e.g. Clients → Client Name).
 - **Props**:
   - `items` (array): Array of objects with `label` (string) and optional `href` (string). The last item is automatically styled as the active, non-clickable current page (`aria-current="page"`).
-- **Styling**: Sticky full-width bar spanning the main content area via negative margins (`bg-[#1c213d]`, border-bottom). Parent page content should account for the bar with `space-y-*` spacing after it.
+- **Styling**: Sticky full-width bar spanning the main content area via negative margins (`bg-table-hover`, border-bottom). Parent page content should account for the bar with `space-y-*` spacing after it.
 - **Accessibility**: Renders `<nav aria-label="Breadcrumb">` with an ordered list; intermediate items use React Router `Link`.
 
 ### Detail pages (read-only surfaces)
@@ -519,6 +563,7 @@ Use this layout for entity detail screens (reference: `src/features/clients/comp
 1. **Breadcrumbs** linking back to the list route.
 2. **Page title** (`h1`) with the entity name (the app bar keeps the section title from `handle.title`, e.g. **Clients** — do not show IDs or entity names there).
 3. **Summary cards** in a responsive grid (`grid-cols-1 md:grid-cols-2`) built from a parent-defined card array mapped to `<Card />`.
+  - Implementation note: For emphasis, a leading or featured summary card may span the full row on medium+ screens. Apply `md:col-span-2` to the featured card wrapper (or use a conditional class when mapping) so the primary card occupies both columns while remaining responsive.
 4. **Tabs** with per-tab `content` for section-specific panels.
 
 **Read-only fields**: Use `DetailField` / `DetailFieldGrid` from the feature's `components/` folder for label/value pairs. Define field data as `{ label, value }[]` arrays in mock/API payloads rather than hardcoding JSX per field.

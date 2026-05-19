@@ -40,7 +40,7 @@ function Drawer({
             className
           )}
         >
-          <div className="flex h-16 items-center justify-between gap-3 border-b border-stroke-divider bg-[#151827] px-4 sm:gap-4 sm:px-6 lg:px-8">
+          <div className="flex h-16 items-center justify-between gap-3 border-b border-stroke-divider bg-layer3 px-4 sm:gap-4 sm:px-6 lg:px-8">
             <div className="min-w-0">
               <DialogPrimitive.Title className="truncate text-xl font-bold text-heading">
                 {title}
@@ -80,7 +80,7 @@ function Drawer({
           {footer && (
             <div
               className={cn(
-                'flex min-h-16 shrink-0 flex-col-reverse gap-3 border-t border-stroke-divider bg-[#151827] px-4 py-3 sm:h-16 sm:flex-row sm:items-center sm:justify-end sm:px-6 sm:py-0 lg:px-8',
+                'flex min-h-16 shrink-0 flex-col-reverse gap-3 border-t border-stroke-divider bg-layer3 px-4 py-3 sm:h-16 sm:flex-row sm:items-center sm:justify-end sm:px-6 sm:py-0 lg:px-8',
                 footerClassName
               )}
             >

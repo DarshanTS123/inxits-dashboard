@@ -5,27 +5,38 @@ import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import { cn } from "@/utils/cn";
 import { Card } from "@/components/ui/Card/Card";
 
-const DEFAULT_DONUT_COLORS = [
-  "#E07B39", // orange
-  "#3598E4", // medium blue
-  "#114F7E", // dark blue
-  "#C96868", // rose/red
-  "#7893CD", // light blue
-];
+function readCssVar(name, fallback) {
+  if (typeof document === "undefined") return fallback;
+  const value = getComputedStyle(document.documentElement)
+    .getPropertyValue(name)
+    .trim();
+  return value || fallback;
+}
+
+function getSliceLabelColor(hexColor) {
+  const hex = hexColor.replace("#", "");
+  const r = parseInt(hex.slice(0, 2), 16);
+  const g = parseInt(hex.slice(2, 4), 16);
+  const b = parseInt(hex.slice(4, 6), 16);
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  return luminance > 0.55
+    ? readCssVar("--chart-label-dark", "#13172a")
+    : readCssVar("--chart-label-light", "#ffffff");
+}
 
 const DonutSkeleton = () => (
   <div className="flex flex-col h-full animate-pulse">
-    <div className="h-5 w-52 bg-slate-800 rounded mb-5" />
+    <div className="h-5 w-52 bg-layer2 rounded mb-5" />
     <div className="flex flex-1 items-center gap-6">
       <div
-        className="flex-shrink-0 rounded-full border-[28px] border-slate-800 bg-transparent"
+        className="flex-shrink-0 rounded-full border-[28px] border-layer2 bg-transparent"
         style={{ width: 140, height: 140 }}
       />
       <div className="flex flex-col gap-3 flex-1">
         {[1, 2, 3, 4, 5].map((i) => (
           <div key={i} className="flex items-center gap-2">
-            <div className="w-2.5 h-2.5 rounded-full bg-slate-700 shrink-0" />
-            <div className="h-3 bg-slate-800 rounded w-full" />
+            <div className="w-2.5 h-2.5 rounded-full bg-layer3 shrink-0" />
+            <div className="h-3 bg-layer2 rounded w-full" />
           </div>
         ))}
       </div>
@@ -38,7 +49,7 @@ const DonutSkeleton = () => (
  *
  * @param {Array}   data      - [{ category: string, value: number }]
  * @param {string}  title     - Chart title (underlined)
- * @param {string[]} colors   - Optional color palette override
+ * @param {string[]} colors   - Slice color palette (required when data is present)
  * @param {boolean} loading   - Show skeleton loader
  * @param {string}  className - Extra Tailwind classes for the card
  * @param {number|string} height - Card height (default 300)
@@ -48,7 +59,7 @@ const DonutSkeleton = () => (
 const DonutChart = ({
   data = [],
   title,
-  colors,
+  colors = [],
   loading = false,
   className,
   height = 300,
@@ -56,13 +67,17 @@ const DonutChart = ({
   const chartId = `donut-chart-${useId().replaceAll(":", "")}`;
 
   useLayoutEffect(() => {
-    if (loading || !data || data.length === 0) return;
+    if (loading || !data?.length || !colors?.length) return;
+
+    const pageBg = readCssVar("--bg-page", "#13172a");
+    const popupBg = readCssVar("--bg-popup", "#1a1f33");
+    const legendText = readCssVar("--text-paragraph", "#c9c9c9");
+    const divider = readCssVar("--stroke-divider", "#3a3a3a");
 
     const root = am5.Root.new(chartId);
     if (root._logo) root._logo.dispose();
     root.setThemes([am5themes_Animated.new(root)]);
 
-    // ── Chart ──────────────────────────────────────────────────────────────
     const chart = root.container.children.push(
       am5percent.PieChart.new(root, {
         layout: root.horizontalLayout,
@@ -74,7 +89,6 @@ const DonutChart = ({
       })
     );
 
-    // ── Series ─────────────────────────────────────────────────────────────
     const series = chart.series.push(
       am5percent.PieSeries.new(root, {
         valueField: "value",
@@ -85,18 +99,15 @@ const DonutChart = ({
       })
     );
 
-    // Colors
-    const palette = colors?.length ? colors : DEFAULT_DONUT_COLORS;
     series.get("colors").set(
       "colors",
-      palette.map((c) => am5.color(c))
+      colors.map((c) => am5.color(c))
     );
 
-    // Slices
     series.slices.template.setAll({
       strokeOpacity: 1,
       strokeWidth: 2,
-      stroke: am5.color("#0d1526"),
+      stroke: am5.color(pageBg),
       interactive: true,
       tooltipText:
         "{category}: [bold]{value}[/] ({valuePercentTotal.formatNumber('0.00')}%)",
@@ -107,33 +118,36 @@ const DonutChart = ({
       shiftRadius: 5,
     });
 
-    // Tooltip
     const tooltip = am5.Tooltip.new(root, {
       getFillFromSprite: false,
       autoTextColor: false,
     });
     tooltip.get("background").setAll({
-      fill: am5.color("#0d1526"),
+      fill: am5.color(popupBg),
       fillOpacity: 0.95,
-      stroke: am5.color("#2a3550"),
+      stroke: am5.color(divider),
       strokeWidth: 1,
       cornerRadius: 8,
     });
     tooltip.label.setAll({ fill: am5.color("#ffffff"), fontSize: 12 });
     series.slices.template.set("tooltip", tooltip);
 
-    // Labels inside the ring (Percentage)
     series.labels.template.setAll({
       inside: true,
       radius: 20,
       fontSize: 14,
       fontWeight: "500",
-      fill: am5.color("#ffffff"),
-      text: "{valuePercentTotal.formatNumber('#.##')}%", // Show decimals only if needed (up to 2)
+      text: "{valuePercentTotal.formatNumber('#.##')}%",
+    });
+    series.labels.template.adapters.add("fill", (_fill, target) => {
+      const dataItem = target.dataItem;
+      if (!dataItem) return am5.color("#ffffff");
+      const index = series.dataItems.indexOf(dataItem);
+      const sliceColor = colors[index % colors.length];
+      return am5.color(getSliceLabelColor(sliceColor));
     });
     series.ticks.template.setAll({ forceHidden: true });
 
-    // ── Legend ─────────────────────────────────────────────────────────────
     const legend = chart.children.push(
       am5.Legend.new(root, {
         centerY: am5.percent(50),
@@ -143,12 +157,11 @@ const DonutChart = ({
       })
     );
 
-    // Legend Markers (Rounded Squares)
-    legend.markers.template.setAll({ 
-      width: 18, 
+    legend.markers.template.setAll({
+      width: 18,
       height: 18,
     });
-    
+
     legend.markerRectangles.template.setAll({
       cornerRadiusTL: 6,
       cornerRadiusTR: 6,
@@ -156,20 +169,18 @@ const DonutChart = ({
       cornerRadiusBR: 6,
     });
 
-    // Legend Label Text Configuration (Unified for tight spacing)
     legend.labels.template.setAll({
       fontSize: 14,
       fontWeight: "400",
-      fill: am5.color("#cbd5e1"),
+      fill: am5.color(legendText),
     });
 
     legend.valueLabels.template.setAll({
       fontSize: 14,
       fontWeight: "400",
-      fill: am5.color("#cbd5e1"),
+      fill: am5.color(legendText),
     });
 
-    // ── Data (always last) ─────────────────────────────────────────────────
     series.data.setAll(data);
     legend.data.setAll(series.dataItems);
 
@@ -178,6 +189,8 @@ const DonutChart = ({
 
     return () => root.dispose();
   }, [data, loading, colors, chartId]);
+
+  const hasChart = data?.length > 0 && colors?.length > 0;
 
   return (
     <Card
@@ -190,8 +203,8 @@ const DonutChart = ({
       contentClassName="flex-1 relative"
       style={{ height: typeof height === "number" ? `${height}px` : height }}
     >
-      {!data || data.length === 0 ? (
-        <div className="absolute inset-0 flex items-center justify-center text-slate-500 text-sm italic">
+      {!hasChart ? (
+        <div className="absolute inset-0 flex items-center justify-center text-paragraph/70 text-sm italic">
           No data available
         </div>
       ) : (

@@ -10,18 +10,23 @@
   --bg-page: #13172a;
   --bg-layer-1: rgba(255, 255, 255, 0.04);
   --bg-layer-2: rgba(255, 255, 255, 0.08);
+  --bg-layer-3: #25293b;
   --bg-popup: #1a1f33;
   --bg-topnav: rgba(29, 29, 29, 0.24);
   --bg-helper: #1c2033;
+  --bg-table-hover: #1c213d;
+  --bg-table-footer: #1d2135;
+  --avatar-bg: #dff3fb;
 
   /* Buttons */
-  --btn-primary: #46a8dc;
+  --btn-primary: #1e7ab0;
+  --btn-secondary: #0c335d;
   --btn-disabled: #a6a6a6;
 
   /* Text */
-  --text-heading: #f0f0f0;
-  --text-subheading: #cccccc;
-  --text-paragraph: #b0b0b0;
+  --text-heading: #ffffff;
+  --text-subheading: #e3e3e3;
+  --text-paragraph: #c9c9c9;
   --text-disabled: #878787;
   --text-enabled: #d4d2d2;
   --text-label: #eaeaea;
@@ -30,6 +35,7 @@
 
   /* Strokes & Outlines */
   --stroke-divider: #3a3a3a;
+  --stroke-field-inactive: #383838;
   --btn-outline-secondary: #ffffff;
   --outline-active: #d8d8d8;
   --outline-disabled: #616060;
@@ -40,10 +46,19 @@
   --icon-primary: #46a8dc;
 
   /* Feedback */
-  --success: #2bc76f;
-  --warning: #eaf120;
-  --error: #ea5455;
+  --success: #28c76f;
+  --warning: #efbf00;
+  --error: #ea5758;
   --info: #00cfe8;
+
+  /* Chart palette */
+  --chart-1: #124e7a;
+  --chart-2: #6889c9;
+  --chart-3: #b85c5c;
+  --chart-4: #d97a32;
+  --chart-5: #2e8fd4;
+  --chart-label-light: #ffffff;
+  --chart-label-dark: #13172a;
 
   /* Sector Colors */
   --sector-it: #4a90e2;
@@ -58,7 +73,7 @@
   --sector-gold: #d4af37;
 
   /* Sidebar Specific (Derived from Palette) */
-  --sidebar-header-bg: #0f2b5c;
+  --sidebar-header-bg: #0c335d;
   --sidebar-bg: var(--bg-page);
   --sidebar-item-active-bg: rgba(255, 255, 255, 0.12);
   --sidebar-item-active-text: var(--primary);

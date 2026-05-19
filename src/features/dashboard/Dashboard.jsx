@@ -9,6 +9,16 @@ import { Button } from '@/components/ui/Button/Button';
 
 const THIRD_ROW_CARD_HEIGHT = 400;
 
+const SEGMENTATION_COLORS = [
+  '#124e7a',
+  '#6889c9',
+  '#b85c5c',
+  '#d97a32',
+  '#2e8fd4',
+];
+
+const TRANSACTION_STATUS_COLORS = ['#ea5758', '#28c76f', '#efbf00', '#6889c9'];
+
 export const Dashboard = () => {
   const { data: dashboardData, isLoading } = useDashboardData();
 
@@ -36,7 +46,7 @@ export const Dashboard = () => {
           type="button"
           variant="outline"
           size="md"
-          className="border-slate-700 bg-slate-800/40 font-semibold text-slate-300 hover:bg-slate-700/60"
+          className="border-stroke-divider bg-layer2 font-semibold text-subheading hover:bg-layer1"
         >
           Alerts(10)
         </Button>
@@ -50,12 +60,14 @@ export const Dashboard = () => {
         <DonutChart
           title="Client Segmentation by Risk"
           data={riskData}
+          colors={SEGMENTATION_COLORS}
           loading={isLoading}
           height={380}
         />
         <PieChart
           title="AUM by category"
           data={aumData}
+          colors={SEGMENTATION_COLORS}
           loading={isLoading}
           height={380}
         />
@@ -69,7 +81,7 @@ export const Dashboard = () => {
           loading={isLoading}
           height={THIRD_ROW_CARD_HEIGHT}
           headerClassName="items-center"
-          colors={['#ef4444', '#22c55e', '#f59e0b', '#94a3b8']}
+          colors={TRANSACTION_STATUS_COLORS}
           legendValueText=": {value}"
           action={
             <div className="flex items-center gap-3">
@@ -78,16 +90,16 @@ export const Dashboard = () => {
                   <input
                     type="radio"
                     name="tx-type"
-                    className="h-3 w-3 accent-blue-500"
+                    className="h-3 w-3 accent-primary"
                     defaultChecked
                   />
-                  <span className="text-[11px] font-medium text-slate-400 group-hover:text-slate-200">
+                  <span className="text-[11px] font-medium text-paragraph/70 group-hover:text-subheading">
                     Lumpsum
                   </span>
                 </label>
                 <label className="group flex cursor-pointer items-center gap-1.5">
                   <input type="radio" name="tx-type" className="h-3 w-3 accent-blue-500" />
-                  <span className="text-[11px] font-medium text-slate-400 group-hover:text-slate-200">
+                  <span className="text-[11px] font-medium text-paragraph/70 group-hover:text-subheading">
                     SIP
                   </span>
                 </label>
@@ -95,7 +107,7 @@ export const Dashboard = () => {
               <Select
                 options={[{ label: 'MTD', value: 'mtd' }]}
                 defaultValue="mtd"
-                className="h-7 min-w-[70px] border-slate-700/50 bg-slate-800/60 text-[10px]"
+                className="h-7 min-w-[70px] border-stroke-divider bg-layer2 text-[10px]"
               />
             </div>
           }

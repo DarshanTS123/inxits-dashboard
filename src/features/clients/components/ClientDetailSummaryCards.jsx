@@ -8,6 +8,14 @@ import { DetailFieldGrid } from './DetailField';
 
 const detailCardTitleClass = 'text-base text-heading';
 
+const RISK_GAUGE_BANDS = [
+  { start: 0, end: 20, color: '#1e9e58' },
+  { start: 20, end: 40, color: '#8ec800' },
+  { start: 40, end: 60, color: '#efbf00' },
+  { start: 60, end: 80, color: '#e67e22' },
+  { start: 80, end: 100, color: '#ea5758' },
+];
+
 const StatusDot = ({ variant }) => (
   <span
     className={cn(
@@ -79,6 +87,7 @@ const buildSummaryCards = (client) => {
             <GaugeChart
               value={riskProfile.value}
               label={riskProfile.label}
+              bands={RISK_GAUGE_BANDS}
               height={180}
               className="w-full border-0 bg-transparent p-0 shadow-none hover:border-transparent"
             />

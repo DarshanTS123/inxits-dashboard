@@ -23,19 +23,19 @@ export const OngoingTransactions = ({ data, loading }) => {
       header: 'Order ID',
       accessorKey: 'orderId',
       className: 'min-w-[120px]',
-      cell: ({ value }) => <span className="font-medium text-slate-300">{value || '-'}</span>,
+      cell: ({ value }) => <span className="font-medium text-subheading">{value || '-'}</span>,
     },
     {
       header: 'Order Date',
       accessorKey: 'orderDate',
       className: 'min-w-[170px]',
       cell: ({ value }) => {
-        if (!value) return <span className="text-[12px] text-slate-300">-</span>;
+        if (!value) return <span className="text-[12px] text-subheading">-</span>;
         const parts = value.split(' ');
         return (
           <div className="flex flex-col">
-            <span className="text-slate-300">{parts[0]} {parts[1]}</span>
-            <span className="text-[12px] text-slate-500">{parts.slice(2).join(' ')}</span>
+            <span className="text-subheading">{parts[0]} {parts[1]}</span>
+            <span className="text-[12px] text-paragraph/70">{parts.slice(2).join(' ')}</span>
           </div>
         );
       },
@@ -44,35 +44,36 @@ export const OngoingTransactions = ({ data, loading }) => {
       header: 'Client Name',
       accessorKey: 'clientName',
       className: 'min-w-[160px]',
-      cell: ({ value }) => <span className="font-medium text-blue-400 cursor-pointer hover:underline">{value || '-'}</span>,
+      cell: ({ value }) => <span className="font-medium text-primary cursor-pointer hover:underline">{value || '-'}</span>,
     },
     {
       header: 'Transaction ID',
       accessorKey: 'transactionId',
-      cell: ({ value }) => <span className="text-slate-400">{value || '-'}</span>,
-    },    {
+      cell: ({ value }) => <span className="text-paragraph">{value || '-'}</span>,
+    },
+    {
       header: 'Status',
       accessorKey: 'status',
       cell: ({ value }) => {
-        if (!value) return <span className="text-[12px] text-slate-300">-</span>;
+        if (!value) return <span className="text-[12px] text-subheading">-</span>;
         const getStatusStyles = (status) => {
           switch (status) {
-            case 'Settled': return 'text-green-400';
-            case 'In progress': return 'text-amber-400';
-            case 'Failed': return 'text-red-400';
-            case 'Order Placed': return 'text-slate-400';
-            case 'Units Allotted': return 'text-cyan-400';
-            default: return 'text-slate-400';
+            case 'Settled': return 'text-success';
+            case 'In progress': return 'text-warning';
+            case 'Failed': return 'text-error';
+            case 'Order Placed': return 'text-paragraph';
+            case 'Units Allotted': return 'text-info';
+            default: return 'text-paragraph';
           }
         };
         const getDotStyles = (status) => {
           switch (status) {
-            case 'Settled': return 'bg-green-400';
-            case 'In progress': return 'bg-amber-400';
-            case 'Failed': return 'bg-red-400';
-            case 'Order Placed': return 'bg-slate-400';
-            case 'Units Allotted': return 'bg-cyan-400';
-            default: return 'bg-slate-400';
+            case 'Settled': return 'bg-success';
+            case 'In progress': return 'bg-warning';
+            case 'Failed': return 'bg-error';
+            case 'Order Placed': return 'bg-paragraph/60';
+            case 'Units Allotted': return 'bg-info';
+            default: return 'bg-paragraph/60';
           }
         };
 
@@ -87,38 +88,38 @@ export const OngoingTransactions = ({ data, loading }) => {
     {
       header: 'Scheme',
       accessorKey: 'scheme',
-      cell: ({ value }) => <span className="text-slate-300 whitespace-nowrap">{value || '-'}</span>,
+      cell: ({ value }) => <span className="text-subheading whitespace-nowrap">{value || '-'}</span>,
     },
     {
       header: 'Order Type',
       accessorKey: 'orderType',
-      cell: ({ value }) => <span className="text-slate-400">{value || '-'}</span>,
+      cell: ({ value }) => <span className="text-paragraph">{value || '-'}</span>,
     },
     {
       header: 'Units',
       accessorKey: 'units',
-      cell: ({ value }) => <span className="text-slate-300">{value || '-'}</span>,
+      cell: ({ value }) => <span className="text-subheading">{value || '-'}</span>,
     },
     {
       header: 'Amount (₹)',
       accessorKey: 'amount',
-      cell: ({ value }) => <span className="font-semibold text-slate-200">{value || '-'}</span>,
+      cell: ({ value }) => <span className="font-semibold text-heading">{value || '-'}</span>,
     },
     {
       header: 'NAV Date',
       accessorKey: 'navDate',
-      cell: ({ value }) => <span className="text-slate-500 whitespace-nowrap">{value || '-'}</span>,
+      cell: ({ value }) => <span className="text-paragraph/70 whitespace-nowrap">{value || '-'}</span>,
     },
     {
       header: 'Settlement Date',
       accessorKey: 'settlementDate',
-      cell: ({ value }) => <span className="text-slate-500">{value || '-'}</span>,
+      cell: ({ value }) => <span className="text-paragraph/70">{value || '-'}</span>,
     },
     {
       header: 'RM',
       accessorKey: 'rm',
       className: 'min-w-[160px]',
-      cell: ({ value }) => <span className="text-slate-300">{value || '-'}</span>,
+      cell: ({ value }) => <span className="text-subheading">{value || '-'}</span>,
     },
   ];
 
@@ -134,18 +135,18 @@ export const OngoingTransactions = ({ data, loading }) => {
           type="button"
           variant="ghost"
           size="sm"
-          className="p-0 font-semibold uppercase text-blue-400 hover:bg-transparent hover:text-blue-300"
+          className="p-0 font-semibold uppercase text-primary hover:bg-transparent hover:text-primary/80"
         >
           View all
         </Button>
       }
     >
-      <div className="overflow-hidden rounded-xl border border-slate-800/60">
+      <div className="overflow-hidden rounded-xl border border-stroke-divider">
         {loading ? (
           <div className="p-8 flex flex-col gap-4 animate-pulse">
-            <div className="h-10 bg-slate-800 rounded w-full" />
+            <div className="h-10 bg-layer2 rounded w-full" />
             {Array.from({ length: 5 }).map((_, i) => (
-              <div key={i} className="h-12 bg-slate-800/50 rounded w-full" />
+              <div key={i} className="h-12 bg-layer2/50 rounded w-full" />
             ))}
           </div>
         ) : (
@@ -155,7 +156,7 @@ export const OngoingTransactions = ({ data, loading }) => {
             stickyColumns={{ left: [{ index: 0, width: 120 }, { index: 1, width: 170 }, { index: 2, width: 160 }] }}
             tableClassName="border-none"
             containerClassName="max-h-[500px]"
-            rowClassName="hover:bg-slate-800/30 transition-colors border-b border-slate-800/40 last:border-0"
+            rowClassName="hover:bg-table-hover transition-colors border-b border-stroke-divider last:border-0"
             />
         )}
       </div>

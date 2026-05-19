@@ -54,7 +54,7 @@ export const Input = React.forwardRef(({
             'bg-transparent w-full',
             config.height,
             // Default/Enabled State
-            'border-stroke-divider hover:border-white/40',
+            'border-field-inactive hover:border-white/40',
             // Focused State
             'focus-within:border-primary focus-within:ring-1 focus-within:ring-primary/20',
             // Error State

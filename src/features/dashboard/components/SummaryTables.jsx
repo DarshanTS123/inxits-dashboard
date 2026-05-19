@@ -2,17 +2,17 @@ import { Button } from '@/components/ui/Button/Button';
 import { Card } from '@/components/ui/Card/Card';
 import { DataTable } from '@/components/ui/Table/Table';
 
-const tableClassName = 'min-w-[720px] bg-[#171c2f]';
+const tableClassName = 'min-w-[720px] bg-layer1';
 const containerClassName =
-  'overflow-hidden rounded-xl border border-slate-600/70 bg-[#171c2f]';
+  'overflow-hidden rounded-xl border border-stroke-divider bg-layer1';
 const headerClassName =
-  'bg-[#1a2033] border-b border-slate-600/70 px-6 py-4 text-[13px] font-medium normal-case tracking-normal text-slate-300';
+  'bg-helper border-b border-stroke-divider px-6 py-4 text-[13px] font-medium normal-case tracking-normal text-subheading';
 const cellClassName =
-  'border-b border-slate-600/60 px-6 py-5 text-slate-400';
-const rowClassName = 'group hover:bg-slate-800/30 transition-colors';
+  'border-b border-stroke-divider px-6 py-5 text-paragraph';
+const rowClassName = 'group hover:bg-table-hover transition-colors';
 
 const loadingCell = (width = 'w-20') => (
-  <div className={`h-4 rounded bg-slate-800 ${width}`} />
+  <div className={`h-4 rounded bg-layer2 ${width}`} />
 );
 
 const createLoadingRows = (count) =>
@@ -55,7 +55,7 @@ export const BusinessUpdateTable = ({ data = [], loading }) => {
     {
       header: 'Particulars',
       accessorKey: 'particulars',
-      cellClassName: 'font-semibold text-slate-300',
+      cellClassName: 'font-semibold text-subheading',
       cell: ({ row, value }) =>
         row.__loading ? loadingCell('w-24') : value || '-',
     },
@@ -92,7 +92,7 @@ export const BusinessUpdateTable = ({ data = [], loading }) => {
     {
       header: 'Total',
       accessorKey: 'total',
-      cellClassName: 'font-medium text-slate-200',
+      cellClassName: 'font-medium text-heading',
       cell: ({ row, value }) =>
         row.__loading ? loadingCell('w-16') : value || '-',
     },
@@ -121,10 +121,10 @@ export const RMPerformanceTable = ({ data = [], loading }) => {
           loadingCell('w-24')
         ) : (
           <div className="flex flex-col">
-            <span className="font-semibold text-slate-300 group-hover:text-blue-400 transition-colors cursor-pointer">
+            <span className="font-semibold text-subheading group-hover:text-primary transition-colors cursor-pointer">
               {value || '-'}
             </span>
-            <span className="text-[12px] text-slate-500 font-medium uppercase tracking-tighter">
+            <span className="text-[12px] text-paragraph/70 font-medium uppercase tracking-tighter">
               {row.role || ''}
             </span>
           </div>

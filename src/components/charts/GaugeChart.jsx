@@ -7,15 +7,15 @@ import { cn } from "@/utils/cn";
 
 const GaugeSkeleton = () => (
   <div className="flex flex-col h-full animate-pulse">
-    <div className="h-5 w-52 bg-slate-800 rounded mb-5" />
+    <div className="h-5 w-52 bg-layer2 rounded mb-5" />
     <div className="flex flex-col items-center justify-center flex-1">
       <div
-        className="w-48 h-24 bg-slate-800 rounded-t-full relative overflow-hidden"
-        style={{ borderBottom: "4px solid #1e293b" }}
+        className="w-48 h-24 bg-layer2 rounded-t-full relative overflow-hidden"
+        style={{ borderBottom: "4px solid var(--bg-layer-3)" }}
       >
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-slate-700" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-layer3" />
       </div>
-      <div className="h-6 w-32 bg-slate-800 rounded mt-6" />
+      <div className="h-6 w-32 bg-layer2 rounded mt-6" />
     </div>
   </div>
 );
@@ -26,6 +26,7 @@ const GaugeSkeleton = () => (
  * @param {number}  value     - Current value (0-100)
  * @param {string}  title     - Chart title (underlined)
  * @param {string}  label     - Label displayed below the gauge (e.g. "Moderate : 65/100")
+ * @param {Array}   bands     - [{ start: number, end: number, color: string }] (required)
  * @param {boolean} loading   - Show skeleton loader
  * @param {string}  className - Extra Tailwind classes for the card
  * @param {number|string} height - Card height (default 380)
@@ -34,6 +35,7 @@ const GaugeChart = ({
   value = 0,
   title,
   label,
+  bands = [],
   loading = false,
   className,
   height = 380,
@@ -41,7 +43,7 @@ const GaugeChart = ({
   const chartId = `gauge-chart-${useId().replaceAll(":", "")}`;
 
   useLayoutEffect(() => {
-    if (loading) return;
+    if (loading || !bands?.length) return;
 
     const root = am5.Root.new(chartId);
     if (root._logo) root._logo.dispose();
@@ -109,15 +111,7 @@ const GaugeChart = ({
     xAxis.createAxisRange(axisDataItem);
 
     // Bands data from design
-    const bandsData = [
-      { start: 0, end: 20, color: "#1a911a" },    // Green
-      { start: 20, end: 40, color: "#8ec800" },   // Lime
-      { start: 40, end: 60, color: "#d9ae00" },   // Yellow
-      { start: 60, end: 80, color: "#e67e22" },   // Orange
-      { start: 80, end: 100, color: "#c0392b" },  // Red
-    ];
-
-    bandsData.forEach((seg) => {
+    bands.forEach((seg) => {
       const rangeDataItem = xAxis.makeDataItem({});
       rangeDataItem.set("value", seg.start);
       rangeDataItem.set("endValue", seg.end);
@@ -146,12 +140,12 @@ const GaugeChart = ({
     chart.appear(1000, 100);
 
     return () => root.dispose();
-  }, [value, loading, chartId]);
+  }, [value, loading, bands, chartId]);
 
   return (
     <div
       className={cn(
-        "rounded-2xl border border-slate-700/60 bg-[#0d1526] p-5 shadow-xl transition-all hover:border-slate-600/80",
+        "rounded-2xl border border-stroke-divider bg-layer1 p-5 shadow-xl transition-all hover:border-outline-active/40",
         className
       )}
       style={{ height: typeof height === "number" ? `${height}px` : height }}
@@ -162,7 +156,7 @@ const GaugeChart = ({
         <div className="flex flex-col h-full">
           {title && (
             <div className="mb-4">
-              <h3 className="text-[15px] font-semibold text-white underline underline-offset-4 decoration-white/70 tracking-tight">
+              <h3 className="text-[15px] font-semibold text-heading underline underline-offset-4 decoration-paragraph/50 tracking-tight">
                 {title}
               </h3>
             </div>
@@ -171,7 +165,7 @@ const GaugeChart = ({
             <div id={chartId} className="w-full h-full max-h-[220px]" />
             {label && (
               <div className="mt-4 text-center">
-                <span className="text-xl font-bold text-slate-200 tracking-wide">
+                <span className="text-xl font-bold text-subheading tracking-wide">
                   {label}
                 </span>
               </div>

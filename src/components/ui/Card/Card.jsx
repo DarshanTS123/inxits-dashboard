@@ -2,9 +2,9 @@ import React from 'react';
 import { cn } from '@/utils/cn';
 
 const cardVariants = {
-  default: 'border-slate-700/60 bg-[#0d1526]',
-  muted: 'border-slate-700/50 bg-[#111827]',
-  elevated: 'border-slate-700/60 bg-[#0d1526] shadow-2xl shadow-black/20',
+  default: 'border-stroke-divider bg-layer1',
+  muted: 'border-stroke-divider bg-layer2',
+  elevated: 'border-stroke-divider bg-layer1 shadow-2xl shadow-black/20',
 };
 
 const cardPaddings = {
@@ -34,13 +34,13 @@ const renderNode = (node, fallbackProps = {}) => {
 
 const CardSkeleton = ({ rows = 3 }) => (
   <div className="animate-pulse space-y-4">
-    <div className="h-5 w-40 rounded bg-slate-800" />
+    <div className="h-5 w-40 rounded bg-layer2" />
     <div className="space-y-3">
       {Array.from({ length: rows }).map((_, index) => (
         <div
           key={index}
           className={cn(
-            'h-4 rounded bg-slate-800',
+            'h-4 rounded bg-layer2',
             skeletonWidths[index === rows - 1 ? 'md' : 'full']
           )}
         />
@@ -54,11 +54,11 @@ const CardEmptyState = ({
   emptyTitle = 'No data available',
   emptyDescription,
 }) => (
-  <div className="flex min-h-32 flex-col items-center justify-center gap-2 text-center text-slate-500">
-    {emptyIcon && <div className="text-slate-500">{emptyIcon}</div>}
-    <p className="text-sm font-medium text-slate-400">{emptyTitle}</p>
+  <div className="flex min-h-32 flex-col items-center justify-center gap-2 text-center text-paragraph/70">
+    {emptyIcon && <div className="text-paragraph/70">{emptyIcon}</div>}
+    <p className="text-sm font-medium text-paragraph">{emptyTitle}</p>
     {emptyDescription && (
-      <p className="max-w-sm text-xs leading-5 text-slate-500">
+      <p className="max-w-sm text-xs leading-5 text-paragraph/70">
         {emptyDescription}
       </p>
     )}
@@ -127,9 +127,9 @@ const Card = React.forwardRef(
           'rounded-2xl border shadow-xl transition-all',
           cardVariants[variant] || cardVariants.default,
           cardPaddings[padding] || padding,
-          hoverable && 'hover:border-slate-600/80',
+          hoverable && 'hover:border-outline-active/40',
           interactive &&
-            'cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/50',
+            'cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/50',
           className
         )}
         {...props}
@@ -157,9 +157,9 @@ const Card = React.forwardRef(
                     {title && (
                       <h3
                         className={cn(
-                          'text-[17px] font-medium tracking-tight text-slate-300',
+                          'text-[17px] font-medium tracking-tight text-heading',
                           titleUnderline &&
-                            'underline underline-offset-[6px] decoration-slate-400/30',
+                            'underline underline-offset-[6px] decoration-paragraph/30',
                           titleClassName
                         )}
                       >
@@ -169,7 +169,7 @@ const Card = React.forwardRef(
                     {subtitle && (
                       <span
                         className={cn(
-                          'text-[11px] font-medium text-slate-500',
+                          'text-[11px] font-medium text-paragraph/70',
                           subtitleClassName
                         )}
                       >
@@ -180,7 +180,7 @@ const Card = React.forwardRef(
                   {description && (
                     <p
                       className={cn(
-                        'text-sm text-slate-500',
+                        'text-sm text-paragraph/70',
                         descriptionClassName
                       )}
                     >
@@ -201,7 +201,7 @@ const Card = React.forwardRef(
                 {label && (
                   <span
                     className={cn(
-                      'text-[11px] font-semibold uppercase tracking-widest text-slate-500',
+                      'text-[11px] font-semibold uppercase tracking-widest text-paragraph/70',
                       labelClassName
                     )}
                   >
@@ -212,7 +212,7 @@ const Card = React.forwardRef(
                   {hasValue(value) && (
                     <span
                       className={cn(
-                        'text-[26px] font-bold tracking-tight text-slate-100',
+                        'text-[26px] font-bold tracking-tight text-heading',
                         valueClassName
                       )}
                     >
@@ -222,7 +222,7 @@ const Card = React.forwardRef(
                   {meta && (
                     <div
                       className={cn(
-                        'text-xs font-semibold text-slate-400',
+                        'text-xs font-semibold text-paragraph',
                         metaClassName
                       )}
                     >

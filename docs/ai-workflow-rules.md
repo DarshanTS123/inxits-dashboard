@@ -95,7 +95,12 @@ Rules:
   - document new env vars in `docs/project-overview.md` if introduced
 - Any new UI token must:
   - be added to `src/index.css`
-  - be referenced via Tailwind alias if used broadly
+  - be referenced via Tailwind alias in `tailwind.config.js` if used broadly
+  - be documented in `docs/ui-context.md` (Color tokens section)
+- Any new chart color palette must:
+  - be defined in the parent feature/page and passed via `colors`, `bands`, or `branchColors`
+  - optionally mirror suggested values from `--chart-*` CSS variables in `src/index.css`
+  - be documented in `docs/chart-architecture.md` when introducing a reusable palette for a domain
 - Any new UI layout, spacing, or typography pattern must:
   - follow `docs/ui-context.md` (Typography + Spacing, layout & density sections)
   - extend `docs/ui-context.md` if the pattern is reusable (do not leave one-off `gap-*` / `text-[Npx]` only in feature code)

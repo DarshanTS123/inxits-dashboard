@@ -11,11 +11,16 @@ export default {
         page: 'var(--bg-page)',
         layer1: 'var(--bg-layer-1)',
         layer2: 'var(--bg-layer-2)',
+        layer3: 'var(--bg-layer-3)',
         popup: 'var(--bg-popup)',
         topnav: 'var(--bg-topnav)',
         helper: 'var(--bg-helper)',
+        'table-hover': 'var(--bg-table-hover)',
+        'table-footer': 'var(--bg-table-footer)',
+        avatar: 'var(--avatar-bg)',
         
         'btn-primary': 'var(--btn-primary)',
+        'btn-secondary': 'var(--btn-secondary)',
         'btn-disabled': 'var(--btn-disabled)',
         
         heading: 'var(--text-heading)',
@@ -28,6 +33,7 @@ export default {
         'text-on-disabled': 'var(--text-on-disabled)',
         
         'stroke-divider': 'var(--stroke-divider)',
+        'field-inactive': 'var(--stroke-field-inactive)',
         'btn-outline-secondary': 'var(--btn-outline-secondary)',
         'outline-active': 'var(--outline-active)',
         'outline-disabled': 'var(--outline-disabled)',
@@ -40,6 +46,11 @@ export default {
         warning: 'var(--warning)',
         error: 'var(--error)',
         info: 'var(--info)',
+        'chart-1': 'var(--chart-1)',
+        'chart-2': 'var(--chart-2)',
+        'chart-3': 'var(--chart-3)',
+        'chart-4': 'var(--chart-4)',
+        'chart-5': 'var(--chart-5)',
         'sidebar-header': 'var(--sidebar-header-bg)',
         sidebar: 'var(--sidebar-bg)',
 

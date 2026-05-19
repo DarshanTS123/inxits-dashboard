@@ -51,6 +51,7 @@ The inXits Dashboard is a role-based internal web console for investment and ope
 - Data is fetched via `src/features/clients/api/clientDetail.js` (`useClient`), merging list rows from `public/mock/clients.json` with section templates/overrides from `public/mock/client-details.json`.
 - Layout pattern: `Breadcrumbs` → page title → summary cards grid → data-driven `Tabs`.
 - Summary cards (`ClientDetailSummaryCards`) use the parent-defined card array pattern with `Card`, `DetailFieldGrid`, and `GaugeChart`.
+ - Implementation note: In some designs the primary or featured summary card may be required to take the full row on medium and larger screens; implement this by applying `md:col-span-2` to the featured card wrapper when mapping the parent card array.
 - Personal tab (`ClientDetailPersonalTab`) renders identity, address, nominees, FATCA, bank, and document sections as stacked cards.
 - Remaining tabs (Portfolios, Transactions, Family member, Reports) render placeholders until their workflows are implemented.
 - Loading, not-found, and error states are handled at the page layer (`PageLoader`, `ClientDetailNotFound`, `ClientDetailError`).
@@ -70,7 +71,7 @@ The inXits Dashboard is a role-based internal web console for investment and ope
 
 - `/dashboard` provides a high-level overview of AUM, risk segmentation, transaction status, and regulatory updates.
 - Uses a "Feature-First" orchestration pattern where domain logic resides in `src/features/dashboard/Dashboard.jsx`.
-- Analytics are powered by AmCharts 5 with custom dark-themed wrappers and unified legend formatting.
+- Analytics are powered by AmCharts 5; slice/band colors are passed from parent features, with adaptive labels and unified `Card` containers.
 - All layout sections are encapsulated in the shared `Card` primitive for visual consistency.
 
 ### Data Workflows
@@ -96,7 +97,7 @@ The inXits Dashboard is a role-based internal web console for investment and ope
 - Adding new route-level modules under the existing router and layouts.
 - Implementing feature domains under `src/features/*` when they include API hooks, state, or domain components.
 - Integrating APIs through `src/lib/axios.js` and React Query.
-- Extending design tokens in `src/index.css` and using Tailwind token aliases.
+- Extending design tokens in `src/index.css` and using Tailwind token aliases (see `docs/ui-context.md` for the full palette, Figma reference, and accessibility rules).
 
 ## Development Patterns
 

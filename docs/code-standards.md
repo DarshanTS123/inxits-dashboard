@@ -177,7 +177,9 @@ Measurable:
 - Direct network calls in UI primitives/pages (`axios.*` or `fetch`).
 - `localStorage` access outside `src/utils/*` or store middleware.
 - `window.location.href = ...` usage except inside centralized auth failure handling (`axios.js`).
-- Hardcoded hex colors in JSX classnames (e.g. `bg-[#123456]`) except for **explicitly documented** cases (currently header avatar uses `bg-[#dff3fb]`; do not copy this pattern).
+- Hardcoded hex colors in JSX classnames (e.g. `bg-[#123456]`) — use CSS variables and Tailwind token aliases from `src/index.css` / `tailwind.config.js` instead.
+- Tailwind palette classes (`slate-*`, `green-*`, `amber-*`, `red-*`, `blue-*`) for UI surfaces — use design tokens (`text-heading`, `bg-layer1`, `text-success`, etc.).
+- Using `bg-primary` for filled buttons — use `bg-btn-primary` for accessible CTA fills; reserve `primary` for accents, links, and focus rings.
 - Deep relative imports when alias `@` is available for cross-cutting code.
 
 - Use specific aliases for cross-module imports:

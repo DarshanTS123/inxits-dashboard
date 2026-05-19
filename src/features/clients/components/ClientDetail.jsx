@@ -6,6 +6,7 @@ import { Button } from '@components/ui/Button/Button';
 import { Breadcrumbs } from '@components/ui/Breadcrumbs/Breadcrumbs';
 import { ClientDetailSummaryCards } from './ClientDetailSummaryCards';
 import { ClientDetailPersonalTab } from './ClientDetailPersonalTab';
+import { ClientDetailPortfolioTab } from './ClientDetailPortfolioTab';
 
 const TabPlaceholder = ({ label }) => (
   <div className="rounded-lg border border-stroke-divider bg-layer1 p-8 text-center text-sm text-paragraph">
@@ -25,7 +26,7 @@ export const ClientDetail = ({ client }) => {
       {
         value: 'portfolio',
         label: 'Portfolios',
-        content: <TabPlaceholder label="Portfolios" />,
+        content: <ClientDetailPortfolioTab />,
       },
       {
         value: 'transactions',

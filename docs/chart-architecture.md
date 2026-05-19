@@ -35,9 +35,8 @@ We follow a **layered approach** to chart implementation to ensure reusability w
 | :--- | :--- | :--- |
 | **Shared Base Components** | `src/components/charts` | Purpose-built chart components (`DonutChart`, `PieChart`). |
 | **Feature Components** | `src/features/dashboard/components` | Domain-specific wrappers (e.g., `ChartsShowcase`). |
-| **Chart Utilities** | `src/utils/charts` | Data formatters, adapters, and AmCharts configuration helpers. |
+| **Chart Utilities** | Parent feature/page files | Slice palettes, gauge bands, sunburst branch maps — passed as props. |
 | **Chart Hooks** | `src/hooks` | Shared hooks for chart lifecycle, resizing, and data fetching. |
-| **Theme & Colors** | `src/styles` | Centralized AmCharts theme definitions and color palettes. |
 
 ---
 
@@ -60,10 +59,46 @@ useLayoutEffect(() => {
 ```
 
 ### 2. Theme & Color Management
-Integrate AmCharts with our design tokens defined in `src/styles`.
 
-- **Location**: `src/styles/chartTheme.js`
-- **Pattern**: Use CSS variables (e.g., `var(--primary)`) or resolve tokens via a utility.
+**Parent-owned colors**: Chart slice/band colors are defined in the **parent feature or page** (e.g. `Dashboard.jsx`, `ClientDetailSummaryCards.jsx`) and passed via props. Chart components do not ship default palettes.
+
+| Component | Prop | Shape | Required when |
+| :--- | :--- | :--- | :--- |
+| `DonutChart` | `colors` | `string[]` hex values | `data` is non-empty |
+| `PieChart` | `colors` | `string[]` hex values | `data` is non-empty |
+| `GaugeChart` | `bands` | `{ start, end, color }[]` | chart renders |
+| `SunburstChart` | `branchColors` | `Record<string, string>` | `data` is present |
+
+**Suggested default palette** (Figma-aligned — define in parent, optionally copy from `--chart-1` … `--chart-5` in `src/index.css`):
+
+| Index | Hex | Use |
+| :--- | :--- | :--- |
+| 1 | `#124E7A` | Dark blue (largest slice) |
+| 2 | `#6889C9` | Periwinkle |
+| 3 | `#B85C5C` | Coral |
+| 4 | `#D97A32` | Orange |
+| 5 | `#2E8FD4` | Sky blue |
+
+**Example — dashboard segmentation** (`src/features/dashboard/Dashboard.jsx`):
+
+```javascript
+const SEGMENTATION_COLORS = [
+  '#124e7a',
+  '#6889c9',
+  '#b85c5c',
+  '#d97a32',
+  '#2e8fd4',
+];
+
+<DonutChart data={riskData} colors={SEGMENTATION_COLORS} ... />
+<PieChart data={aumData} colors={SEGMENTATION_COLORS} ... />
+```
+
+**Chart chrome** (slice stroke, tooltip, legend text): read from CSS variables at runtime inside chart components (`--bg-page`, `--bg-popup`, `--text-paragraph`, `--stroke-divider`). Do not pass these from parents.
+
+**Adaptive slice labels**: Donut/Pie charts compute label color from slice luminance using `--chart-label-light` / `--chart-label-dark` — parents only supply slice fill colors.
+
+**Card containers**: Chart components use the shared `Card` primitive with `bg-layer1 border-stroke-divider`.
 
 ### 3. Responsive Design
 - Use `am5.Percent(100)` for container dimensions.
@@ -117,31 +152,33 @@ export const ChartWrapper = ({ children, title, subtitle, isLoading, isEmpty }) 
 | :--- | :--- | :--- | :--- |
 | `data` | `Array` | `[]` | `[{ category: string, value: number }]` |
 | `title` | `string` | `undefined` | Card title (rendered with premium underline decoration) |
-| `colors` | `string[]` | Built-in palette | Custom hex colors for slices |
+| `colors` | `string[]` | *(none — required from parent)* | Hex colors for slices |
+| `bands` | `Array` | *(none — required from parent)* | Gauge band segments (`GaugeChart` only) |
+| `branchColors` | `Object` | *(none — required from parent)* | Top-level branch colors (`SunburstChart` only) |
 | `loading` | `boolean` | `false` | Show skeleton loading state |
 | `height` | `number \| string` | `300` | Card height in px |
 | `className` | `string` | `undefined` | Tailwind overrides for the card |
 
 #### DonutChart (`src/components/charts/DonutChart.jsx`)
 - **Visuals**: Ring chart with `innerRadius: 70%` for a modern, thin profile.
-- **Labels**: Smart integer formatting (`#.##%`) shown inside the ring.
+- **Labels**: Percentage labels inside the ring with adaptive color from slice luminance.
 - **Legend**: Unified format `Category - Value` (e.g., `Conservative - 78`).
-- **Colors**: Vibrant risk-based palette (Orange, Blue, Dark Blue, Red, Steel Blue).
+- **Colors**: Parent passes `colors` prop.
 
 #### PieChart (`src/components/charts/PieChart.jsx`)
 - **Visuals**: Full pie chart (`innerRadius: 0%`).
-- **Labels**: Smart integer formatting (`#.##%`) shown inside slices.
+- **Labels**: Percentage labels inside slices with adaptive color from slice luminance.
 - **Legend**: Specialized format `Category : Value%` (e.g., `Equity Fund : 30%`).
-- **Colors**: Asset-based palette (Coral, Steel Blue, Amber, Sage, Lavender).
+- **Colors**: Parent passes `colors` prop.
 
 #### GaugeChart (`src/components/charts/GaugeChart.jsx`)
 - **Visuals**: Semi-circular gauge chart for scores or risk levels.
-- **Features**: Supports segmented colored bands (Low, Mid, High) and a dynamic pointer needle.
+- **Features**: Segmented bands from parent `bands` prop and a dynamic pointer needle.
 - **Usage**: Best for single-metric visualizations like "Portfolio Risk Score".
 
 #### SunburstChart (`src/components/charts/SunburstChart.jsx`)
 - **Visuals**: Hierarchical circular chart (Sunburst) for nested data structures.
-- **Features**: Deeply nested data support, automatic branch-based coloring, and intelligent label fitting.
+- **Features**: Deeply nested data support, top-level colors from parent `branchColors`, child segments lighten automatically.
 - **Usage**: Perfect for complex asset allocation or multi-level category distribution (e.g., "Mutual Fund > Equity > Large Cap").
 
 > [!NOTE]
@@ -159,20 +196,26 @@ Demonstrates components side-by-side with data matching the high-fidelity design
 ```javascript
 import { DonutChart, PieChart } from '@components/charts';
 
-export const ChartsShowcase = () => (
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-    <DonutChart
-      title="Client Segmentation by Risk"
-      data={riskData}
-      height={380}
-    />
-    <PieChart
-      title="AUM by category"
-      data={aumData}
-      height={380}
-    />
-  </div>
-);
+export const ChartsShowcase = () => {
+  const segmentationColors = ['#124e7a', '#6889c9', '#b85c5c', '#d97a32', '#2e8fd4'];
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <DonutChart
+        title="Client Segmentation by Risk"
+        data={riskData}
+        colors={segmentationColors}
+        height={380}
+      />
+      <PieChart
+        title="AUM by category"
+        data={aumData}
+        colors={segmentationColors}
+        height={380}
+      />
+    </div>
+  );
+};
 ```
 
 ---
@@ -183,56 +226,13 @@ export const ChartsShowcase = () => (
 
 #### `src/components/charts/DonutChart.jsx`
 ```javascript
-const DonutChart = ({ data, title, colors, loading, height = 300 }) => {
-  const chartIdRef = useRef(`donut-chart-${Math.random().toString(36).substr(2, 9)}`);
+// Parent (feature/page) owns the palette
+const SEGMENTATION_COLORS = ['#124e7a', '#6889c9', '#b85c5c', '#d97a32', '#2e8fd4'];
 
-  useLayoutEffect(() => {
-    if (loading || !data?.length) return;
-    const root = am5.Root.new(chartIdRef.current);
-    
-    const chart = root.container.children.push(
-      am5percent.PieChart.new(root, { 
-        innerRadius: am5.percent(70), 
-        layout: root.horizontalLayout 
-      })
-    );
-
-    const series = chart.series.push(
-      am5percent.PieSeries.new(root, {
-        valueField: "value",
-        categoryField: "category",
-        alignLabels: false,
-      })
-    );
-
-    // Labels inside the ring with smart decimal logic
-    series.labels.template.setAll({
-      inside: true,
-      text: "{valuePercentTotal.formatNumber('#.##')}%",
-      fill: am5.color("#ffffff"),
-      fontSize: 14
-    });
-
-    // Unified legend format: "Category - Value"
-    const legend = chart.children.push(am5.Legend.new(root, {
-      layout: root.verticalLayout,
-      paddingLeft: 20
-    }));
-
-    legend.labels.template.setAll({
-      text: "{category} - {value.formatNumber('#.##')}",
-      fill: am5.color("#cbd5e1")
-    });
-
-    series.data.setAll(data);
-    legend.data.setAll(series.dataItems);
-    
-    return () => root.dispose();
-  }, [data, loading]);
-
-  return <div id={chartIdRef.current} className="w-full h-full" />;
-};
+<DonutChart data={riskData} colors={SEGMENTATION_COLORS} title="Client Segmentation by Risk" />
 ```
+
+Chart components read chrome colors from CSS variables at runtime and compute adaptive slice label colors internally — parents only pass `colors`, `bands`, or `branchColors`.
 
 #### `src/components/charts/PieChart.jsx`
 Same pattern as `DonutChart` but without `innerRadius` and with `legendValueText: ': {valuePercentTotal.formatNumber(\'0.00\')}%'`.
@@ -258,6 +258,11 @@ export { default as GaugeChart } from './GaugeChart';
 ### Memory Leak Prevention
 - **Always** call `root.dispose()` in the cleanup function of `useLayoutEffect`.
 - Avoid storing large AmCharts object instances in React state; use `useRef`.
+
+### Accessibility (chart labels)
+
+- Parents must choose slice/band colors with sufficient contrast; Donut/Pie adapt label text color (light vs dark) from slice luminance.
+- Tooltip backgrounds use `--bg-popup`; slice strokes use `--bg-page`.
 
 ### Dark Theme Support
 - Detect theme changes via global state (Redux) or CSS classes.

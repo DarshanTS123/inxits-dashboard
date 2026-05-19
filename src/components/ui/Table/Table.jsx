@@ -29,7 +29,7 @@ function buildStickyColumnStyles(scopeClassName, stickyColumns) {
   // the hover/selected effect is still visible across the entire row.
   rules.push(`
     .${scopeClassName} tbody tr:hover > * {
-      background: #303244 !important;
+      background: var(--bg-table-hover) !important;
     }
     .${scopeClassName} tbody tr[data-selected=true] > * {
       background: var(--bg-layer-1) !important;
@@ -114,7 +114,7 @@ function TableRow({ className, ...props }) {
   return (
     <tr
       className={cn(
-        'border-b border-stroke-divider transition-colors hover:bg-layer1/60 data-[selected=true]:bg-layer1',
+        'border-b border-stroke-divider transition-colors hover:bg-table-hover data-[selected=true]:bg-layer1',
         className
       )}
       {...props}

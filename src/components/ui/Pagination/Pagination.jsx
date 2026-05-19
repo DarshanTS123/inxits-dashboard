@@ -100,7 +100,7 @@ export function Pagination({
                   'h-10 w-10 rounded-md border p-0 text-sm font-semibold',
                   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25',
                   isActive
-                    ? 'border-primary bg-primary text-text-on-primary shadow-[0_0_0_1px_rgba(70,168,220,0.18)]'
+                    ? 'border-primary bg-btn-primary text-text-on-primary shadow-[0_0_0_1px_rgba(30,122,176,0.18)]'
                     : 'border-stroke-divider bg-layer1 text-paragraph hover:border-white/25 hover:bg-layer2 hover:text-heading'
                 )}
                 aria-current={isActive ? 'page' : undefined}
