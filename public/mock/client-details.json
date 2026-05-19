@@ -102,6 +102,93 @@
         { "label": "Signature", "active": true },
         { "label": "Photo", "active": false }
       ]
+    },
+    "transactionsTab": {
+      "lastTransactionDate": "19 Sept 2025",
+      "dateRange": {
+        "start": "2025-09-01",
+        "end": "2025-09-26",
+        "label": "01 Sep 25 - 26 Sep 25"
+      },
+      "typeFilters": [
+        { "value": "sip", "label": "SIP" },
+        { "value": "redeem", "label": "Redeem" },
+        { "value": "lumpsum", "label": "Lumpsum" }
+      ],
+      "items": [
+        {
+          "id": "tx-1",
+          "schemeName": "ICICI Prudential Short Term Fund Direct Plan Growth",
+          "amount": "₹1200",
+          "typeLabel": "SIP instalment",
+          "transactionType": "sip",
+          "status": "Completed",
+          "date": "2025-09-26"
+        },
+        {
+          "id": "tx-2",
+          "schemeName": "Bandhan Financial Services Reg Gr",
+          "amount": "₹500",
+          "typeLabel": "SIP instalment",
+          "transactionType": "sip",
+          "status": "Failed",
+          "date": "2025-09-26"
+        },
+        {
+          "id": "tx-3",
+          "schemeName": "Aditya BSL Bkng & Fin Srvcs Reg Gr",
+          "amount": "₹500",
+          "typeLabel": "SIP instalment",
+          "transactionType": "sip",
+          "status": "In Progress",
+          "date": "2025-09-26"
+        },
+        {
+          "id": "tx-4",
+          "schemeName": "ICICI Prudential Short Term Fund Direct Plan Growth",
+          "amount": "₹500",
+          "typeLabel": "SIP instalment",
+          "transactionType": "sip",
+          "status": "Completed",
+          "date": "2025-09-22"
+        },
+        {
+          "id": "tx-5",
+          "schemeName": "Aditya BSL Bkng & Fin Srvcs Reg Gr",
+          "amount": "₹1000",
+          "typeLabel": "SIP instalment",
+          "transactionType": "sip",
+          "status": "Completed",
+          "date": "2025-09-22"
+        },
+        {
+          "id": "tx-6",
+          "schemeName": "HDFC Equity Fund Direct Growth",
+          "amount": "₹2500",
+          "typeLabel": "Redeem",
+          "transactionType": "redeem",
+          "status": "Completed",
+          "date": "2025-09-20"
+        },
+        {
+          "id": "tx-7",
+          "schemeName": "SBI Bluechip Fund Direct Growth",
+          "amount": "₹50000",
+          "typeLabel": "Lumpsum",
+          "transactionType": "lumpsum",
+          "status": "Completed",
+          "date": "2025-09-15"
+        },
+        {
+          "id": "tx-8",
+          "schemeName": "Axis Midcap Fund Direct Growth",
+          "amount": "₹75000",
+          "typeLabel": "Lumpsum",
+          "transactionType": "lumpsum",
+          "status": "In Progress",
+          "date": "2025-09-10"
+        }
+      ]
     }
   },
   "overrides": {}

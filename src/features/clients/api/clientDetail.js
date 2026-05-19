@@ -56,6 +56,20 @@ const mergeClientDetail = (client, template, overrides = {}) => {
       documents:
         overrides.personalTab?.documents ?? template.personalTab.documents,
     },
+    transactionsTab: {
+      lastTransactionDate:
+        overrides.transactionsTab?.lastTransactionDate ??
+        template.transactionsTab.lastTransactionDate,
+      dateRange: mergeSection(
+        template.transactionsTab.dateRange,
+        overrides.transactionsTab?.dateRange
+      ),
+      typeFilters:
+        overrides.transactionsTab?.typeFilters ??
+        template.transactionsTab.typeFilters,
+      items:
+        overrides.transactionsTab?.items ?? template.transactionsTab.items,
+    },
   };
 };
 

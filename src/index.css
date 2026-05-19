@@ -1,3 +1,5 @@
+@import 'react-day-picker/style.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,6 +7,9 @@
 :root {
   /* Brand Colors */
   --primary: #46a8dc;
+  --calendar-range-fill: color-mix(in srgb, var(--primary) 16%, var(--bg-popup));
+  --calendar-range-endpoint: #4ea8de;
+  --calendar-range-bar-height: 2rem;
 
   /* Backgrounds */
   --bg-page: #13172a;
@@ -104,6 +109,7 @@
     --input: var(--stroke-divider);
     --ring: var(--primary);
     --radius: 0.5rem;
+    --radius-md: 0.375rem;
   }
   
   body {
@@ -129,4 +135,65 @@
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.2);
   }
+}
+
+/* Unlayered so these override react-day-picker's default range backgrounds (#f0f0ff + transparent gradients). */
+.rdp-root {
+  --rdp-accent-color: var(--primary);
+  --rdp-accent-background-color: var(--calendar-range-fill);
+  --rdp-range_middle-background-color: var(--calendar-range-fill);
+  --rdp-range_start-background: none;
+  --rdp-range_end-background: none;
+  --rdp-range_start-date-background-color: var(--calendar-range-endpoint);
+  --rdp-range_end-date-background-color: var(--calendar-range-endpoint);
+  --rdp-day-height: 2.25rem;
+  --rdp-day-width: 2.25rem;
+  --rdp-day_button-height: 2.25rem;
+  --rdp-day_button-width: 2.25rem;
+  --rdp-day_button-border-radius: 0.375rem;
+  --rdp-selected-border: none;
+  --rdp-today-color: var(--primary);
+}
+
+.rdp-root .rdp-range_start,
+.rdp-root .rdp-range_end {
+  background: none;
+}
+
+.rdp-root .rdp-range_middle {
+  background-color: transparent;
+}
+
+.rdp-root .rdp-range_start .rdp-day_button,
+.rdp-root .rdp-range_end .rdp-day_button {
+  height: var(--calendar-range-bar-height);
+  width: 100%;
+  max-width: 2.25rem;
+  border: none;
+  border-radius: 0.375rem;
+  background-color: var(--calendar-range-endpoint);
+  color: var(--text-on-primary);
+}
+
+.rdp-root .rdp-range_start .rdp-day_button {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.rdp-root .rdp-range_end .rdp-day_button {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.rdp-root .rdp-range_start.rdp-range_end .rdp-day_button {
+  border-radius: 0.375rem;
+}
+
+.rdp-root .rdp-range_start.rdp-range_end {
+  background: none;
+}
+
+.rdp-root .rdp-range_middle .rdp-day_button {
+  background-color: transparent;
+  border: none;
 }

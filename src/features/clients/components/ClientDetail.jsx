@@ -7,6 +7,7 @@ import { Breadcrumbs } from '@components/ui/Breadcrumbs/Breadcrumbs';
 import { ClientDetailSummaryCards } from './ClientDetailSummaryCards';
 import { ClientDetailPersonalTab } from './ClientDetailPersonalTab';
 import { ClientDetailPortfolioTab } from './ClientDetailPortfolioTab';
+import { ClientDetailTransactionsTab } from './ClientDetailTransactionsTab';
 
 const TabPlaceholder = ({ label }) => (
   <div className="rounded-lg border border-stroke-divider bg-layer1 p-8 text-center text-sm text-paragraph">
@@ -31,7 +32,12 @@ export const ClientDetail = ({ client }) => {
       {
         value: 'transactions',
         label: 'Transactions',
-        content: <TabPlaceholder label="Transactions" />,
+        content: (
+          <ClientDetailTransactionsTab
+            key={client.id}
+            transactionsTab={client.transactionsTab}
+          />
+        ),
       },
       {
         value: 'family',
@@ -44,7 +50,7 @@ export const ClientDetail = ({ client }) => {
         content: <TabPlaceholder label="Reports" />,
       },
     ],
-    [client.personalTab]
+    [client.personalTab, client.transactionsTab]
   );
 
   return (
