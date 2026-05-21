@@ -583,7 +583,23 @@ Use this layout for entity detail screens (reference: `src/features/clients/comp
 
 ### Modals
 
-- If modals are introduced, they must be built on Radix primitives for focus management and keyboard handling.
+The `Modal` component (`src/components/ui/Modal/Modal.jsx`) is a centralized Dialog overlay backed by Radix UI. Use modals for localized tasks that require immediate user input or confirmation without losing the context of the underlying page (e.g., "Change RM" forms, destructive action confirmations).
+
+#### Props
+
+- `open` (boolean): Controls modal visibility; required
+- `onOpenChange` (function): Called when open state changes
+- `title` (string): Modal header title; required
+- `description` (string, optional): Subtitle below title
+- `children` (ReactNode): Main content area
+- `footer` (ReactNode, optional): Action buttons footer
+- `size` (string): One of `'sm'`, `'md'`, `'lg'`, `'xl'`, `'full'`. Controls `max-width`. The modal is naturally constrained vertically (e.g., `max-h-[90vh]`) so it doesn't render as full-screen inadvertently.
+
+#### Best practices
+
+1. **Form integration**: Place `<form>` inside modal content; use `form="form-id"` on footer buttons.
+2. **Reset on close**: Always reset form states upon closing to avoid stale data on re-open.
+3. **Focus management**: Handled automatically by the Radix Dialog primitive.
 
 ### Drawers
 

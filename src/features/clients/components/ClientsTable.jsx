@@ -1,11 +1,20 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MoreVertical } from 'lucide-react';
+import { MoreVertical, UserIcon } from 'lucide-react';
 
 import { Button } from '@components/ui/Button/Button';
+import { Modal } from '@components/ui/Modal/Modal';
 import { DropdownMenuList } from '@components/ui/DropdownMenu/DropdownMenu';
 import { DataTable } from '@components/ui/Table/Table';
+import { Select } from '@components/ui/Select/Select';
 import { cn } from '@utils/cn';
+
+const RM_OPTIONS = [
+  { label: 'Select rm', value: 'unassigned' },
+  { label: 'Aarav Shah', value: 'aarav-shah' },
+  { label: 'Kavya Mehta', value: 'kavya-mehta' },
+  { label: 'Rohan Iyer', value: 'rohan-iyer' },
+];
 
 function statusToDot(status) {
   switch (status) {
@@ -22,6 +31,7 @@ function statusToDot(status) {
 
 export const ClientsTable = ({ data, isLoading }) => {
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const columns = useMemo(
     () => [
@@ -111,7 +121,7 @@ export const ClientsTable = ({ data, isLoading }) => {
               {
                 id: 'change-rm',
                 label: 'Change RM',
-                onSelect: (e) => e.preventDefault(),
+                onSelect: (e) => { e.preventDefault(); setIsModalOpen(true); },
               },
               {
                 id: 'mark-inactive',
@@ -127,13 +137,70 @@ export const ClientsTable = ({ data, isLoading }) => {
   );
 
   return (
-    <DataTable
-      columns={columns}
-      data={data}
-      getRowKey={(row) => row.id}
-      emptyMessage={isLoading ? 'Loading clients...' : 'No clients found.'}
-      stickyColumns={{ left: [{ index: 0, width: 180 }], right: [{ index: -1, width: 56 }] }}
-      onRowClick={(row) => navigate(`/clients/${row.id}`)}
+    <>
+      <DataTable
+        columns={columns}
+        data={data}
+        getRowKey={(row) => row.id}
+        emptyMessage={isLoading ? 'Loading clients...' : 'No clients found.'}
+        stickyColumns={{ left: [{ index: 0, width: 180 }], right: [{ index: -1, width: 56 }] }}
+        onRowClick={(row) => navigate(`/clients/${row.id}`)}
+      />
+      <Modal
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+      >
+        <div className="flex flex-col gap-6 p-2">
+  {/* Title with user icon */}
+  <div className="flex items-center gap-3">
+    <span className="flex h-12 w-12 items-center justify-center rounded-full bg-sky-900/40">
+      <UserIcon className="h-6 w-6 text-primary" />
+    </span>
+    <h3 className="text-xl font-bold text-heading">Change RM</h3>
+  </div>
+
+  {/* Select RM dropdown */}
+  <div className="flex flex-col gap-2">
+    <label htmlFor="rm-select" className="text-sm font-medium text-paragraph">
+      Select RM<span className="text-error">*</span>
+    </label>
+    <Select
+      id="rm-select"
+      placeholder="Select RM"
+      options={RM_OPTIONS}
+      triggerClassName="h-12 w-full rounded-xl bg-transparent text-sm border border-stroke-divider"
     />
+  </div>
+
+  {/* Reason for change dropdown */}
+  <div className="flex flex-col gap-2">
+    <label htmlFor="reason-select" className="text-sm font-medium text-paragraph">
+      Reason for change<span className="text-error">*</span>
+    </label>
+    <Select
+      id="reason-select"
+      placeholder="Select Reason"
+      options={[
+        { label: 'On Notice Period', value: 'on-notice-period' },
+        { label: 'Resigned', value: 'resigned' },
+        { label: 'Performance Issue', value: 'performance-issue' },
+        { label: 'Client Request', value: 'client-request' },
+        { label: 'Other', value: 'other' },
+      ]}
+      triggerClassName="h-12 w-full rounded-xl bg-transparent text-sm border border-stroke-divider"
+    />
+  </div>
+
+  {/* Change RM button */}
+  <Button className="self-start mt-1 rounded-lg px-6 py-2.5" onClick={() => {
+    // TODO: implement change RM logic
+    setIsModalOpen(false);
+  }}>
+    Change RM
+  </Button>
+</div>
+      </Modal>
+    </>
   );
+
 };

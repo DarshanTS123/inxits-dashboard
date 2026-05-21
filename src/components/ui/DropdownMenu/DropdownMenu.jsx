@@ -37,6 +37,7 @@ function DropdownMenuItem({ className, inset, variant = 'default', menuVariant =
       data-menu-variant={menuVariant}
       data-slot="dropdown-menu-item"
       data-variant={variant}
+      onClick={e => { e.stopPropagation() }}
       className={cn(
         'relative flex cursor-pointer select-none items-center gap-2 rounded px-2 py-1.5 text-xs font-semibold outline-none transition data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[inset=true]:pl-8 data-[variant=destructive]:text-error data-[variant=destructive]:focus:bg-error/10',
         menuVariant === 'light' && 'focus:bg-primary/10',
