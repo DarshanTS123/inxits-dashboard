@@ -17,7 +17,7 @@
   --bg-layer-2: rgba(255, 255, 255, 0.08);
   --bg-layer-3: #25293b;
   --bg-popup: #1a1f33;
-  --bg-topnav: rgba(29, 29, 29, 0.24);
+  --bg-topnav: #151827;
   --bg-helper: #1c2033;
   --bg-table-hover: #1c213d;
   --bg-table-footer: #1d2135;
@@ -79,7 +79,7 @@
 
   /* Sidebar Specific (Derived from Palette) */
   --sidebar-header-bg: #0c335d;
-  --sidebar-bg: var(--bg-page);
+  --sidebar-bg: #1D1D1D3D;
   --sidebar-item-active-bg: rgba(255, 255, 255, 0.12);
   --sidebar-item-active-text: var(--primary);
   --sidebar-item-text: var(--icon-active);
@@ -111,7 +111,7 @@
     --radius: 0.5rem;
     --radius-md: 0.375rem;
   }
-  
+
   body {
     @apply bg-page text-paragraph;
   }

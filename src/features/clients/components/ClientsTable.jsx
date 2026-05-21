@@ -1,12 +1,13 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MoreVertical, UserIcon } from 'lucide-react';
+import { MoreVertical, UserIcon, Ban } from 'lucide-react';
 
 import { Button } from '@components/ui/Button/Button';
 import { Modal } from '@components/ui/Modal/Modal';
 import { DropdownMenuList } from '@components/ui/DropdownMenu/DropdownMenu';
 import { DataTable } from '@components/ui/Table/Table';
 import { Select } from '@components/ui/Select/Select';
+import { RadioGroup, RadioGroupItem } from '@components/ui/radio-group';
 import { cn } from '@utils/cn';
 
 const RM_OPTIONS = [
@@ -31,7 +32,7 @@ function statusToDot(status) {
 
 export const ClientsTable = ({ data, isLoading }) => {
   const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeModal, setActiveModal] = useState(null);
 
   const columns = useMemo(
     () => [
@@ -121,12 +122,12 @@ export const ClientsTable = ({ data, isLoading }) => {
               {
                 id: 'change-rm',
                 label: 'Change RM',
-                onSelect: (e) => { e.preventDefault(); setIsModalOpen(true); },
+                onSelect: () => setActiveModal('change-rm'),
               },
               {
                 id: 'mark-inactive',
                 label: 'Mark Inactive',
-                onSelect: (e) => e.preventDefault(),
+                onSelect: () => setActiveModal('mark-inactive'),
               },
             ]}
           />
@@ -147,58 +148,100 @@ export const ClientsTable = ({ data, isLoading }) => {
         onRowClick={(row) => navigate(`/clients/${row.id}`)}
       />
       <Modal
-        open={isModalOpen}
-        onOpenChange={setIsModalOpen}
+        open={activeModal === 'change-rm'}
+        onOpenChange={(open) => setActiveModal(open ? 'change-rm' : null)}
       >
         <div className="flex flex-col gap-6 p-2">
-  {/* Title with user icon */}
-  <div className="flex items-center gap-3">
-    <span className="flex h-12 w-12 items-center justify-center rounded-full bg-sky-900/40">
-      <UserIcon className="h-6 w-6 text-primary" />
-    </span>
-    <h3 className="text-xl font-bold text-heading">Change RM</h3>
-  </div>
+          {/* Title with user icon */}
+          <div className="flex items-center gap-3">
+            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-sky-900/40">
+              <UserIcon className="h-6 w-6 text-primary" />
+            </span>
+            <h3 className="text-xl font-bold text-heading">Change RM</h3>
+          </div>
 
-  {/* Select RM dropdown */}
-  <div className="flex flex-col gap-2">
-    <label htmlFor="rm-select" className="text-sm font-medium text-paragraph">
-      Select RM<span className="text-error">*</span>
-    </label>
-    <Select
-      id="rm-select"
-      placeholder="Select RM"
-      options={RM_OPTIONS}
-      triggerClassName="h-12 w-full rounded-xl bg-transparent text-sm border border-stroke-divider"
-    />
-  </div>
+          {/* Select RM dropdown */}
+          <div className="flex flex-col gap-2">
+            <label htmlFor="rm-select" className="text-sm font-medium text-paragraph">
+              Select RM<span className="text-error">*</span>
+            </label>
+            <Select
+              id="rm-select"
+              placeholder="Select RM"
+              options={RM_OPTIONS}
+              triggerClassName="h-12 w-full rounded-xl bg-transparent text-sm border border-stroke-divider"
+            />
+          </div>
 
-  {/* Reason for change dropdown */}
-  <div className="flex flex-col gap-2">
-    <label htmlFor="reason-select" className="text-sm font-medium text-paragraph">
-      Reason for change<span className="text-error">*</span>
-    </label>
-    <Select
-      id="reason-select"
-      placeholder="Select Reason"
-      options={[
-        { label: 'On Notice Period', value: 'on-notice-period' },
-        { label: 'Resigned', value: 'resigned' },
-        { label: 'Performance Issue', value: 'performance-issue' },
-        { label: 'Client Request', value: 'client-request' },
-        { label: 'Other', value: 'other' },
-      ]}
-      triggerClassName="h-12 w-full rounded-xl bg-transparent text-sm border border-stroke-divider"
-    />
-  </div>
+          {/* Reason for change dropdown */}
+          <div className="flex flex-col gap-2">
+            <label htmlFor="reason-select" className="text-sm font-medium text-paragraph">
+              Reason for change<span className="text-error">*</span>
+            </label>
+            <Select
+              id="reason-select"
+              placeholder="Select Reason"
+              options={[
+                { label: 'On Notice Period', value: 'on-notice-period' },
+                { label: 'Resigned', value: 'resigned' },
+                { label: 'Performance Issue', value: 'performance-issue' },
+                { label: 'Client Request', value: 'client-request' },
+                { label: 'Other', value: 'other' },
+              ]}
+              triggerClassName="h-12 w-full rounded-xl bg-transparent text-sm border border-stroke-divider"
+            />
+          </div>
 
-  {/* Change RM button */}
-  <Button className="self-start mt-1 rounded-lg px-6 py-2.5" onClick={() => {
-    // TODO: implement change RM logic
-    setIsModalOpen(false);
-  }}>
-    Change RM
-  </Button>
-</div>
+          {/* Change RM button */}
+          <Button className="self-start mt-1 rounded-lg px-6 py-2.5" onClick={() => {
+            // TODO: implement change RM logic
+            setActiveModal(null);
+          }}>
+            Change RM
+          </Button>
+        </div>
+      </Modal>
+
+      <Modal
+        open={activeModal === 'mark-inactive'}
+        onOpenChange={(open) => setActiveModal(open ? 'mark-inactive' : null)}
+        size="md"
+      >
+        <div className="flex flex-col items-center text-center gap-5 p-2">
+          <span className="flex h-14 w-14 items-center justify-center rounded-full bg-sky-900/40">
+            <Ban className="h-7 w-7 text-primary" />
+          </span>
+          <div className="flex flex-col gap-2">
+            <h3 className="text-xl font-medium text-heading tracking-tight leading-snug">
+              Are you sure you want to mark this<br />user Inactive?
+            </h3>
+            <p className="text-[14px] text-paragraph mt-1">You can always activate the user later.</p>
+          </div>
+
+          <div className="w-full flex flex-col gap-3 text-left mt-2 mb-2">
+            <label className="text-[14px] text-paragraph">
+              Reason<span className="text-error">*</span>
+            </label>
+            <RadioGroup defaultValue="discontinued" className="flex items-center gap-5" name="inactiveReason">
+              <div className="flex items-center gap-2.5">
+                <RadioGroupItem value="discontinued" id="r1" />
+                <label htmlFor="r1" className="text-[14px] text-heading font-normal cursor-pointer whitespace-nowrap">
+                  Client Discontinued
+                </label>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <RadioGroupItem value="plan-changed" id="r2" />
+                <label htmlFor="r2" className="text-[14px] text-heading font-normal cursor-pointer whitespace-nowrap">
+                  Plan Changed (Regular-Direct)
+                </label>
+              </div>
+            </RadioGroup>
+          </div>
+
+          <Button className="px-6 py-[9px] rounded-lg text-[15px] font-medium" onClick={() => setActiveModal(null)}>
+            Mark Inactive
+          </Button>
+        </div>
       </Modal>
     </>
   );

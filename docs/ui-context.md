@@ -41,7 +41,7 @@ Defined in `src/index.css`, aliased in `tailwind.config.js`. Values are aligned 
   - `--bg-layer-2` → `rgba(255,255,255,0.08)` → `bg-layer2`
   - `--bg-layer-3` → `#25293B` → `bg-layer3` (drawer header/footer, nested panels)
   - `--bg-popup` → `#1A1F33` → `bg-popup`
-  - `--bg-topnav` → `rgba(29,29,29,0.24)` → `bg-topnav`
+  - `--bg-topnav` → `#151827` → `bg-topnav`
   - `--bg-helper` → `#1C2033` → `bg-helper` (table headers)
   - `--bg-table-hover` → `#1C213D` → `bg-table-hover`
   - `--bg-table-footer` → `#1D2135` → `bg-table-footer`
@@ -267,7 +267,7 @@ Rules:
 - Must be **presentational** (no API calls, no React Query, no Redux).
 - Existing primitives include:
   - `Button`, `Input`, `Tooltip`
-  - Radix-backed `DropdownMenu`, `Select`, and `Tabs`
+  - Radix-backed `DropdownMenu`, `Select`, `Tabs`, and `RadioGroup`
   - `Table`/`DataTable` and `Pagination` for dense list surfaces
   - `PageLoader` and `PagePlaceholder` for route states
   - `Card` system for unified container aesthetics

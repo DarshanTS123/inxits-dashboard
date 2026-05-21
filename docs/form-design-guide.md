@@ -16,6 +16,7 @@ This document outlines standards and best practices for designing and implementi
 - **Input primitives**: `src/components/ui/Input/Input.jsx` for text inputs
 - **Textarea primitives**: `src/components/ui/Textarea/Textarea.jsx` for multi-line text fields
 - **Select/multi-select**: `src/components/ui/Select/Select.jsx` for dropdowns
+- **Radio buttons**: `src/components/ui/radio-group.jsx` for mutually exclusive options
 - **Buttons**: `src/components/ui/Button/Button.jsx` for submit/reset/cancel
 - **Validation**: `zod` schemas via `@hookform/resolvers/zod` and `react-hook-form`
 - **Async validation** (if needed): `react-hook-form` `validate` callback with React Query

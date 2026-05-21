@@ -36,7 +36,7 @@ export const MainLayout = () => {
       <div className="main-content flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
         <Header onMenuClick={() => dispatch(openMobileSidebar())} />
 
-        <main className="min-h-0 flex-1 overflow-y-auto bg-[#090e1a] p-6 custom-scrollbar">
+        <main className="min-h-0 flex-1 overflow-y-auto p-6 custom-scrollbar">
           <Suspense fallback={<PageLoader />}>
             <Outlet />
           </Suspense>

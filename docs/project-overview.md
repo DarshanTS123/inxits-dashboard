@@ -39,7 +39,7 @@ The inXits Dashboard is a role-based internal web console for investment and ope
 #### Clients list (`/clients`)
 
 - Tabbed client states (All, Invited, Ageing, Inactive), search by selected column, pagination, and row action menus.
-- Row action menus support opening `Modal` components (e.g., "Change RM" action) for quick operational updates without leaving the page.
+- Row action menus support opening `Modal` components (e.g., "Change RM" and "Mark Inactive" actions) for quick operational updates without leaving the page.
 - Row click navigates to `/clients/:id`.
 - Data is fetched via `src/features/clients/api/clients.js` using `privateApi` from `public/mock/clients.json`.
 - Tab constants live in `src/features/clients/constants/clientTabs.js`.
@@ -87,7 +87,7 @@ The inXits Dashboard is a role-based internal web console for investment and ope
 - Public auth shell: `AuthLayout`.
 - Route guards: `PublicRoute`, `PrivateRoute`, and `RoleProtectedRoute`.
 - Global document title management: `DocumentTitle` and route `handle.title`.
-- UI primitives: `Button`, `Input`, `Tooltip`, `DropdownMenu`, `Tabs`, `Select`, `Table`, `Pagination`, `PageLoader`, `PagePlaceholder`, `Card`, `Badge`, `Modal`, `Drawer`, and `Breadcrumbs`.
+- UI primitives: `Button`, `Input`, `Tooltip`, `DropdownMenu`, `Tabs`, `Select`, `Table`, `Pagination`, `PageLoader`, `PagePlaceholder`, `Card`, `Badge`, `Modal`, `Drawer`, `RadioGroup`, and `Breadcrumbs`.
 - Analytics Charts: High-fidelity `DonutChart`, `PieChart`, `GaugeChart`, and `SunburstChart` with smart decimal labels, custom legends, and skeleton loading.
 - Dashboard capabilities: linked statistics, categorical announcements with badges, summary performance tables, and functional transaction pagination.
 - Clients list capabilities: state tabs with counts, column-scoped search, paginated rows, sticky first/action columns, row action menu, row navigation to detail, and empty state messaging.
