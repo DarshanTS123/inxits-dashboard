@@ -51,7 +51,7 @@ The inXits Dashboard is a role-based internal web console for investment and ope
 - Lean page: `src/pages/clients/ClientDetailPage.jsx` loads data and delegates rendering to `src/features/clients/components/ClientDetail.jsx`.
 - Data is fetched via `src/features/clients/api/clientDetail.js` (`useClient`), merging list rows from `public/mock/clients.json` with section templates/overrides from `public/mock/client-details.json`.
 - Layout pattern: `Breadcrumbs` → page title → summary cards grid → data-driven `Tabs`.
-- Summary cards (`ClientDetailSummaryCards`) use the parent-defined card array pattern with `Card`, `DetailFieldGrid`, and `GaugeChart`.
+- Summary cards (`ClientDetailSummaryCards`) use the parent-defined card array pattern with `Card`, `DetailFieldGrid`, and `GaugeChart`; typography inherits shared defaults from `Card` and `DetailFieldGrid`.
  - Implementation note: In some designs the primary or featured summary card may be required to take the full row on medium and larger screens; implement this by applying `md:col-span-2` to the featured card wrapper when mapping the parent card array.
 - Personal tab (`ClientDetailPersonalTab`) renders identity, address, nominees, FATCA, bank, and document sections as stacked cards.
 - Remaining tabs (Portfolios, Transactions, Family member, Reports) render placeholders until their workflows are implemented.

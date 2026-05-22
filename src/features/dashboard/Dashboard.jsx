@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import { useDashboardData } from './api/dashboard';
 import { StatsGrid } from './components/StatsGrid';
 import { DonutChart, PieChart } from '@/components/charts';
@@ -20,6 +22,7 @@ const SEGMENTATION_COLORS = [
 const TRANSACTION_STATUS_COLORS = ['#ea5758', '#28c76f', '#efbf00', '#6889c9'];
 
 export const Dashboard = () => {
+  const navigate = useNavigate();
   const { data: dashboardData, isLoading } = useDashboardData();
 
   const aumData = [
@@ -47,6 +50,7 @@ export const Dashboard = () => {
           variant="outline"
           size="md"
           className="border-stroke-divider bg-layer2 font-semibold text-subheading hover:bg-layer1"
+          onClick={() => navigate('/dashboard/alerts')}
         >
           Alerts(10)
         </Button>

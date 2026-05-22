@@ -14,6 +14,7 @@ const ApplicationManagementPage = lazy(() => import('../pages/application-manage
 const CompliancePage = lazy(() => import('../pages/compliance/CompliancePage').then((m) => ({ default: m.CompliancePage })));
 const AUMReportsPage = lazy(() => import('../pages/aum-reports/AUMReportsPage').then((m) => ({ default: m.AUMReportsPage })));
 const ReportsPage = lazy(() => import('../pages/reports/ReportsPage').then((m) => ({ default: m.ReportsPage })));
+const AlertsPage = lazy(() => import('../pages/alerts/AlertsPage').then((m) => ({ default: m.AlertsPage })));
 const LoginPage = lazy(() => import('../pages/auth/LoginPage').then((m) => ({ default: m.LoginPage })));
 import { PublicRoute } from './PublicRoute';
 import { PrivateRoute } from './PrivateRoute';
@@ -55,6 +56,7 @@ export const router = createBrowserRouter([
             element: <MainLayout />,
             children: [
               { path: '/dashboard', element: <DashboardOverview />, handle: { title: 'Dashboard' } },
+              { path: '/dashboard/alerts', element: <AlertsPage />, handle: { title: 'Dashboard' } },
               { path: '/clients', element: <ClientsPage />, handle: { title: 'Clients' } },
               {
                 path: '/clients/:id',

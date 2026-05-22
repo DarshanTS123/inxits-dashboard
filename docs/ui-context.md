@@ -14,7 +14,7 @@ This document defines how UI is built in this repo: tokens, Tailwind usage, comp
 | Forms | `docs/form-design-guide.md` |
 | Charts | `docs/chart-architecture.md` |
 
-**Default page rhythm**: `flex flex-col gap-5` inside `MainLayout`’s `p-6` main area. **Default card title**: `text-[17px]` via `Card`. **Default paired row**: `lg:grid-cols-2 gap-5 items-stretch`.
+**Default page rhythm**: `flex flex-col gap-5` inside `MainLayout`’s `p-6` main area. **Default card title**: `text-[18px] font-normal` via `Card`. **Default paired row**: `lg:grid-cols-2 gap-5 items-stretch`.
 
 ## Design system foundation
 
@@ -149,7 +149,7 @@ Use Tailwind utilities only. Do not add arbitrary `font-size` in CSS for app UI.
 | Semibold | `font-semibold` | `600` | Buttons, "View all", KPI meta |
 | Bold | `font-bold` | `700` | Page titles, metric values |
 
-**UI Rule T2**: Detail section cards may override title with `titleClassName="text-xl text-heading"` and `titleUnderline={false}` — do not mix other sizes on the same page without reason.
+**UI Rule T2**: Shared `Card` section titles default to `text-[18px] font-normal`; shared read-only detail labels/values default to `14px` / `16px`, both regular weight. Prefer these defaults and use `titleClassName`, `labelClassName`, or `valueClassName` only for a documented design exception.
 
 **UI Rule T3**: Uppercase is reserved for **metric labels**, **compact actions** (“View all”), and **table meta** (e.g. RM role). Body copy stays sentence case.
 
@@ -197,6 +197,7 @@ Spacing uses the **Tailwind scale only**. Pick from the tables below; do not use
 | **Tight header** | `mb-3` | Dense tables (e.g. ongoing transactions) |
 | **Header alignment** | `headerClassName="items-center"` | When header has filters/actions beside title |
 | **Body internal** | `contentClassName="flex flex-col gap-3"` | Scrollable table + pagination |
+| **Default title type** | `text-[18px] font-normal` | Inherited from `Card`; avoid local title typography overrides |
 
 **UI Rule C3**: Paired cards in one row must use the **same** `padding`, `hoverable`, and **explicit `height`** (via `style` or chart `height` prop) when designs show equal tiles.
 
@@ -522,7 +523,6 @@ Patterns used:
           padding="lg"
           title={card.title}
           titleUnderline={false}
-          titleClassName="text-base text-heading"
           action={card.action}
           contentClassName={card.contentClassName}
         >
@@ -586,7 +586,7 @@ Use this layout for entity detail screens (reference: `src/features/clients/comp
   - Implementation note: For emphasis, a leading or featured summary card may span the full row on medium+ screens. Apply `md:col-span-2` to the featured card wrapper (or use a conditional class when mapping) so the primary card occupies both columns while remaining responsive.
 4. **Tabs** with per-tab `content` for section-specific panels.
 
-**Read-only fields**: Use `DetailField` / `DetailFieldGrid` from the feature's `components/` folder for label/value pairs. Define field data as `{ label, value }[]` arrays in mock/API payloads rather than hardcoding JSX per field.
+**Read-only fields**: Use `DetailField` / `DetailFieldGrid` from the feature's `components/` folder for label/value pairs. `DetailField` renders labels at `14px` and values at `16px`, both regular weight. Define field data as `{ label, value }[]` arrays in mock/API payloads rather than hardcoding JSX per field.
 
 **Detail page states** (handled at the page layer, not inside the main detail component):
 

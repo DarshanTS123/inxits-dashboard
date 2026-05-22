@@ -89,7 +89,7 @@ Examples present today:
   - `api/clients.js`: list query + tab counts
   - `api/clientDetail.js`: detail query merging list row + mock detail template/overrides
   - `components/ClientDetail*.jsx`: detail layout, summary cards, personal tab, and error states
-  - `components/DetailField.jsx`: read-only label/value grid for detail surfaces
+  - `components/DetailField.jsx`: read-only label/value grid for detail surfaces; defaults to 14px regular labels and 16px regular values
 - `features/layout/*`: sidebar collapse/mobile open state
 
 ### `src/components/*` (shared UI + layout atoms)

@@ -126,7 +126,7 @@ const SunburstChart = ({
         <div className="flex flex-col h-full">
           {title && (
             <div className="mb-4">
-              <h3 className="text-[17px] font-medium text-heading underline underline-offset-[6px] decoration-paragraph/30 tracking-tight">
+              <h3 className="text-base font-medium text-heading underline underline-offset-[6px] decoration-paragraph/30 tracking-tight">
                 {title}
               </h3>
             </div>

@@ -2,8 +2,12 @@ import { cn } from '@utils/cn';
 
 export const DetailField = ({ label, value, className }) => (
   <div className={className}>
-    <div className="mb-1 text-xs text-paragraph/70">{label}</div>
-    <div className="text-sm font-semibold text-heading">{value ?? '-'}</div>
+    <div className="mb-1 text-[14px] font-normal leading-tight text-paragraph/70">
+      {label}
+    </div>
+    <div className="break-words text-[16px] font-normal leading-snug text-heading">
+      {value ?? '-'}
+    </div>
   </div>
 );
 

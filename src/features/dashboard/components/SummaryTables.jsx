@@ -6,7 +6,7 @@ const tableClassName = 'min-w-[720px] bg-layer1';
 const containerClassName =
   'overflow-hidden rounded-xl border border-stroke-divider bg-layer1';
 const headerClassName =
-  'bg-helper border-b border-stroke-divider px-6 py-4 text-[13px] font-medium normal-case tracking-normal text-subheading';
+  'bg-helper border-b border-stroke-divider px-6 py-4 font-medium normal-case tracking-normal text-subheading';
 const cellClassName =
   'border-b border-stroke-divider px-6 py-5 text-paragraph';
 const rowClassName = 'group hover:bg-table-hover transition-colors';

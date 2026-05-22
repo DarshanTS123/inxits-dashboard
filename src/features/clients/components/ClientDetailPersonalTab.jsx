@@ -6,8 +6,6 @@ import { Button } from '@components/ui/Button/Button';
 import { cn } from '@utils/cn';
 import { DetailFieldGrid } from './DetailField';
 
-const detailCardTitleClass = 'text-base text-heading';
-
 const DocumentChip = ({ label, active }) => (
   <div className="flex items-center gap-2 rounded-md border border-stroke-divider bg-layer2 px-4 py-2">
     <FileText
@@ -99,7 +97,6 @@ export const ClientDetailPersonalTab = ({ personalTab }) => {
           padding="lg"
           title={card.title}
           titleUnderline={false}
-          titleClassName={detailCardTitleClass}
           action={card.action}
           contentClassName={card.contentClassName}
         >

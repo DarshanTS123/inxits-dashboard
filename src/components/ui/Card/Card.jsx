@@ -157,7 +157,7 @@ const Card = React.forwardRef(
                     {title && (
                       <h3
                         className={cn(
-                          'text-[17px] font-medium tracking-tight text-heading',
+                          'text-[18px] font-normal tracking-tight text-heading',
                           titleUnderline &&
                             'underline underline-offset-[6px] decoration-paragraph/30',
                           titleClassName
@@ -169,7 +169,7 @@ const Card = React.forwardRef(
                     {subtitle && (
                       <span
                         className={cn(
-                          'text-[11px] font-medium text-paragraph/70',
+                          'text-xs font-medium text-paragraph/70',
                           subtitleClassName
                         )}
                       >
@@ -201,7 +201,7 @@ const Card = React.forwardRef(
                 {label && (
                   <span
                     className={cn(
-                      'text-[11px] font-semibold uppercase tracking-widest text-paragraph/70',
+                      'text-[14px] font-normal tracking-widest text-paragraph/70',
                       labelClassName
                     )}
                   >
@@ -212,7 +212,7 @@ const Card = React.forwardRef(
                   {hasValue(value) && (
                     <span
                       className={cn(
-                        'text-[26px] font-bold tracking-tight text-heading',
+                        'text-[16px] font-normal tracking-tight text-heading',
                         valueClassName
                       )}
                     >

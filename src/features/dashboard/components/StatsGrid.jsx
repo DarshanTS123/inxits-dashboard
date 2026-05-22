@@ -17,7 +17,7 @@ export const StatsGrid = ({ stats = [], loading }) => {
       {items.map((item, index) => (
         <Card
           key={index}
-          padding="lg"
+          padding="md"
           label={item.label}
           value={item.value || '-'}
           meta={

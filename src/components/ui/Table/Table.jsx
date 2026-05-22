@@ -92,7 +92,7 @@ function Table({
       {stickyColumnStyles ? <style>{stickyColumnStyles}</style> : null}
       <table
         className={cn(
-          'w-full caption-bottom border-separate border-spacing-0 text-[14px]',
+          'w-full caption-bottom border-separate border-spacing-0 text-sm',
           scopeClassName,
           className
         )}
@@ -126,7 +126,7 @@ function TableHead({ className, sticky, stickyOffset = 0, style, ...props }) {
   return (
     <th
       className={cn(
-        'h-11 border-b border-stroke-divider bg-helper px-4 text-left align-middle text-xs font-semibold uppercase tracking-wide text-subheading whitespace-nowrap',
+        'h-11 whitespace-nowrap border-b border-stroke-divider bg-helper px-4 text-left align-middle text-sm font-semibold uppercase tracking-wide text-subheading',
         sticky === 'left' &&
           'sticky left-[var(--table-cell-sticky-offset)] z-40 border-r border-stroke-divider',
         sticky === 'right' &&
@@ -143,7 +143,7 @@ function TableCell({ className, sticky, stickyOffset = 0, style, ...props }) {
   return (
     <td
       className={cn(
-        'border-b border-stroke-divider bg-page px-4 py-3 align-middle text-[14px] text-paragraph',
+        'border-b border-stroke-divider bg-page px-4 py-3 align-middle text-sm text-paragraph',
         sticky === 'left' &&
           'sticky left-[var(--table-cell-sticky-offset)] z-20 border-r border-stroke-divider',
         sticky === 'right' &&
@@ -195,7 +195,7 @@ function DataTable({
       <TableBody className={className}>
         {data.length === 0 ? (
           <TableRow>
-            <TableCell colSpan={colSpan} className="py-10 text-center text-[14px] text-paragraph">
+            <TableCell colSpan={colSpan} className="py-10 text-center text-sm text-paragraph">
               {emptyMessage}
             </TableCell>
           </TableRow>
