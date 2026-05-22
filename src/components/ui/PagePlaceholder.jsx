@@ -4,7 +4,7 @@ export const PagePlaceholder = ({ title }) => {
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight text-text-heading">{title}</h1>
+        <h1 className="text-3xl font-bold text-heading">{title}</h1>
         <div className="flex gap-3">
           <Button variant="secondary">
             Export
@@ -30,8 +30,8 @@ export const PagePlaceholder = ({ title }) => {
           <div className="mx-auto w-16 h-16 rounded-full bg-bg-layer-2 flex items-center justify-center">
             <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
           </div>
-          <p className="text-text-subheading font-medium">Developing {title} Module...</p>
-          <p className="text-text-paragraph text-sm max-w-xs mx-auto">
+          <p className="font-medium text-subheading">Developing {title} Module...</p>
+          <p className="mx-auto max-w-xs text-sm text-paragraph">
             This module is currently under development to match the premium inXits reporting standards.
           </p>
         </div>

@@ -474,7 +474,7 @@ const CustomSwitch = React.forwardRef(({ label, error, helperText, required, id,
       <label className="flex items-center justify-between cursor-pointer group p-3.5 rounded-xl bg-white/5 border border-stroke-divider hover:border-white/20 transition-all duration-200">
         <span className="text-sm font-semibold text-text-label flex flex-col gap-0.5 max-w-[80%] select-none">
           <span>{label} {required && <span className="text-error font-bold">*</span>}</span>
-          {helperText && <span className="text-xs font-normal text-text-paragraph/60 leading-normal">{helperText}</span>}
+          {helperText && <span className="text-xs font-normal text-paragraph/60 leading-normal">{helperText}</span>}
         </span>
         <div className="relative">
           <input
@@ -617,7 +617,7 @@ const CustomColor = React.forwardRef(({ label, error, helperText, required, valu
             className="w-8 h-8 rounded-lg bg-transparent cursor-pointer border border-stroke-divider p-0.5 overflow-hidden transition-all duration-200 hover:border-white/30"
             {...props}
           />
-          <span className="text-xs font-semibold text-text-subheading font-mono select-all">
+          <span className="text-xs font-semibold text-subheading font-mono select-all">
             {activeColor.toUpperCase()}
           </span>
         </div>
@@ -707,14 +707,14 @@ const CustomFile = React.forwardRef(({ label, error, helperText, required, value
               <FileText className="w-5 h-5 animate-pulse" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-text-heading truncate max-w-[180px] sm:max-w-xs">{uploadedFile.name}</p>
-              <p className="text-xs text-text-paragraph/60 font-semibold">{uploadedFile.size || '2.4 MB'}</p>
+              <p className="text-sm font-semibold text-heading truncate max-w-[180px] sm:max-w-xs">{uploadedFile.name}</p>
+              <p className="text-xs text-paragraph/60 font-semibold">{uploadedFile.size || '2.4 MB'}</p>
             </div>
           </div>
           <button
             type="button"
             onClick={handleRemove}
-            className="p-2 rounded-lg text-text-paragraph hover:text-error hover:bg-error/10 transition-all duration-200"
+            className="p-2 rounded-lg text-paragraph hover:text-error hover:bg-error/10 transition-all duration-200"
           >
             <Trash2 className="w-4 h-4" />
           </button>
@@ -725,7 +725,7 @@ const CustomFile = React.forwardRef(({ label, error, helperText, required, value
           <div className="w-full max-w-[200px] h-1.5 bg-white/10 rounded-full overflow-hidden">
             <div className="h-full bg-primary transition-all duration-300" style={{ width: `${progress}%` }} />
           </div>
-          <p className="text-xs font-semibold text-text-subheading animate-pulse">Uploading Document... {progress}%</p>
+          <p className="text-xs font-semibold text-subheading animate-pulse">Uploading Document... {progress}%</p>
         </div>
       ) : (
         <div
@@ -746,12 +746,12 @@ const CustomFile = React.forwardRef(({ label, error, helperText, required, value
             onChange={handleChange}
             {...props}
           />
-          <UploadCloud className="w-8 h-8 text-text-paragraph/50 group-hover:text-primary transition-colors duration-200" />
+          <UploadCloud className="w-8 h-8 text-paragraph/50 group-hover:text-primary transition-colors duration-200" />
           <div>
-            <p className="text-sm font-semibold text-text-heading">
+            <p className="text-sm font-semibold text-heading">
               Drag & Drop file or <span className="text-primary hover:underline font-bold">Browse</span>
             </p>
-            <p className="text-xs text-text-paragraph/60 mt-1 font-semibold">Supports CSV, PDF, SVG up to 10MB</p>
+            <p className="text-xs text-paragraph/60 mt-1 font-semibold">Supports CSV, PDF, SVG up to 10MB</p>
           </div>
         </div>
       )}
@@ -1005,7 +1005,7 @@ const DynamicFormRenderer = ({ schema, onSubmit, resetCounter }) => {
 
       {/* Live Form Values Viewer */}
       <div className="p-4 rounded-xl bg-white/5 border border-stroke-divider mt-8 space-y-2">
-        <h4 className="text-xs font-bold text-text-subheading tracking-wider uppercase flex items-center gap-1.5">
+        <h4 className="text-xs font-bold text-subheading tracking-wider uppercase flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
           Live Reactive Data State
         </h4>
@@ -1080,12 +1080,12 @@ export const ReportsPage = () => {
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-stroke-divider pb-5">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-3xl font-extrabold tracking-tight text-text-heading">Reports Panel</h1>
+            <h1 className="text-3xl font-bold text-heading">Reports Panel</h1>
             <span className="text-[10px] font-bold uppercase tracking-wider text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 rounded-full mt-1.5">
               Form Rendering Engine
             </span>
           </div>
-          <p className="text-sm text-text-paragraph mt-1">
+          <p className="text-sm text-paragraph mt-1">
             Build and render forms at runtime using modular JSON schema blueprints. Edit JSON schemas to adapt validation rules, layouts, and input variables dynamically.
           </p>
         </div>
@@ -1103,7 +1103,7 @@ export const ReportsPage = () => {
         <div className="xl:col-span-5 space-y-6">
           <div className="p-5 rounded-2xl bg-white/[0.02] border border-stroke-divider shadow-xl">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-base font-semibold text-text-heading flex items-center gap-2">
+              <h2 className="text-base font-semibold text-heading flex items-center gap-2">
                 <Code className="w-4 h-4 text-primary" />
                 Schema Configuration
               </h2>
@@ -1116,7 +1116,7 @@ export const ReportsPage = () => {
                 onClick={() => handlePresetSelect('reports')}
                 className={cn(
                   "py-2 px-2.5 rounded-lg text-xs font-bold transition-all duration-200 truncate",
-                  activeTab === 'reports' ? "bg-primary text-text-on-primary shadow" : "text-text-paragraph hover:text-text-heading"
+                  activeTab === 'reports' ? "bg-primary text-text-on-primary shadow" : "text-paragraph hover:text-heading"
                 )}
               >
                 1. Report Setup
@@ -1125,7 +1125,7 @@ export const ReportsPage = () => {
                 onClick={() => handlePresetSelect('intake')}
                 className={cn(
                   "py-2 px-2.5 rounded-lg text-xs font-bold transition-all duration-200 truncate",
-                  activeTab === 'intake' ? "bg-primary text-text-on-primary shadow" : "text-text-paragraph hover:text-text-heading"
+                  activeTab === 'intake' ? "bg-primary text-text-on-primary shadow" : "text-paragraph hover:text-heading"
                 )}
               >
                 2. Client Intake
@@ -1134,7 +1134,7 @@ export const ReportsPage = () => {
                 onClick={() => handlePresetSelect('playbook')}
                 className={cn(
                   "py-2 px-2.5 rounded-lg text-xs font-bold transition-all duration-200 truncate",
-                  activeTab === 'playbook' ? "bg-primary text-text-on-primary shadow" : "text-text-paragraph hover:text-text-heading"
+                  activeTab === 'playbook' ? "bg-primary text-text-on-primary shadow" : "text-paragraph hover:text-heading"
                 )}
               >
                 3. Playbook (All 13)
@@ -1169,7 +1169,7 @@ export const ReportsPage = () => {
                 <Sliders className="w-3.5 h-3.5" />
                 Did you know?
               </h4>
-              <p className="text-[11px] leading-normal text-text-paragraph/80 font-medium">
+              <p className="text-[11px] leading-normal text-paragraph/80 font-medium">
                 Try modifying the schema JSON! You can change a field's <code className="text-primary font-bold">"label"</code>, set <code className="text-primary font-bold">"required": true</code>, or append new objects. The renderer on the right will instantly rebuild.
               </p>
             </div>
@@ -1186,11 +1186,11 @@ export const ReportsPage = () => {
             <div className="absolute -top-24 -right-24 w-48 h-48 rounded-full bg-primary/10 blur-3xl pointer-events-none" />
             
             <div className="flex items-center justify-between border-b border-stroke-divider pb-4 mb-6">
-              <h2 className="text-base font-bold text-text-heading flex items-center gap-2">
+              <h2 className="text-base font-bold text-heading flex items-center gap-2">
                 <LayoutGrid className="w-4 h-4 text-primary animate-pulse" />
                 Live Rendered form
               </h2>
-              <span className="text-xs font-semibold text-text-paragraph/60">Reactive UI</span>
+              <span className="text-xs font-semibold text-paragraph/60">Reactive UI</span>
             </div>
 
             {/* Dynamic Form Stitches here */}
@@ -1199,8 +1199,8 @@ export const ReportsPage = () => {
                 <div className="w-12 h-12 rounded-full bg-error/10 text-error flex items-center justify-center mx-auto border border-error/20">
                   <AlertTriangle className="w-6 h-6" />
                 </div>
-                <p className="text-sm font-semibold text-text-subheading">Form Render Paused</p>
-                <p className="text-xs text-text-paragraph/60 max-w-xs mx-auto">
+                <p className="text-sm font-semibold text-subheading">Form Render Paused</p>
+                <p className="text-xs text-paragraph/60 max-w-xs mx-auto">
                   Resolve the syntax schema errors in the JSON configuration editor to resume page validation.
                 </p>
               </div>
@@ -1217,7 +1217,7 @@ export const ReportsPage = () => {
           {/* SUBMISSIONS HISTORY */}
           {submissions.length > 0 && (
             <div className="p-6 rounded-2xl bg-white/[0.02] border border-stroke-divider shadow-xl animate-in slide-in-from-bottom-4 duration-500">
-              <h3 className="text-sm font-bold text-text-heading flex items-center gap-2 border-b border-stroke-divider pb-3 mb-4">
+              <h3 className="text-sm font-bold text-heading flex items-center gap-2 border-b border-stroke-divider pb-3 mb-4">
                 <CheckCircle2 className="w-4 h-4 text-emerald-500 animate-bounce" />
                 Submission Activity Log
               </h3>
@@ -1228,11 +1228,11 @@ export const ReportsPage = () => {
                       <span className="text-xs font-bold text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 px-2 py-0.5 rounded-full">
                         Success Submission
                       </span>
-                      <span className="text-[10px] font-semibold text-text-paragraph/50">
+                      <span className="text-[10px] font-semibold text-paragraph/50">
                         {sub.timestamp} (Preset: {sub.preset})
                       </span>
                     </div>
-                    <pre className="text-[10px] font-mono text-text-subheading bg-black/20 p-2.5 rounded-lg overflow-x-auto whitespace-pre-wrap leading-relaxed select-all">
+                    <pre className="text-[10px] font-mono text-subheading bg-black/20 p-2.5 rounded-lg overflow-x-auto whitespace-pre-wrap leading-relaxed select-all">
                       {JSON.stringify(sub.payload, null, 2)}
                     </pre>
                   </div>

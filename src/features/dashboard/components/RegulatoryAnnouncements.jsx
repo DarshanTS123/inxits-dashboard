@@ -15,10 +15,10 @@ const AnnouncementItem = ({ title, date, type, typeColor, index, onEdit }) => (
     )}
   >
     <div className="flex flex-col gap-1.5">
-      <h4 className="text-[14px] font-medium text-blue-400 group-hover:text-blue-300 transition-colors line-clamp-1">
+      <h4 className="line-clamp-1 text-sm font-medium text-primary transition-colors group-hover:text-primary/80">
         {title}
       </h4>
-      <span className="text-[12px] italic text-slate-400">{date}</span>
+      <span className="text-xs italic text-paragraph/70">{date}</span>
     </div>
     <div className="flex items-center gap-3">
       <Badge
@@ -120,7 +120,7 @@ export const RegulatoryAnnouncements = ({
             type="button"
             variant="ghost"
             size="sm"
-            className="p-0 text-[11px] font-semibold uppercase tracking-wide text-blue-400 hover:bg-transparent hover:text-blue-300"
+            className="p-0 text-[11px] font-semibold uppercase tracking-wide text-primary hover:bg-transparent hover:text-primary/80"
           >
             View all
           </Button>

@@ -40,7 +40,7 @@ const TableWrapper = ({ title, subtitle, children, viewAll }) => (
           type="button"
           variant="ghost"
           size="sm"
-          className="p-0 font-semibold uppercase text-blue-400 hover:bg-transparent hover:text-blue-300"
+          className="p-0 text-[11px] font-semibold uppercase tracking-wide text-primary hover:bg-transparent hover:text-primary/80"
         >
           View all
         </Button>
@@ -124,7 +124,7 @@ export const RMPerformanceTable = ({ data = [], loading }) => {
             <span className="font-semibold text-subheading group-hover:text-primary transition-colors cursor-pointer">
               {value || '-'}
             </span>
-            <span className="text-[12px] text-paragraph/70 font-medium uppercase tracking-tighter">
+            <span className="text-xs font-medium uppercase tracking-wide text-paragraph/70">
               {row.role || ''}
             </span>
           </div>

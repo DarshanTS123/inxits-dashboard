@@ -212,33 +212,33 @@ export const ClientsTable = ({ data, isLoading }) => {
             <Ban className="h-7 w-7 text-primary" />
           </span>
           <div className="flex flex-col gap-2">
-            <h3 className="text-xl font-medium text-heading tracking-tight leading-snug">
+            <h3 className="text-xl font-medium leading-snug text-heading">
               Are you sure you want to mark this<br />user Inactive?
             </h3>
-            <p className="text-[14px] text-paragraph mt-1">You can always activate the user later.</p>
+            <p className="mt-1 text-sm text-paragraph">You can always activate the user later.</p>
           </div>
 
           <div className="w-full flex flex-col gap-3 text-left mt-2 mb-2">
-            <label className="text-[14px] text-paragraph">
+            <label className="text-sm text-paragraph">
               Reason<span className="text-error">*</span>
             </label>
             <RadioGroup defaultValue="discontinued" className="flex items-center gap-5" name="inactiveReason">
               <div className="flex items-center gap-2.5">
                 <RadioGroupItem value="discontinued" id="r1" />
-                <label htmlFor="r1" className="text-[14px] text-heading font-normal cursor-pointer whitespace-nowrap">
+                <label htmlFor="r1" className="cursor-pointer whitespace-nowrap text-sm font-normal text-heading">
                   Client Discontinued
                 </label>
               </div>
               <div className="flex items-center gap-2.5">
                 <RadioGroupItem value="plan-changed" id="r2" />
-                <label htmlFor="r2" className="text-[14px] text-heading font-normal cursor-pointer whitespace-nowrap">
+                <label htmlFor="r2" className="cursor-pointer whitespace-nowrap text-sm font-normal text-heading">
                   Plan Changed (Regular-Direct)
                 </label>
               </div>
             </RadioGroup>
           </div>
 
-          <Button className="px-6 py-[9px] rounded-lg text-[15px] font-medium" onClick={() => setActiveModal(null)}>
+          <Button className="rounded-lg px-6 py-2.5 text-sm font-medium" onClick={() => setActiveModal(null)}>
             Mark Inactive
           </Button>
         </div>

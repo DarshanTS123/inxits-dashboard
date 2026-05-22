@@ -26,7 +26,7 @@ export const StatsGrid = ({ stats = [], loading }) => {
                 type="button"
                 variant="ghost"
                 size="sm"
-                className="p-0 font-semibold uppercase text-blue-400 hover:bg-transparent hover:text-blue-300"
+                className="p-0 text-[11px] font-semibold uppercase tracking-wide text-primary hover:bg-transparent hover:text-primary/80"
               >
                 {item.link}
               </Button>

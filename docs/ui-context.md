@@ -99,37 +99,57 @@ New tokens must follow:
 
 Use Tailwind utilities only. Do not add arbitrary `font-size` in CSS for app UI.
 
+**Typeface**: Myriad Pro — self-hosted from `public/fonts/myriad-pro/` as OTF files, loaded via `@font-face` declarations in `src/index.css`.
+
+### Font loading pipeline
+
+1. **`@font-face` rules** in `src/index.css` register four weights of Myriad Pro from local OTF files:
+
+   | Weight | File | CSS `font-weight` |
+   |--------|------|-------------------|
+   | Light | `MyriadPro-Light.otf` | `300` |
+   | Regular | `MYRIADPRO-REGULAR.OTF` | `400` |
+   | Semibold | `MYRIADPRO-SEMIBOLD.OTF` | `600` |
+   | Bold | `MYRIADPRO-BOLD.OTF` | `700` |
+
+   Additional weights (Condensed, Bold Condensed, Bold Condensed Italic, Bold Italic, Condensed Italic, Semibold Italic) are available in the same directory but not currently registered. Add `@font-face` rules as needed.
+
+2. **`@layer base`** block in `src/index.css` applies `font-family: "Myriad Pro", system-ui, sans-serif` to both `html` and `body` with `!important`, overriding Tailwind's preflight default font stack.
+
+3. **`tailwind.config.js`** extends `fontFamily.sans` to `['"Myriad Pro"', 'system-ui', 'sans-serif']`, ensuring Tailwind's `font-sans` utility class (and the implicit body default) resolves to Myriad Pro.
+
+**UI Rule T0**: Do not link external font services (Google Fonts, Adobe Typekit). All fonts must be self-hosted under `public/fonts/` and loaded via `@font-face` in `src/index.css`.
+
 **UI Rule T1**: Prefer the scale below. New screens must reuse an existing role before inventing a new size.
 
 ### Type scale (canonical)
 
-| Role | Classes | Where used |
-|------|---------|------------|
-| **Page title** (`h1`) | `text-3xl font-bold tracking-tight text-text-heading` | Entity detail pages, major page headings |
-| **App bar title** | `text-base font-semibold text-heading` | `Header` route title (section name, e.g. **Clients** on list and detail) |
-| **Card / section title** | `text-[17px] font-medium tracking-tight text-heading` + default underline | `Card` `title` prop (charts, tables, lists) |
-| **Card subtitle** | `text-[11px] font-medium text-paragraph/70` | `Card` `subtitle` (e.g. “- Current Month”) |
-| **Metric label** | `text-[11px] font-semibold uppercase tracking-widest text-paragraph/70` | `Card` `label` (dashboard KPIs) |
-| **Metric value** | `text-[26px] font-bold tracking-tight text-heading` | `Card` `value` |
-| **Body** | `text-sm text-subheading` or `text-paragraph` | Table cells, descriptions |
-| **Table header** | `text-[13px] font-medium normal-case tracking-normal text-subheading` | `DataTable` column headers (dashboard tables) |
-| **Secondary line** | `text-[12px] text-paragraph/70` | Dates, RM role under name, stacked cell sub-lines |
-| **Emphasis in cell** | `font-semibold text-heading` or `font-semibold text-subheading` | Totals, primary column values |
-| **Interactive text** | `font-medium text-primary` (+ `hover:underline` for links) | Client name links, announcement titles |
-| **Micro / filter label** | `text-[11px] font-medium text-paragraph/70` | Chart filters (Lumpsum/SIP), compact controls |
-| **Text link action** | `text-[11px] font-semibold uppercase tracking-wide text-primary` | “View all” in card headers |
-| **Badge / tag** | `text-[10px]`–`text-[11px] font-medium` | `Badge`, announcement type pills |
-| **Error / helper** | `text-xs` | Form labels and inline errors (see `form-design-guide.md`) |
+| Role | Classes | Font Size | Weight |
+|------|---------|-----------|--------|
+| **h1** | `text-5xl` | 40px | Light, Regular, Semibold, Bold |
+| **h2** | `text-4xl` | 32px | Light, Regular, Semibold, Bold |
+| **h3** | `text-3xl` | 28px | Light, Regular, Semibold, Bold |
+| **h4** | `text-2xl` | 24px | Light, Regular, Semibold, Bold |
+| **Subheading 1** | `text-xl` | 20px | Light, Regular, Semibold, Bold |
+| **Body 1** | `text-lg` | 18px | Light, Regular, Semibold, Bold |
+| **Paragraph** | `text-base` | 16px | Light, Regular, Semibold, Bold |
+| **Label** | `text-sm` | 14px | Light, Regular, Semibold, Bold |
+| **Helper text** | `text-xs` | 12px | Light, Regular, Semibold, Bold |
+| **Button Large** | `text-base font-semibold` | 16px | Semibold |
+| **Button Medium** | `text-sm font-semibold` | 14px | Semibold |
+| **Button Small** | `text-xs font-normal` | 12px | Regular |
 
 ### Font weight
 
-| Weight | Use |
-|--------|-----|
-| `font-medium` | Titles, labels, default emphasis |
-| `font-semibold` | Table values, buttons, “View all”, KPI meta |
-| `font-bold` | Page titles, metric values |
+| Weight | Tailwind class | CSS value | Use |
+|--------|---------------|-----------|-----|
+| Light | `font-light` | `300` | De-emphasized labels, subtle text |
+| Regular | `font-normal` | `400` | Small buttons, standard text |
+| Medium | `font-medium` | `500` | Titles, labels, default emphasis |
+| Semibold | `font-semibold` | `600` | Buttons, "View all", KPI meta |
+| Bold | `font-bold` | `700` | Page titles, metric values |
 
-**UI Rule T2**: Detail section cards may override title with `titleClassName="text-base text-heading"` and `titleUnderline={false}` — do not mix other sizes on the same page without reason.
+**UI Rule T2**: Detail section cards may override title with `titleClassName="text-xl text-heading"` and `titleUnderline={false}` — do not mix other sizes on the same page without reason.
 
 **UI Rule T3**: Uppercase is reserved for **metric labels**, **compact actions** (“View all”), and **table meta** (e.g. RM role). Body copy stays sentence case.
 
