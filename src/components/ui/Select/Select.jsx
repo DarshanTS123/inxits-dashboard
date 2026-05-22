@@ -8,6 +8,7 @@ function Select({
   options,
   placeholder,
   triggerClassName,
+  triggerProps,
   contentClassName,
   align = 'start',
   children,
@@ -17,7 +18,11 @@ function Select({
     <SelectPrimitive.Root data-slot="select" {...props}>
       {options ? (
         <>
-          <SelectTrigger id={id} className={triggerClassName}>
+          <SelectTrigger
+            id={id}
+            className={triggerClassName}
+            {...triggerProps}
+          >
             <SelectValue placeholder={placeholder} />
           </SelectTrigger>
           <SelectContent className={contentClassName} align={align}>
@@ -121,7 +126,10 @@ function SelectLabel({ className, ...props }) {
   return (
     <SelectPrimitive.Label
       data-slot="select-label"
-      className={cn('px-2 py-1 text-xs font-semibold text-subheading', className)}
+      className={cn(
+        'px-2 py-1 text-xs font-semibold text-subheading',
+        className
+      )}
       {...props}
     />
   );

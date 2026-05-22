@@ -64,6 +64,10 @@ const PieChart = ({
   className,
   height = 300,
   legendValueText,
+  sliceLabelText,
+  sliceLabelFontSize = 14,
+  showLegend = true,
+  embedded = false,
   action,
   headerClassName,
   actionClassName,
@@ -83,7 +87,7 @@ const PieChart = ({
 
     const chart = root.container.children.push(
       am5percent.PieChart.new(root, {
-        layout: root.horizontalLayout,
+        layout: showLegend ? root.horizontalLayout : root.verticalLayout,
         paddingLeft: 0,
         paddingRight: 0,
         paddingTop: 0,
@@ -136,12 +140,21 @@ const PieChart = ({
     series.labels.template.setAll({
       inside: true,
       radius: 40,
-      fontSize: 14,
+      fontSize: sliceLabelFontSize,
       fontWeight: "500",
-      text: "{value.formatNumber('#.##')}%",
+      text: sliceLabelText || "{value.formatNumber('#.##')}%",
       centerX: am5.percent(50),
       centerY: am5.percent(50),
     });
+
+    if (!showLegend) {
+      series.setAll({
+        x: am5.percent(50),
+        y: am5.percent(50),
+        centerX: am5.percent(50),
+        centerY: am5.percent(50),
+      });
+    }
     series.labels.template.adapters.add("fill", (_fill, target) => {
       const dataItem = target.dataItem;
       if (!dataItem) return am5.color("#ffffff");
@@ -151,49 +164,104 @@ const PieChart = ({
     });
     series.ticks.template.setAll({ forceHidden: true });
 
-    const legend = chart.children.push(
-      am5.Legend.new(root, {
-        centerY: am5.percent(50),
-        y: am5.percent(50),
-        layout: root.verticalLayout,
-        paddingLeft: 20,
-      })
-    );
-
-    legend.markers.template.setAll({
-      width: 18,
-      height: 18,
-    });
-
-    legend.markerRectangles.template.setAll({
-      cornerRadiusTL: 6,
-      cornerRadiusTR: 6,
-      cornerRadiusBL: 6,
-      cornerRadiusBR: 6,
-    });
-
-    legend.labels.template.setAll({
-      fontSize: 14,
-      fontWeight: "400",
-      fill: am5.color(legendText),
-    });
-
-    legend.valueLabels.template.setAll({
-      fontSize: 14,
-      fontWeight: "400",
-      fill: am5.color(legendText),
-    });
-
     series.data.setAll(data);
-    legend.data.setAll(series.dataItems);
+
+    if (showLegend) {
+      const legend = chart.children.push(
+        am5.Legend.new(root, {
+          centerY: am5.percent(50),
+          y: am5.percent(50),
+          layout: root.verticalLayout,
+          paddingLeft: 20,
+        })
+      );
+
+      legend.itemContainers.template.setAll({
+        interactive: true,
+        cursorOverStyle: "pointer",
+      });
+
+      legend.markers.template.setAll({
+        width: 18,
+        height: 18,
+      });
+
+      legend.markerRectangles.template.setAll({
+        cornerRadiusTL: 6,
+        cornerRadiusTR: 6,
+        cornerRadiusBL: 6,
+        cornerRadiusBR: 6,
+      });
+
+      legend.labels.template.setAll({
+        fontSize: 14,
+        fontWeight: "400",
+        fill: am5.color(legendText),
+      });
+
+      legend.valueLabels.template.setAll({
+        fontSize: 14,
+        fontWeight: "400",
+        fill: am5.color(legendText),
+      });
+
+      legend.data.setAll(series.dataItems);
+    }
 
     series.appear(1000, 100);
     chart.appear(1000, 100);
 
     return () => root.dispose();
-  }, [data, loading, colors, legendValueText, chartId]);
+  }, [
+    data,
+    loading,
+    colors,
+    legendValueText,
+    sliceLabelText,
+    sliceLabelFontSize,
+    showLegend,
+    chartId,
+  ]);
 
   const hasChart = data?.length > 0 && colors?.length > 0;
+  const resolvedHeight =
+    typeof height === "number" ? `${height}px` : height;
+
+  const chartContent = !hasChart ? (
+    <div className="absolute inset-0 flex items-center justify-center text-paragraph/70 text-sm italic">
+      No data available
+    </div>
+  ) : (
+    <div id={chartId} className="h-full w-full" />
+  );
+
+  if (embedded) {
+    const embeddedStyle = showLegend
+      ? { height: resolvedHeight, width: "100%" }
+      : { height: resolvedHeight, width: resolvedHeight };
+
+    return (
+      <div
+        className={cn(
+          "relative min-h-0",
+          showLegend ? "w-full flex-1" : "shrink-0",
+          className
+        )}
+        style={embeddedStyle}
+      >
+        {loading ? (
+          <div
+            className={cn(
+              "h-full w-full animate-pulse bg-layer2",
+              showLegend ? "rounded-lg" : "rounded-full"
+            )}
+          />
+        ) : (
+          chartContent
+        )}
+      </div>
+    );
+  }
 
   return (
     <Card
@@ -207,15 +275,9 @@ const PieChart = ({
       loadingFallback={<PieSkeleton />}
       className={cn("flex flex-col h-full", className)}
       contentClassName="flex-1 relative min-h-0"
-      style={{ height: typeof height === "number" ? `${height}px` : height }}
+      style={{ height: resolvedHeight }}
     >
-      {!hasChart ? (
-        <div className="absolute inset-0 flex items-center justify-center text-paragraph/70 text-sm italic">
-          No data available
-        </div>
-      ) : (
-        <div id={chartId} className="w-full h-full" />
-      )}
+      {chartContent}
     </Card>
   );
 };

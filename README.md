@@ -2,7 +2,9 @@
 
 Role-based internal dashboard for inXits reporting and operations workflows. The app is a React/Vite SPA with authenticated private routes, a reusable dashboard shell, and module pages for clients, portfolio oversight, transactions, compliance, AUM reports, and related operations screens.
 
-The Clients module is implemented end-to-end for list and detail flows: `/clients` (tabbed list with search and pagination) and `/clients/:id` (summary cards, personal tab, and placeholder tabs for portfolios/transactions). Both surfaces use local mock data with reusable table, tabs, card, breadcrumb, dropdown, and pagination primitives. Other business modules are routed through the dashboard shell and still use placeholders until their backend contracts and workflows are defined.
+The Clients module is implemented end-to-end for list and detail flows: `/clients` (tabbed list with search and pagination) and `/clients/:id` (summary cards, personal tab, and placeholder tabs for portfolios/transactions). Both surfaces use local mock data with reusable table, tabs, card, breadcrumb, dropdown, and pagination primitives.
+
+Portfolio Oversight (`/portfolio`) is implemented with mock data from `public/mock/portfolio.json`: summary metrics, platform split and allocation charts, and a paginated holdings table with star ratings. Other business modules are routed through the dashboard shell and still use placeholders until their backend contracts and workflows are defined.
 
 ## Stack
 

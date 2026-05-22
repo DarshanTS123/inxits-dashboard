@@ -33,17 +33,29 @@ When adding a new module or feature:
    - Add `handle.title` (usually the section name; detail routes reuse the list title — entity name goes in breadcrumbs + page `h1`, not the app bar)
 2. **Define domain boundary**
    - If feature requires API/state/hooks, create `src/features/<domain>/...`
-3. **Define API hooks**
-   - `src/features/<domain>/api/*` uses React Query + `publicApi/privateApi`
-   - Use query key factories (e.g. `clientDetailKeys`) for cache identity
-4. **Define state**
+3. **Create the mock API payload (mandatory for data-driven features)**
+   - Add `public/mock/<domain>.json` (or `public/mock/<domain>-<screen>.json` for multi-screen domains)
+   - Shape the JSON to match the screen contract: metrics, tables, charts, detail fields, filters, etc.
+   - Use realistic sample values; keep field names stable so swapping to a real endpoint later is a URL change only
+   - Do **not** embed large mock datasets inside JSX, page files, or presentational components
+4. **Define API hooks**
+   - Create `src/features/<domain>/api/*.js` that fetches the mock JSON via `privateApi.get('/mock/<domain>.json')` (or `publicApi` for unauthenticated reads)
+   - Wrap reads in TanStack React Query hooks with query key factories (e.g. `portfolioKeys`, `clientDetailKeys`)
+   - Normalize or merge mock payloads in the API module when needed (see `clientDetail.js`, `portfolio.js`)
+5. **Define state**
    - If global UI/session state is required, add a Redux slice, selectors, and listener middleware persistence if needed
-5. **Compose page**
+6. **Compose page and feature UI**
    - `src/pages/<domain>/<Domain>Page.jsx` is a lean wrapper that renders the feature component and owns loading/error/not-found branching
-6. **UI primitives**
+   - Feature orchestrator/components consume React Query hooks; presentational children receive shaped data via props
+7. **UI primitives**
    - Only after above, add/extend `src/components/ui/*` primitives if reuse is at least 2 places
 
-**Reference implementation**: Clients module — list (`ClientsPage` → `Clients`) and detail (`ClientDetailPage` → `ClientDetail`).
+**Mock API is required by default**: unless a real backend endpoint is already available and documented, every new data-driven feature must ship with a mock JSON file and a feature API module that reads it. Skipping the mock layer requires explicit user approval.
+
+**Reference implementations**:
+- Clients — list (`ClientsPage` → `Clients`) via `public/mock/clients.json`; detail (`ClientDetailPage` → `ClientDetail`) merging `clients.json` + `client-details.json`
+- Portfolio — overview (`PortfolioPage` → `PortfolioOversight`) via `public/mock/portfolio.json`
+- Dashboard — `public/mock/dashboard.json` via `src/features/dashboard/api/dashboard.js`
 
 ## 3) Boundary validation (must-check list)
 
@@ -93,6 +105,7 @@ Rules:
 
 - Any new feature must:
   - document new env vars in `docs/project-overview.md` if introduced
+  - include a mock JSON file under `public/mock/` when the feature is data-driven (unless a real API is already wired)
 - Any new UI token must:
   - be added to `src/index.css`
   - be referenced via Tailwind alias in `tailwind.config.js` if used broadly

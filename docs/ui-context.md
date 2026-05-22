@@ -218,6 +218,8 @@ Card borders: `border-stroke-divider` on default surfaces; table containers use 
 |---------|--------|-----------|
 | Dashboard chart row (2-up) | `380` | Risk donut + AUM pie |
 | Dashboard paired row (chart + list) | `400` | Transaction status + regulatory announcements |
+| Portfolio allocation grid (2-up) | `390` | `PortfolioAllocationCharts` |
+| Portfolio embedded platform pie | `200` | `PortfolioInvestmentSummary` (card-less `embedded` mode) |
 | Default `PieChart` / `DonutChart` | `300` | Component default when not specified |
 
 Define row height once per row in the parent (`Dashboard.jsx`) and pass to children.
@@ -290,6 +292,7 @@ Rules:
   - `Button`, `Input`, `Tooltip`
   - Radix-backed `DropdownMenu`, `Select`, `Tabs`, and `RadioGroup`
   - `Table`/`DataTable` and `Pagination` for dense list surfaces
+  - `StarRating` for read-only numeric star displays (tables, summary surfaces)
   - `PageLoader` and `PagePlaceholder` for route states
   - `Card` system for unified container aesthetics
   - `Badge` for categorical and status indicators
@@ -391,10 +394,18 @@ Patterns used:
 - If a table renders >100 rows, implement pagination and/or virtualization.
 - Table actions (row menus) must use `DropdownMenu` primitives.
 - Prefer `DataTable` for simple column definitions, including custom cells and loading skeleton rows. Columns may define `accessorKey`, `header`, `cell`, `className`, `headerClassName`, and `cellClassName`.
+- For star-rating columns, use `cellType: 'rating'` instead of a custom `cell` renderer. Optional column fields: `maxStars`, `ratingClassName`, `filledStarClassName`, `emptyStarClassName`, `starIconClassName`. See `PortfolioHoldingsTable`.
 - Use the lower-level `Table`, `TableHeader`, `TableBody`, `TableRow`, `TableHead`, and `TableCell` primitives only when `DataTable` cannot express the table behavior.
 - Use `stickyColumns` only for dense horizontal tables where keeping identity/actions visible improves scanning.
 - Pair paginated tables with `Pagination`, including page size options and a total row count.
 - Row navigation to detail pages: pass `onRowClick` to `DataTable` and navigate via React Router (see `ClientsTable`).
+
+### Star ratings
+
+- Use `StarRating` from `src/components/ui/StarRating/StarRating.jsx` for read-only numeric ratings (not interactive input).
+- Props: `value`, `max` (default 5), `filledClassName` (default `fill-warning text-warning`), `emptyClassName`, `iconClassName`.
+- Includes `aria-label` for screen readers (e.g. `"4 out of 5 stars"`).
+- In tables, prefer `cellType: 'rating'` on the column definition rather than importing `StarRating` in feature code.
 
 ### Selects and tabs
 

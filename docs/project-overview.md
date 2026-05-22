@@ -75,6 +75,20 @@ The inXits Dashboard is a role-based internal web console for investment and ope
 - Analytics are powered by AmCharts 5; slice/band colors are passed from parent features, with adaptive labels and unified `Card` containers.
 - All layout sections are encapsulated in the shared `Card` primitive for visual consistency.
 
+### Portfolio Oversight (`/portfolio`)
+
+- Lean page: `src/pages/portfolio/PortfolioPage.jsx` renders `src/features/portfolio/PortfolioOversight.jsx`.
+- Data is fetched via `src/features/portfolio/api/portfolio.js` (`usePortfolioData`) from `public/mock/portfolio.json`.
+- Orchestrator owns client-side holdings pagination (`page`, `pageSize`); mock payload normalization expands holdings rows when `total` exceeds sample items.
+- Layout sections (top to bottom):
+  - **Controls** (`PortfolioControls`): portfolio scope `Select`, disabled download action, date-range button, NAV as-of note.
+  - **Metric cards** (`PortfolioMetricCards`): five summary tiles (current value, invested value, gain/loss, XIRR, scheme count) via `Card` label/value/meta pattern.
+  - **Investment summary** (`PortfolioInvestmentSummary`): two-column card with embedded `PieChart` (platform split) and `DataTable` (investment sources by platform).
+  - **Allocation charts** (`PortfolioAllocationCharts`): responsive 2×2 grid of domain-owned `PieChart` cards (asset, market cap, sector, geography).
+  - **Holdings table** (`PortfolioHoldingsTable`): paginated `DataTable` with scheme status badges, `StarRating` via `cellType: 'rating'`, and footer `Pagination`.
+- Domain config lives in `src/features/portfolio/portfolioConfig.js` (`PLATFORM_COLORS`, `investmentSourceColumns`).
+- Route title: **Portfolio Oversight** (`handle: { title: 'Portfolio Oversight' }`).
+
 ### Data Workflows
 
 - Server reads and writes should use TanStack React Query and Axios clients.
@@ -87,11 +101,12 @@ The inXits Dashboard is a role-based internal web console for investment and ope
 - Public auth shell: `AuthLayout`.
 - Route guards: `PublicRoute`, `PrivateRoute`, and `RoleProtectedRoute`.
 - Global document title management: `DocumentTitle` and route `handle.title`.
-- UI primitives: `Button`, `Input`, `Tooltip`, `DropdownMenu`, `Tabs`, `Select`, `Table`, `Pagination`, `PageLoader`, `PagePlaceholder`, `Card`, `Badge`, `Modal`, `Drawer`, `RadioGroup`, and `Breadcrumbs`.
-- Analytics Charts: High-fidelity `DonutChart`, `PieChart`, `GaugeChart`, and `SunburstChart` with smart decimal labels, custom legends, and skeleton loading.
+- UI primitives: `Button`, `Input`, `Tooltip`, `DropdownMenu`, `Tabs`, `Select`, `Table`, `Pagination`, `PageLoader`, `PagePlaceholder`, `Card`, `Badge`, `Modal`, `Drawer`, `RadioGroup`, `StarRating`, and `Breadcrumbs`.
+- Analytics Charts: High-fidelity `DonutChart`, `PieChart`, `GaugeChart`, and `SunburstChart` with smart decimal labels, custom legends, skeleton loading, and optional embedded (card-less) pie mode for nested layouts.
 - Dashboard capabilities: linked statistics, categorical announcements with badges, summary performance tables, and functional transaction pagination.
 - Clients list capabilities: state tabs with counts, column-scoped search, paginated rows, sticky first/action columns, row action menu, row navigation to detail, and empty state messaging.
 - Client detail capabilities: breadcrumb navigation, summary cards (personal, risk profile gauge, KYC, relationship manager), tabbed sections with read-only field grids, and dedicated not-found/error recovery states.
+- Portfolio oversight capabilities: portfolio scope controls, summary metric cards, platform split visualization, allocation pie grid, paginated holdings with inXits star ratings, and buy/sell/hold status indicators.
 
 ## In Scope
 

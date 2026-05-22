@@ -197,7 +197,7 @@ const Card = React.forwardRef(
             )}
 
             {hasMetric && (
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-1">
                 {label && (
                   <span
                     className={cn(

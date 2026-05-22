@@ -86,10 +86,20 @@ Use `features/<domain>` when the domain has any of:
 Examples present today:
 - `features/auth/*`: session + login flow
 - `features/clients/*`: client listing, filtering, detail views, and management
-  - `api/clients.js`: list query + tab counts
+  - `api/clients.js`: list query + tab counts (`public/mock/clients.json`)
   - `api/clientDetail.js`: detail query merging list row + mock detail template/overrides
   - `components/ClientDetail*.jsx`: detail layout, summary cards, personal tab, and error states
   - `components/DetailField.jsx`: read-only label/value grid for detail surfaces; defaults to 14px regular labels and 16px regular values
+- `features/portfolio/*`: portfolio oversight (metrics, allocation charts, holdings table)
+  - `PortfolioOversight.jsx`: orchestrator — React Query hook, holdings pagination state, section composition
+  - `api/portfolio.js`: overview query via `public/mock/portfolio.json`; `normalizePortfolioData` expands holdings when mock `total` exceeds sample rows
+  - `portfolioConfig.js`: domain-owned chart palette (`PLATFORM_COLORS`) and table column definitions
+  - `components/PortfolioControls.jsx`: scope select, date range, download (placeholder)
+  - `components/PortfolioMetricCards.jsx`: summary metric tiles
+  - `components/PortfolioInvestmentSummary.jsx`: embedded platform-split pie + investment sources table
+  - `components/PortfolioAllocationCharts.jsx`: grid of allocation pies with per-chart colors from mock payload
+  - `components/PortfolioHoldingsTable.jsx`: paginated holdings with status badges and star ratings
+- `features/dashboard/*`: dashboard overview via `public/mock/dashboard.json`
 - `features/layout/*`: sidebar collapse/mobile open state
 
 ### `src/components/*` (shared UI + layout atoms)
@@ -178,6 +188,16 @@ Defined in `src/lib/axios.js`:
 
 **Invariant API1**: All authenticated API calls must use `privateApi`.
 **Invariant API2**: API hooks must return *data* (already unwrapped), not full axios response objects.
+
+### Mock API layer (default for new features)
+
+Until a real backend endpoint is available, data-driven features must use mock JSON served from `public/mock/`:
+
+- **Invariant API3**: New data-driven features must add `public/mock/<domain>.json` and fetch it from `src/features/<domain>/api/*` via `privateApi.get('/mock/<domain>.json')` (or `publicApi` for unauthenticated reads).
+- **Invariant API4**: Screen data must not live as large inline arrays/objects in pages or presentational components. Mock payloads belong in JSON files; shaping/normalization belongs in the feature API module.
+- **Invariant API5**: Swapping mock → real API is a change inside the feature API module only (URL + optional response mapping). UI and page layers must not hardcode mock paths.
+
+Reference: `features/clients/api/*`, `features/portfolio/api/portfolio.js`, `features/dashboard/api/dashboard.js`.
 
 ## Auth model
 

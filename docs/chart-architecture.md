@@ -34,7 +34,7 @@ We follow a **layered approach** to chart implementation to ensure reusability w
 | Component Type | Location | Description |
 | :--- | :--- | :--- |
 | **Shared Base Components** | `src/components/charts` | Purpose-built chart components (`DonutChart`, `PieChart`). |
-| **Feature Components** | `src/features/dashboard/components` | Domain-specific wrappers (e.g., `ChartsShowcase`). |
+| **Feature Components** | `src/features/*/components` | Domain-specific wrappers (e.g., `ChartsShowcase`, `PortfolioAllocationCharts`). |
 | **Chart Utilities** | Parent feature/page files | Slice palettes, gauge bands, sunburst branch maps — passed as props. |
 | **Chart Hooks** | `src/hooks` | Shared hooks for chart lifecycle, resizing, and data fetching. |
 
@@ -153,6 +153,11 @@ export const ChartWrapper = ({ children, title, subtitle, isLoading, isEmpty }) 
 | `data` | `Array` | `[]` | `[{ category: string, value: number }]` |
 | `title` | `string` | `undefined` | Card title (rendered with premium underline decoration) |
 | `colors` | `string[]` | *(none — required from parent)* | Hex colors for slices |
+| `legendValueText` | `string` | `": {valuePercentTotal.formatNumber('#.##')}%"` | AmCharts legend value template (`PieChart`) |
+| `sliceLabelText` | `string` | `"{value.formatNumber('#.##')}%"` | AmCharts slice label template (`PieChart`) |
+| `sliceLabelFontSize` | `number` | `14` | Slice label font size in px (`PieChart`) |
+| `showLegend` | `boolean` | `true` | Toggle legend visibility (`PieChart`) |
+| `embedded` | `boolean` | `false` | Render chart without `Card` wrapper — for nested layouts (`PieChart`) |
 | `bands` | `Array` | *(none — required from parent)* | Gauge band segments (`GaugeChart` only) |
 | `branchColors` | `Object` | *(none — required from parent)* | Top-level branch colors (`SunburstChart` only) |
 | `loading` | `boolean` | `false` | Show skeleton loading state |
@@ -167,8 +172,9 @@ export const ChartWrapper = ({ children, title, subtitle, isLoading, isEmpty }) 
 
 #### PieChart (`src/components/charts/PieChart.jsx`)
 - **Visuals**: Full pie chart (`innerRadius: 0%`).
-- **Labels**: Percentage labels inside slices with adaptive color from slice luminance.
-- **Legend**: Specialized format `Category : Value%` (e.g., `Equity Fund : 30%`).
+- **Labels**: Percentage labels inside slices with adaptive color from slice luminance. Override via `sliceLabelText` and `sliceLabelFontSize`.
+- **Legend**: Default format `Category : Value%`; override via `legendValueText`. Data rows may include extra fields (e.g. `displayValue`) referenced in custom templates.
+- **Embedded mode**: Set `embedded={true}` to render without the outer `Card` — use inside parent cards or split layouts (see `PortfolioInvestmentSummary`).
 - **Colors**: Parent passes `colors` prop.
 
 #### GaugeChart (`src/components/charts/GaugeChart.jsx`)
@@ -217,6 +223,34 @@ export const ChartsShowcase = () => {
   );
 };
 ```
+
+### Portfolio allocation (`src/features/portfolio/components/PortfolioAllocationCharts.jsx`)
+
+Domain-owned palettes per chart come from `public/mock/portfolio.json` (`allocationCharts[].colors`). Parent grid uses `height={390}` and passes mock `title`, `data`, and `colors` to each `PieChart`.
+
+### Portfolio platform split (`src/features/portfolio/components/PortfolioInvestmentSummary.jsx`)
+
+Uses `PieChart` in **embedded** mode inside a parent `Card`. Platform split data includes `displayValue` for formatted legend/slice labels:
+
+```javascript
+const platformChartData = platformSplit.map(({ label, percent, value }) => ({
+  category: label,
+  value: percent,
+  displayValue: value,
+}));
+
+<PieChart
+  embedded
+  data={platformChartData}
+  colors={PLATFORM_COLORS}
+  height={200}
+  legendValueText=": {displayValue}"
+  sliceLabelText="{displayValue}"
+  sliceLabelFontSize={10}
+/>
+```
+
+Palette `PLATFORM_COLORS` is defined in `src/features/portfolio/portfolioConfig.js`.
 
 ---
 

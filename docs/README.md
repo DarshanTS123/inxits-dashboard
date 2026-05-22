@@ -4,7 +4,11 @@
 >
 > If you are an AI assistant, coding agent, autonomous IDE, or implementation model reading this repository:
 >
-> You MUST read and comply with ALL relevant `.md` files inside this `/docs` directory BEFORE:
+> You MUST treat this file as the documentation entry point, not as the
+> complete documentation. Reading `docs/README.md` is only step zero.
+>
+> You MUST read and comply with EVERY `.md` file inside this `/docs`
+> directory BEFORE:
 >
 > - proposing implementations
 > - generating code
@@ -14,6 +18,10 @@
 > - restructuring folders
 > - updating state management
 > - changing UI patterns
+>
+> Do not ask the user to paste the other documentation files. Discover them
+> from this folder, read them yourself, and follow the strict read order below.
+> If new `.md` files are added to `/docs`, read them too before coding.
 >
 > Failure to follow documented rules invalidates the implementation.
 >
@@ -46,6 +54,7 @@
 >
 > - affected architectural layers
 > - state ownership
+> - data ownership and API/mock API source (create `public/mock/<domain>.json` + feature API module for new data-driven features)
 > - reusable existing modules
 > - validation requirements
 > - accessibility implications
@@ -60,6 +69,7 @@
 > - run `npm run build`
 > - ensure JavaScript runs without errors
 > - ensure imports follow architecture rules
+> - ensure screen data flows through the documented API/mock API pattern
 > - ensure accessibility requirements are met
 > - ensure responsive behavior works correctly
 > - ensure loading/error/empty states are handled
@@ -100,7 +110,8 @@ The documentation exists to:
 
 # Required Read Order (STRICT)
 
-AI assistants MUST read files in the following order:
+AI assistants MUST read every documentation file in this directory before
+coding. Start with this README, then read the files below in this exact order:
 
 1. `docs/project-overview.md`
 2. `docs/architecture.md`
@@ -110,7 +121,11 @@ AI assistants MUST read files in the following order:
 6. `docs/ai-workflow-rules.md`
 7. `docs/chart-architecture.md`
 
-This order matters because later documents depend on constraints defined earlier.
+After these required files, read any additional `.md` files present in
+`docs/`. This order matters because later documents depend on constraints
+defined earlier.
+
+Do not proceed to implementation until this read pass is complete.
 
 ---
 
@@ -172,6 +187,52 @@ src/
 ---
 
 # Architectural Principles
+
+## Mock API And Screen Data (mandatory for new features)
+
+Every new **data-driven** feature must be implemented against the repository
+mock API layer first. Do not wait for backend endpoints and do not inline
+large static datasets in components.
+
+### Required workflow
+
+When creating a new feature, follow this order:
+
+1. **Create mock payload** — `public/mock/<domain>.json`
+   - One file per screen, or one file per domain with named sections (metrics, tables, charts, etc.)
+   - Match the shape the UI will consume; use stable field names for future real-API swap
+2. **Create feature API module** — `src/features/<domain>/api/<domain>.js`
+   - Fetch with `privateApi.get('/mock/<domain>.json')` (or `publicApi` when unauthenticated)
+   - Export query key factories and React Query hooks (`usePortfolioData`, `useClients`, etc.)
+   - Normalize or merge payloads here when a screen combines multiple mock files
+3. **Build feature UI** — hooks in orchestrators; props into presentational components
+4. **Wire route page** — lean wrapper only; loading/error/empty states at page or feature root
+
+### Rules
+
+- Mock JSON lives under `public/mock/*.json` only (never in `src/`).
+- All screen data flows through the feature API module + React Query — not through page JSX or UI primitives.
+- Query keys stay in the API module so cache identity is explicit.
+- Route pages render the feature component; they do not fetch data or hold large mock objects.
+- Static arrays inside components are acceptable only for tiny UI config (select options, tabs, local labels).
+
+### Examples in this repo
+
+| Feature | Mock file | API module |
+|---|---|---|
+| Clients (list) | `public/mock/clients.json` | `src/features/clients/api/clients.js` |
+| Client detail | `public/mock/client-details.json` (+ list row) | `src/features/clients/api/clientDetail.js` |
+| Portfolio | `public/mock/portfolio.json` | `src/features/portfolio/api/portfolio.js` |
+| Dashboard | `public/mock/dashboard.json` | `src/features/dashboard/api/dashboard.js` |
+| Auth (demo) | `public/mock/user.json` | `src/features/auth/api/login.js` |
+
+### When a real API exists
+
+Replace the mock URL in the feature API module only. Keep the hook signature, query keys, and normalization layer unchanged so UI components do not need to change.
+
+See also: `docs/ai-workflow-rules.md` §2 (feature development workflow).
+
+---
 
 ## Feature Isolation
 
@@ -277,6 +338,7 @@ A task is complete only if:
 - build passes
 - accessibility requirements are satisfied
 - loading/error/empty states exist
+- for new data-driven features: `public/mock/<domain>.json` exists and screen data is fetched via the feature API module (React Query + `privateApi`/`publicApi`), not inline in components
 - responsive behavior works
 - duplicated logic is avoided
 - documentation is updated if needed

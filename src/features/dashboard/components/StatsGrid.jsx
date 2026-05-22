@@ -17,9 +17,11 @@ export const StatsGrid = ({ stats = [], loading }) => {
       {items.map((item, index) => (
         <Card
           key={index}
-          padding="md"
+          padding="sm"
           label={item.label}
           value={item.value || '-'}
+          loading={loading}
+          skeletonRows={2}
           meta={
             item.link && (
               <Button
@@ -32,13 +34,9 @@ export const StatsGrid = ({ stats = [], loading }) => {
               </Button>
             )
           }
-          loading={loading}
-          loadingFallback={
-            <div className="flex flex-col gap-2 animate-pulse">
-              <div className="h-4 bg-slate-800 rounded w-28" />
-              <div className="h-8 bg-slate-800 rounded w-24 animate-pulse" />
-            </div>
-          }
+          labelClassName="tracking-normal"
+          valueClassName="text-lg font-semibold"
+          className="rounded-xl"
         />
       ))}
     </div>

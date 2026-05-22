@@ -1,6 +1,30 @@
 import React from 'react';
 
+import { StarRating } from '@/components/ui/StarRating/StarRating';
 import { cn } from '@/utils/cn';
+
+function renderCellContent(column, context) {
+  const { row, value, rowIndex } = context;
+
+  if (column.cell) {
+    return column.cell({ row, value, rowIndex, column });
+  }
+
+  if (column.cellType === 'rating') {
+    return (
+      <StarRating
+        value={value}
+        max={column.maxStars ?? 5}
+        className={column.ratingClassName}
+        filledClassName={column.filledStarClassName}
+        emptyClassName={column.emptyStarClassName}
+        iconClassName={column.starIconClassName}
+      />
+    );
+  }
+
+  return value;
+}
 
 function normalizeStickyColumns(stickyColumns, stickyColumn) {
   if (stickyColumns) return stickyColumns;
@@ -217,7 +241,7 @@ function DataTable({
                     key={column.id || column.accessorKey}
                     className={cn(column.cellClassName, column.className)}
                   >
-                    {column.cell ? column.cell({ row, value, rowIndex, column }) : value}
+                    {renderCellContent(column, { row, value, rowIndex })}
                   </TableCell>
                 );
               })}
@@ -230,3 +254,4 @@ function DataTable({
 }
 
 export { DataTable, Table, TableBody, TableCell, TableHead, TableHeader, TableRow };
+export { StarRating } from '@/components/ui/StarRating/StarRating';

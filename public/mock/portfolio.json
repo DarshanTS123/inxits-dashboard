@@ -1,0 +1,259 @@
+{
+  "metrics": [
+    {
+      "id": "current",
+      "label": "Current Value",
+      "value": "₹1,85,00,000",
+      "meta": "(+17.5%)",
+      "metaClassName": "text-success",
+      "suffix": "1D"
+    },
+    {
+      "id": "invested",
+      "label": "Invested Value",
+      "value": "₹1,60,00,000"
+    },
+    {
+      "id": "gain",
+      "label": "Unrealised Gain/Loss",
+      "value": "+₹25,00,000"
+    },
+    {
+      "id": "xirr",
+      "label": "XIRR (YTD)",
+      "value": "12.4%"
+    },
+    {
+      "id": "schemes",
+      "label": "No. of Invested Schemes",
+      "value": "18"
+    }
+  ],
+  "investmentSummary": {
+    "totalInvestment": "₹15,50,000",
+    "platformSplit": [
+      {
+        "label": "Inxits",
+        "value": "₹1,29,50,000 (70%)",
+        "percent": 70
+      },
+      {
+        "label": "Finfactor",
+        "value": "₹5,55,000(30%)",
+        "percent": 30
+      }
+    ],
+    "sources": [
+      {
+        "source": "Our Platform",
+        "invested": "₹9,40,000",
+        "current": "₹10,85,000",
+        "gain": "+₹1,45,000",
+        "total": "70%"
+      },
+      {
+        "source": "Other Platform",
+        "invested": "₹4,20,000",
+        "current": "₹4,65,000",
+        "gain": "+₹45,000",
+        "total": "30%"
+      }
+    ]
+  },
+  "allocationCharts": [
+    {
+      "id": "asset",
+      "title": "Asset Allocation",
+      "data": [
+        { "category": "Equity MF", "value": 46 },
+        { "category": "Debt MF", "value": 22 },
+        { "category": "Hybrid MF", "value": 16 },
+        { "category": "Liquid MF", "value": 16 }
+      ],
+      "colors": ["#c96868", "#83b3bb", "#ef8437", "#6f9d8e"]
+    },
+    {
+      "id": "market",
+      "title": "Market Capital Allocation",
+      "data": [
+        { "category": "Large Cap", "value": 14 },
+        { "category": "Mid Cap", "value": 14 },
+        { "category": "Small Cap", "value": 14 },
+        { "category": "Flexi Cap", "value": 14 },
+        { "category": "Other", "value": 14 }
+      ],
+      "colors": ["#166394", "#2786ca", "#379ade", "#70bdf0", "#b9dbf2"]
+    },
+    {
+      "id": "sector",
+      "title": "Sector Allocation",
+      "data": [
+        { "category": "IT", "value": 26 },
+        { "category": "Debt ETF", "value": 14 },
+        { "category": "Energy", "value": 13 },
+        { "category": "Construction", "value": 11 },
+        { "category": "Financial Services", "value": 10 },
+        { "category": "Pharma", "value": 10 },
+        { "category": "Commodity", "value": 9 },
+        { "category": "Others", "value": 7 }
+      ],
+      "colors": [
+        "#cc696b",
+        "#82b4bc",
+        "#ef8437",
+        "#6f9d8e",
+        "#78b6cf",
+        "#b8caa2",
+        "#c5b49d",
+        "#838784"
+      ]
+    },
+    {
+      "id": "funds",
+      "title": "Weightage distribution - Top 5 MF",
+      "data": [
+        { "category": "HDFC Flexi Cap Fund", "value": 30 },
+        { "category": "SBI Small Cap Fund", "value": 30 },
+        { "category": "ICICI Balanced Advantage", "value": 20 },
+        { "category": "Axis Bluechip Fund", "value": 10 },
+        { "category": "Nippon India Liquid Fund", "value": 10 }
+      ],
+      "colors": ["#78b6cf", "#b5c4a3", "#9fd7c5", "#6e9d8e", "#83b3bb"]
+    }
+  ],
+  "holdings": {
+    "total": 56,
+    "items": [
+      {
+        "id": "holding-1",
+        "name": "Axis Bluechip Fund",
+        "status": "SELL",
+        "rating": 3,
+        "category": "Equity MF",
+        "clients": 2,
+        "units": "2,350",
+        "avgCost": "51.25",
+        "current": "1.28,300",
+        "gain": "+23,800",
+        "weight": "7%"
+      },
+      {
+        "id": "holding-2",
+        "name": "Mirae Asset Large Cap",
+        "status": "HOLD",
+        "rating": 3,
+        "category": "Equity MF",
+        "clients": 6,
+        "units": "2,350",
+        "avgCost": "51.25",
+        "current": "1.28,300",
+        "gain": "+23,800",
+        "weight": "7%"
+      },
+      {
+        "id": "holding-3",
+        "name": "HDFC Short term Debt",
+        "status": "BUY",
+        "rating": 3,
+        "category": "Equity MF",
+        "clients": 5,
+        "units": "2,350",
+        "avgCost": "51.25",
+        "current": "1.28,300",
+        "gain": "+23,800",
+        "weight": "7%"
+      },
+      {
+        "id": "holding-4",
+        "name": "ICICI balanced advantage",
+        "status": "BUY",
+        "rating": 3,
+        "category": "Equity MF",
+        "clients": 6,
+        "units": "2,350",
+        "avgCost": "51.25",
+        "current": "1.28,300",
+        "gain": "+23,800",
+        "weight": "7%"
+      },
+      {
+        "id": "holding-5",
+        "name": "Nippon ETF nifty BeEs",
+        "status": "SELL",
+        "rating": 3,
+        "category": "Equity MF",
+        "clients": 4,
+        "units": "2,350",
+        "avgCost": "51.25",
+        "current": "1.28,300",
+        "gain": "+23,800",
+        "weight": "7%"
+      },
+      {
+        "id": "holding-6",
+        "name": "Axis Bluechip Fund",
+        "status": "BUY",
+        "rating": 3,
+        "category": "Equity MF",
+        "clients": 3,
+        "units": "2,350",
+        "avgCost": "51.25",
+        "current": "1.28,300",
+        "gain": "+23,800",
+        "weight": "7%"
+      },
+      {
+        "id": "holding-7",
+        "name": "Mirae Asset Large Cap",
+        "status": "SELL",
+        "rating": 3,
+        "category": "Equity MF",
+        "clients": 2,
+        "units": "2,350",
+        "avgCost": "51.25",
+        "current": "1.28,300",
+        "gain": "+23,800",
+        "weight": "7%"
+      },
+      {
+        "id": "holding-8",
+        "name": "HDFC Short term Debt",
+        "status": "BUY",
+        "rating": 3,
+        "category": "Equity MF",
+        "clients": 6,
+        "units": "2,350",
+        "avgCost": "51.25",
+        "current": "1.28,300",
+        "gain": "+23,800",
+        "weight": "7%"
+      },
+      {
+        "id": "holding-9",
+        "name": "ICICI balanced advantage",
+        "status": "HOLD",
+        "rating": 3,
+        "category": "Equity MF",
+        "clients": 2,
+        "units": "2,350",
+        "avgCost": "51.25",
+        "current": "1.28,300",
+        "gain": "+23,800",
+        "weight": "7%"
+      },
+      {
+        "id": "holding-10",
+        "name": "Nippon ETF nifty BeEs",
+        "status": "HOLD",
+        "rating": 3,
+        "category": "Equity MF",
+        "clients": 4,
+        "units": "2,350",
+        "avgCost": "51.25",
+        "current": "1.28,300",
+        "gain": "+23,800",
+        "weight": "7%"
+      }
+    ]
+  }
+}
