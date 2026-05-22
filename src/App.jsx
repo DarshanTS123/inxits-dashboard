@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { router } from './routes';
 import { QueryProvider } from './providers/QueryProvider';
-import { Toaster } from 'sonner';
+import { Toaster } from './components/ui/Toaster/Toaster';
 import { TooltipProvider } from './components/ui/Tooltip/Tooltip';
 import { store, persistor } from './store';
 import './index.css';
@@ -13,7 +13,7 @@ function App() {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <QueryProvider>
-          <Toaster position="top-right" richColors />
+          <Toaster />
           <TooltipProvider delayDuration={0}>
             <RouterProvider router={router} />
           </TooltipProvider>

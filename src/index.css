@@ -233,3 +233,20 @@
   background-color: transparent;
   border: none;
 }
+
+[data-sonner-toaster] {
+  font-family: "Myriad Pro", system-ui, sans-serif !important;
+  --width: 356px;
+}
+
+/* Sonner injects dark-theme close-button styles after app CSS; override with !important. */
+[data-sonner-toaster][data-sonner-theme='dark'] [data-sonner-toast] [data-close-button] {
+  background: transparent !important;
+  border-color: transparent !important;
+  color: var(--icon-active) !important;
+}
+
+[data-sonner-toaster][data-sonner-theme='dark'] [data-sonner-toast] [data-close-button]:hover {
+  background: transparent !important;
+  border-color: transparent !important;
+}
