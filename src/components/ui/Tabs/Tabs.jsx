@@ -2,17 +2,33 @@ import { Tabs as TabsPrimitive } from 'radix-ui';
 
 import { cn } from '@/utils/cn';
 
-const listClass =
-  'inline-flex items-center gap-3 border-b border-transparent';
-
-const triggerClass =
-  'inline-flex items-center gap-2 border-b-2 border-transparent px-1 py-2 text-sm font-semibold text-paragraph transition-colors hover:text-heading focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-2 focus-visible:ring-offset-background data-[state=active]:border-primary data-[state=active]:text-primary [&_[data-slot=tabs-badge]]:inline-flex [&_[data-slot=tabs-badge]]:h-5 [&_[data-slot=tabs-badge]]:min-w-5 [&_[data-slot=tabs-badge]]:items-center [&_[data-slot=tabs-badge]]:justify-center [&_[data-slot=tabs-badge]]:rounded-full [&_[data-slot=tabs-badge]]:border [&_[data-slot=tabs-badge]]:border-stroke-divider [&_[data-slot=tabs-badge]]:bg-layer2 [&_[data-slot=tabs-badge]]:px-1.5 [&_[data-slot=tabs-badge]]:text-[11px] [&_[data-slot=tabs-badge]]:font-semibold [&_[data-slot=tabs-badge]]:leading-none [&_[data-slot=tabs-badge]]:text-paragraph/80 data-[state=active]:[&_[data-slot=tabs-badge]]:border-primary/35 data-[state=active]:[&_[data-slot=tabs-badge]]:bg-primary/20 data-[state=active]:[&_[data-slot=tabs-badge]]:text-primary';
+const TAB_VARIANTS = {
+  default: {
+    list: 'inline-flex items-center gap-3 border-b border-transparent',
+    trigger:
+      'inline-flex items-center gap-2 border-b-2 border-transparent px-1 py-2 text-sm font-semibold text-paragraph transition-colors hover:text-heading focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-2 focus-visible:ring-offset-background data-[state=active]:border-primary data-[state=active]:text-primary [&_[data-slot=tabs-badge]]:inline-flex [&_[data-slot=tabs-badge]]:h-5 [&_[data-slot=tabs-badge]]:min-w-5 [&_[data-slot=tabs-badge]]:items-center [&_[data-slot=tabs-badge]]:justify-center [&_[data-slot=tabs-badge]]:rounded-full [&_[data-slot=tabs-badge]]:border [&_[data-slot=tabs-badge]]:border-stroke-divider [&_[data-slot=tabs-badge]]:bg-layer2 [&_[data-slot=tabs-badge]]:px-1.5 [&_[data-slot=tabs-badge]]:text-[11px] [&_[data-slot=tabs-badge]]:font-semibold [&_[data-slot=tabs-badge]]:leading-none [&_[data-slot=tabs-badge]]:text-paragraph/80 data-[state=active]:[&_[data-slot=tabs-badge]]:border-primary/35 data-[state=active]:[&_[data-slot=tabs-badge]]:bg-primary/20 data-[state=active]:[&_[data-slot=tabs-badge]]:text-primary',
+  },
+  segmented: {
+    list: 'flex h-11 w-full gap-0 rounded-lg border border-stroke-divider bg-layer1 p-0 text-paragraph hover:text-heading',
+    trigger:
+      'inline-flex h-11 min-w-0 flex-1 basis-0 items-center justify-center gap-0 rounded-none border border-transparent bg-transparent px-4 py-0 text-sm font-normal text-paragraph/60 shadow-none transition-colors focus-visible:outline-none focus-visible:z-10 focus-visible:rounded-lg focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary/30 data-[state=active]:z-10 data-[state=active]:rounded-lg data-[state=active]:border-primary data-[state=active]:bg-layer2 data-[state=active]:font-bold data-[state=active]:text-heading',
+  },
+};
 
 const contentClass = 'outline-none';
 
-const renderTabLabel = (label) => {
+const renderTabLabel = (label, variant) => {
   if (typeof label === 'string') {
-    return <span className="text-sm font-semibold">{label}</span>;
+    return (
+      <span
+        className={cn(
+          'text-sm',
+          variant === 'segmented' ? 'font-inherit' : 'font-semibold'
+        )}
+      >
+        {label}
+      </span>
+    );
   }
 
   return label;
@@ -30,11 +46,15 @@ const renderTabLabel = (label) => {
 
 /**
  * Data-driven tabs. Pass an `items` array from the parent.
+ *
+ * @param {'default' | 'segmented'} [variant] - `default`: underline tabs; `segmented`: pill switcher with bordered active segment
  */
 function Tabs({
   items = [],
   children,
+  variant = 'default',
   listClassName,
+  triggerClassName,
   contentClassName,
   defaultValue,
   ...rootProps
@@ -42,6 +62,7 @@ function Tabs({
   const resolvedDefault = defaultValue ?? items[0]?.value;
   const hasPerItemContent = items.some((item) => item.content != null);
   const sharedContent = children;
+  const variantStyles = TAB_VARIANTS[variant] ?? TAB_VARIANTS.default;
 
   if (!items.length) {
     return null;
@@ -50,12 +71,13 @@ function Tabs({
   return (
     <TabsPrimitive.Root
       data-slot="tabs"
+      data-variant={variant}
       defaultValue={resolvedDefault}
       {...rootProps}
     >
       <TabsPrimitive.List
         data-slot="tabs-list"
-        className={cn(listClass, listClassName)}
+        className={cn(variantStyles.list, listClassName)}
       >
         {items.map((item) => (
           <TabsPrimitive.Trigger
@@ -63,9 +85,9 @@ function Tabs({
             data-slot="tabs-trigger"
             value={item.value}
             disabled={item.disabled}
-            className={triggerClass}
+            className={cn(variantStyles.trigger, triggerClassName)}
           >
-            {renderTabLabel(item.label)}
+            {renderTabLabel(item.label, variant)}
             {item.badge != null && (
               <span data-slot="tabs-badge">{item.badge}</span>
             )}

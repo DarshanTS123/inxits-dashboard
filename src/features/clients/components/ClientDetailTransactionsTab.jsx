@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import { ArrowLeftRight, ChevronDown, ChevronRight, Download } from 'lucide-react';
 
 import { Button } from '@components/ui/Button/Button';
 import { DatePicker } from '@components/ui/DatePicker/DatePicker';
 import { DropdownMenuList } from '@components/ui/DropdownMenu/DropdownMenu';
 import { cn } from '@utils/cn';
+import { CreateTransactionDrawer } from './CreateTransactionDrawer';
 import { useClientTransactionsTab } from '../hooks/useClientTransactionsTab';
 import { getTransactionStatusStyles } from '../utils/clientTransactions';
 
@@ -79,6 +81,7 @@ const TypeFilterPills = ({ filters, activeType, onChange }) => (
 );
 
 export const ClientDetailTransactionsTab = ({ transactionsTab }) => {
+  const [isCreateTransactionOpen, setIsCreateTransactionOpen] = useState(false);
   const {
     activeType,
     setActiveType,
@@ -120,6 +123,7 @@ export const ClientDetailTransactionsTab = ({ transactionsTab }) => {
           <Button
             type="button"
             className="h-9 px-5 text-sm font-semibold"
+            onClick={() => setIsCreateTransactionOpen(true)}
           >
             Create Transaction
           </Button>
@@ -169,6 +173,11 @@ export const ClientDetailTransactionsTab = ({ transactionsTab }) => {
           ))}
         </div>
       )}
+
+      <CreateTransactionDrawer
+        open={isCreateTransactionOpen}
+        onOpenChange={setIsCreateTransactionOpen}
+      />
     </div>
   );
 };

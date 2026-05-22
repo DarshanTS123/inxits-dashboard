@@ -48,11 +48,13 @@ function DatePicker({
   defaultValue,
   onChange,
   placeholder,
+  displayLabel,
   disabled = false,
   className,
   triggerClassName,
   align = 'end',
   showFooter = true,
+  showTriggerIcon = true,
   calendarProps,
 }) {
   const isControlled = value !== undefined;
@@ -65,7 +67,8 @@ function DatePicker({
   const resolvedPlaceholder =
     placeholder ?? (mode === 'range' ? 'Select date range' : 'Select date');
 
-  const displayLabel = getDisplayLabel(mode, selected, resolvedPlaceholder);
+  const resolvedDisplayLabel =
+    displayLabel ?? getDisplayLabel(mode, selected, resolvedPlaceholder);
 
   const commitValue = (nextValue) => {
     if (!isControlled) setInternalValue(nextValue);
@@ -116,8 +119,12 @@ function DatePicker({
             className
           )}
         >
-          <span className={cn(!hasSelection && 'text-paragraph/70')}>{displayLabel}</span>
-          <CalendarIcon className="h-4 w-4 shrink-0 text-paragraph/80" aria-hidden />
+          <span className={cn(!hasSelection && !displayLabel && 'text-paragraph/70')}>
+            {resolvedDisplayLabel}
+          </span>
+          {showTriggerIcon && (
+            <CalendarIcon className="h-4 w-4 shrink-0 text-paragraph/80" aria-hidden />
+          )}
         </button>
       </PopoverTrigger>
 
