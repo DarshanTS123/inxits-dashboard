@@ -25,6 +25,7 @@ function TooltipContent({
   className,
   sideOffset = 4,
   children,
+  hideArrow = false,
   ...props
 }) {
   return (
@@ -33,13 +34,23 @@ function TooltipContent({
         data-slot="tooltip-content"
         sideOffset={sideOffset}
         className={cn(
-          "z-50 inline-flex w-fit max-w-xs origin-(--radix-tooltip-content-transform-origin) items-center gap-1.5 rounded-md bg-popup border border-stroke-divider px-3 py-1.5 text-xs text-paragraph shadow-md data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-[state=delayed-open]:animate-in data-[state=delayed-open]:fade-in-0 data-[state=delayed-open]:zoom-in-95 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+          "relative z-50 w-fit max-w-xs overflow-visible rounded-md border border-stroke-divider bg-popup px-3 py-1.5 text-xs text-paragraph shadow-md",
+          "origin-(--radix-tooltip-content-transform-origin)",
+          "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+          "data-[state=delayed-open]:animate-in data-[state=delayed-open]:fade-in-0 data-[state=delayed-open]:zoom-in-95",
+          "data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95",
+          "data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
           className
         )}
         {...props}>
-        {children}
-        <TooltipPrimitive.Arrow
-          className="z-50 size-2.5 translate-y-[calc(-50%_-_2px)] rotate-45 rounded-[2px] bg-popup border-l border-t border-stroke-divider fill-popup" />
+        <span className="relative z-10">{children}</span>
+        {!hideArrow && (
+          <TooltipPrimitive.Arrow
+            width={12}
+            height={6}
+            className="z-0 fill-popup stroke-[var(--stroke-divider)] stroke-[1.5] [stroke-linejoin:round]"
+          />
+        )}
       </TooltipPrimitive.Content>
     </TooltipPrimitive.Portal>
   );

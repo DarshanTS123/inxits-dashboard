@@ -129,8 +129,15 @@ export const Sidebar = ({ isMobileOpen = false, onMobileClose }) => {
                     <TooltipTrigger asChild>
                       <div className="w-full">{content}</div>
                     </TooltipTrigger>
-                    <TooltipContent side="right">
-                      <p>{item.label}</p>
+                    <TooltipContent
+                      side="right"
+                      sideOffset={10}
+                      className={cn(
+                        'max-w-none whitespace-nowrap px-3.5 py-2 text-sm font-semibold leading-snug text-label',
+                        isActive && 'text-primary'
+                      )}
+                    >
+                      {item.label}
                     </TooltipContent>
                   </Tooltip>
                 );
