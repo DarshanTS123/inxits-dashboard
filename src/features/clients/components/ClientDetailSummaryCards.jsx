@@ -55,7 +55,7 @@ const buildSummaryCards = (client) => {
       contentClassName: 'flex flex-col gap-4 sm:flex-row sm:items-start',
       content: (
         <>
-          <div className="h-[124px] w-[152px] shrink-0 overflow-hidden rounded-md bg-layer2">
+          <div className="aspect-square shrink-0 overflow-hidden rounded-md bg-layer2">
             <img
               src={client.avatarUrl}
               alt={`${client.clientName} profile`}
@@ -81,7 +81,7 @@ const buildSummaryCards = (client) => {
       title: 'Risk Profile Card',
       className: 'lg:col-span-5',
       contentClassName:
-        'rounded-lg bg-layer2/70 px-4 py-3.5 md:px-6 md:py-4 flex flex-col items-center gap-5 lg:flex-row lg:items-center',
+        'rounded-lg bg-layer3 px-4 py-3.5 flex flex-col items-center gap-5 lg:flex-row lg:items-center',
       content: (
         <>
           <div className="flex min-w-0 flex-1 flex-col items-center">
@@ -89,11 +89,11 @@ const buildSummaryCards = (client) => {
               value={riskProfile.value}
               label={riskProfile.label}
               bands={RISK_GAUGE_BANDS}
-              height={114}
+              height={150}
               className="w-full min-w-[180px] border-0 bg-transparent p-0 shadow-none hover:border-transparent"
             />
           </div>
-          <div className="w-full flex-1 space-y-5">
+          <div className="space-y-5">
             <div className="text-[14px] font-normal leading-tight text-paragraph/75">
               Asset allocation by Risk Profile :
             </div>

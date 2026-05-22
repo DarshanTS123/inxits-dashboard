@@ -27,7 +27,7 @@ export const DetailFieldGrid = ({
 }) => (
   <div
     className={cn(
-      'grid gap-x-4 gap-y-4 sm:gap-y-6',
+      'grid gap-x-4 gap-y-4',
       gridCols[cols] ?? gridCols[2],
       className
     )}

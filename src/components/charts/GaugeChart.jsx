@@ -165,7 +165,7 @@ const GaugeChart = ({
             <div id={chartId} className="w-full h-full max-h-[220px]" />
             {label && (
               <div className="mt-4 text-center">
-                <span className="text-xl font-bold text-subheading tracking-wide">
+                <span className="text-lg font-bold text-subheading">
                   {label}
                 </span>
               </div>

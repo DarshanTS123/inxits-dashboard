@@ -69,7 +69,6 @@ const DonutChart = ({
   useLayoutEffect(() => {
     if (loading || !data?.length || !colors?.length) return;
 
-    const pageBg = readCssVar("--bg-page", "#13172a");
     const popupBg = readCssVar("--bg-popup", "#1a1f33");
     const legendText = readCssVar("--text-paragraph", "#c9c9c9");
     const divider = readCssVar("--stroke-divider", "#3a3a3a");
@@ -105,9 +104,8 @@ const DonutChart = ({
     );
 
     series.slices.template.setAll({
-      strokeOpacity: 1,
-      strokeWidth: 2,
-      stroke: am5.color(pageBg),
+      strokeOpacity: 0,
+      strokeWidth: 0,
       interactive: true,
       tooltipText:
         "{category}: [bold]{value}[/] ({valuePercentTotal.formatNumber('0.00')}%)",

@@ -68,9 +68,8 @@ const SunburstChart = ({
 
     // Styling the segments (nodes)
     series.nodes.template.setAll({
-      strokeOpacity: 1,
-      strokeWidth: 1.5,
-      stroke: am5.color("#13172a"),
+      strokeOpacity: 0,
+      strokeWidth: 0,
       tooltipText: "{category}: [bold]{sum.formatNumber('#.##')}[/]",
     });
 
