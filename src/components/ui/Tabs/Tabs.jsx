@@ -56,7 +56,9 @@ function Tabs({
   listClassName,
   triggerClassName,
   contentClassName,
+  containerClassName,
   defaultValue,
+  addon,
   ...rootProps
 }) {
   const resolvedDefault = defaultValue ?? items[0]?.value;
@@ -75,25 +77,36 @@ function Tabs({
       defaultValue={resolvedDefault}
       {...rootProps}
     >
-      <TabsPrimitive.List
-        data-slot="tabs-list"
-        className={cn(variantStyles.list, listClassName)}
-      >
-        {items.map((item) => (
-          <TabsPrimitive.Trigger
-            key={item.value}
-            data-slot="tabs-trigger"
-            value={item.value}
-            disabled={item.disabled}
-            className={cn(variantStyles.trigger, triggerClassName)}
-          >
-            {renderTabLabel(item.label, variant)}
-            {item.badge != null && (
-              <span data-slot="tabs-badge">{item.badge}</span>
-            )}
-          </TabsPrimitive.Trigger>
-        ))}
-      </TabsPrimitive.List>
+      <div className={cn(
+        "flex items-center justify-between",
+        variant === 'default' && "border-b border-stroke-divider mb-4",
+        containerClassName
+      )}>
+        <TabsPrimitive.List
+          data-slot="tabs-list"
+          className={cn(
+            variantStyles.list,
+            variant === 'default' && "border-b-0",
+            listClassName
+          )}
+        >
+          {items.map((item) => (
+            <TabsPrimitive.Trigger
+              key={item.value}
+              data-slot="tabs-trigger"
+              value={item.value}
+              disabled={item.disabled}
+              className={cn(variantStyles.trigger, triggerClassName)}
+            >
+              {renderTabLabel(item.label, variant)}
+              {item.badge != null && (
+                <span data-slot="tabs-badge">{item.badge}</span>
+              )}
+            </TabsPrimitive.Trigger>
+          ))}
+        </TabsPrimitive.List>
+        {addon && <div className="flex-shrink-0">{addon}</div>}
+      </div>
 
       {hasPerItemContent &&
         items.map(

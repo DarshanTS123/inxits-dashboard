@@ -20,6 +20,12 @@ export function formatDatePickerRange(range) {
   return `${formatDatePickerDate(range.from)} - ${formatDatePickerDate(range.to)}`;
 }
 
+export function formatDate(date, formatStr = 'dd MMM yyyy') {
+  const d = toDate(date);
+  if (!d) return '';
+  return format(d, formatStr);
+}
+
 export function toIsoDateString(date) {
   if (!date || !isValid(date)) return '';
   return format(date, 'yyyy-MM-dd');

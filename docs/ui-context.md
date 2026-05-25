@@ -738,3 +738,58 @@ export const MyFeatureDrawer = ({ open, onOpenChange }) => {
 6. **Mobile-first**: Test all drawers at mobile breakpoint; consider switching `side` via responsive utilities if needed.
 
 **UI Rule D1**: Drawers containing forms must reset `react-hook-form` state on close to avoid stale data on re-open.
+
+---
+
+## Component Library Reference
+
+This section provides a concise reference for the shared UI components in `src/components/ui/`. Use this guide to ensure correct property usage and adherence to design standards.
+
+### Button Component
+
+Used for primary, secondary, and functional actions.
+
+**Import:** `import { Button } from '@/components/ui/Button/Button';`
+
+#### Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `variant` | `'primary' \| 'secondary' \| 'outline' \| 'ghost' \| 'danger' \| 'link'` | `'primary'` | Visual style of the button. |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Size of the button padding and font. |
+| `isLoading` | `boolean` | `false` | Shows a spinner and disables the button. |
+| `disabled` | `boolean` | `false` | Disables the button. |
+| `leftIcon` | `React.ElementType` | `-` | Icon component displayed to the left of text. |
+| `rightIcon` | `React.ElementType` | `-` | Icon component displayed to the right of text. |
+| `className` | `string` | `-` | Additional classes for customization. |
+| `children` | `React.ReactNode` | `-` | Button label or nested content. |
+
+### Input Component
+
+Used for form fields.
+
+**Import:** `import { Input } from '@/components/ui/Input/Input';`
+
+#### Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `label` | `string` | `-` | Input label text. |
+| `error` | `string \| boolean` | `-` | Error message or error state. |
+| `helperText` | `string` | `-` | Supporting text shown below input. |
+| `size` | `'sm' \| 'lg'` | `'lg'` | Input height. |
+| `leftIcon` | `React.ElementType` | `-` | Icon component displayed on the left. |
+| `rightIcon` | `React.ElementType` | `-` | Icon component displayed on the right. |
+| `disabled` | `boolean` | `-` | Disables the input. |
+| `required` | `boolean` | `-` | Adds an asterisk to the label. |
+| `className` | `string` | `-` | Container class. |
+| `inputClassName` | `string` | `-` | CSS class for the `input` element. |
+| `labelClassName` | `string` | `-` | CSS class for the label. |
+
+---
+
+### Pattern Guidelines
+
+1. **Always use UI Primitives**: Avoid raw `<input>` or `<button>` elements.
+2. **Prop Consistency**: Check this guide before implementing a wrapper around a UI component.
+3. **Accessibility**: For inputs, `label`, `error`, and `helperText` handle IDs and ARIA attributes automatically.
