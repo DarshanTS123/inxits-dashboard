@@ -229,7 +229,7 @@ const ClientDetailPortfolioTabInner = () => {
                </div>
 
                <div className="mt-6 pt-4 text-center border-t border-stroke-divider">
-                 <Button type="button" variant="ghost" className="text-sm text-primary hover:underline font-medium">View More</Button>
+                 <Button type="button" variant="link" className="text-sm font-medium">View More</Button>
                </div>
             </Card>
           ))}

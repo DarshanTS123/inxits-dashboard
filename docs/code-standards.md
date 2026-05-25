@@ -35,6 +35,7 @@ Measurable:
   - App, layout, feature, page, and UI composition code must import and render `Button` from `src/components/ui/Button/Button.jsx` for every button-like control.
   - Raw `<button>` is allowed only inside the shared `Button` primitive implementation.
   - Icon-only buttons must pass `aria-label`; form-submit buttons must explicitly use `type="submit"`.
+  - **Do not manually style button states**: Use the `variant` prop (`primary`, `secondary`, `outline`, `ghost`, `danger`) and `disabled` prop instead of manually passing `bg-*`, `text-*`, or `disabled:*` utility classes via `className` or `style`.
 - **Forms must follow the form design guide**
   - See `docs/form-design-guide.md` for comprehensive form patterns, validation, accessibility, and state management.
   - Use `react-hook-form` for all non-trivial forms (more than 2 fields).

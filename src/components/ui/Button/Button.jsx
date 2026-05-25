@@ -7,6 +7,7 @@ const variants = {
   outline: 'border border-stroke-divider bg-transparent text-heading hover:bg-white/5 active:scale-[0.98]',
   ghost: 'bg-transparent text-paragraph hover:bg-layer1 hover:text-heading',
   danger: 'bg-error text-white hover:opacity-90 active:scale-[0.98]',
+  link: 'bg-transparent text-primary hover:underline active:scale-[0.98]',
 };
 
 const sizes = {

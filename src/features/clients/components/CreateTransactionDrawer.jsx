@@ -4,6 +4,12 @@ import { Calendar, ChevronDown, FileX, RefreshCw } from 'lucide-react';
 import { Button } from '@components/ui/Button/Button';
 import { DatePicker } from '@components/ui/DatePicker/DatePicker';
 import { Drawer } from '@components/ui/Drawer/Drawer';
+import { Modal } from '@components/ui/Modal/Modal';
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from '@components/ui/input-otp';
 import { Select } from '@components/ui/Select/Select';
 import { Tabs } from '@components/ui/Tabs/Tabs';
 import { cn } from '@utils/cn';
@@ -153,9 +159,14 @@ export const CreateTransactionDrawer = ({ open, onOpenChange }) => {
     payFirstInstalment,
     setPayFirstInstalment,
     frequencyOptions,
+    isOtpModalOpen,
+    setIsOtpModalOpen,
+    otpValue,
+    setOtpValue,
     handleOpenChange,
     handleAmountChange,
     handleSubmit,
+    handleVerifyOtp,
   } = useCreateTransactionDrawer(onOpenChange);
 
   const tabItems = useMemo(
@@ -222,7 +233,8 @@ export const CreateTransactionDrawer = ({ open, onOpenChange }) => {
           </label>
           <Button
             type="button"
-            className="h-12 min-w-[200px] rounded-xl bg-primary px-10 text-base font-semibold text-white hover:opacity-90"
+            variant="primary"
+            className="h-12 min-w-[200px] rounded-xl px-10 text-base font-semibold"
             onClick={handleSubmit}
           >
             {primaryActionLabel}
@@ -247,6 +259,53 @@ export const CreateTransactionDrawer = ({ open, onOpenChange }) => {
         <div className="h-px flex-1 bg-stroke-divider" aria-hidden />
         <MandateEmptyState />
       </section>
+
+      <Modal
+        open={isOtpModalOpen}
+        onOpenChange={setIsOtpModalOpen}
+        size="md"
+        contentClassName="p-8 text-center"
+      >
+        <div className="flex flex-col items-center">
+          <h2 className="text-xl font-medium text-heading">
+            Enter the 6-digit OTP sent to
+          </h2>
+          <p className="mt-1 text-xl font-bold text-heading">
+            ******54
+          </p>
+
+          <InputOTP
+            maxLength={6}
+            value={otpValue}
+            onChange={setOtpValue}
+            containerClassName="mt-8"
+          >
+            <InputOTPGroup className="gap-3">
+              {[...Array(6)].map((_, i) => (
+                <InputOTPSlot
+                  key={i}
+                  index={i}
+                  className="h-14 w-12 rounded-xl border border-stroke-divider bg-transparent text-xl font-semibold text-heading first:rounded-xl first:border-l last:rounded-xl data-[active=true]:border-primary data-[active=true]:ring-primary/20"
+                />
+              ))}
+            </InputOTPGroup>
+          </InputOTP>
+
+          <p className="mt-6 text-sm text-paragraph">
+            Resend OTP <span className="font-medium text-primary">in 23s</span>
+          </p>
+
+          <Button
+            type="button"
+            variant="primary"
+            disabled={otpValue.length !== 6}
+            className="mt-8 h-14 w-full rounded-xl text-base"
+            onClick={handleVerifyOtp}
+          >
+            Verify
+          </Button>
+        </div>
+      </Modal>
     </Drawer>
   );
 };

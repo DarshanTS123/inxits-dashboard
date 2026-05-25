@@ -46,6 +46,9 @@ export const useCreateTransactionDrawer = (onOpenChange) => {
   const [sipDate, setSipDate] = useState(createDefaultSipDate);
   const [payFirstInstalment, setPayFirstInstalment] = useState(true);
 
+  const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
+  const [otpValue, setOtpValue] = useState('');
+
   const formattedAmount = useMemo(() => formatInrAmount(amount), [amount]);
   const sipDateLabel = useMemo(() => formatSipOnDay(sipDate), [sipDate]);
 
@@ -57,6 +60,7 @@ export const useCreateTransactionDrawer = (onOpenChange) => {
     setFrequency('monthly');
     setSipDate(createDefaultSipDate());
     setPayFirstInstalment(true);
+    setOtpValue('');
   };
 
   const handleOpenChange = (nextOpen) => {
@@ -71,6 +75,13 @@ export const useCreateTransactionDrawer = (onOpenChange) => {
   };
 
   const handleSubmit = () => {
+    // Instead of submitting immediately, open the OTP modal
+    setIsOtpModalOpen(true);
+  };
+
+  const handleVerifyOtp = () => {
+    // In a real app, verify OTP here
+    setIsOtpModalOpen(false);
     reset();
     onOpenChange(false);
   };
@@ -88,8 +99,13 @@ export const useCreateTransactionDrawer = (onOpenChange) => {
     payFirstInstalment,
     setPayFirstInstalment,
     frequencyOptions: FREQUENCY_OPTIONS,
+    isOtpModalOpen,
+    setIsOtpModalOpen,
+    otpValue,
+    setOtpValue,
     handleOpenChange,
     handleAmountChange,
     handleSubmit,
+    handleVerifyOtp,
   };
 };
