@@ -81,7 +81,7 @@ const buildSummaryCards = (client) => {
       title: 'Risk Profile Card',
       className: 'lg:col-span-5',
       contentClassName:
-        'rounded-lg bg-layer3 px-4 py-3.5 flex flex-col items-center gap-5 lg:flex-row lg:items-center',
+        'rounded-lg bg-layer3 px-4 py-1 flex flex-col items-center gap-5 lg:flex-row lg:items-center',
       content: (
         <>
           <div className="flex min-w-0 flex-1 flex-col items-center">

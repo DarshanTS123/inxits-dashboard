@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { Tabs } from '@components/ui/Tabs/Tabs';
 import { Button } from '@components/ui/Button/Button';
@@ -16,6 +16,13 @@ const TabPlaceholder = ({ label }) => (
 );
 
 export const ClientDetail = ({ client }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get('tab') || 'personal';
+
+  const handleTabChange = (value) => {
+    setSearchParams({ tab: value }, { replace: true });
+  };
+
   const tabs = useMemo(
     () => [
       {
@@ -50,7 +57,7 @@ export const ClientDetail = ({ client }) => {
         content: <TabPlaceholder label="Reports" />,
       },
     ],
-    [client.personalTab, client.transactionsTab]
+    [client.id, client.personalTab, client.transactionsTab]
   );
 
   return (
@@ -71,7 +78,8 @@ export const ClientDetail = ({ client }) => {
       <div className="mt-6">
         <Tabs
           items={tabs}
-          defaultValue="personal"
+          value={activeTab}
+          onValueChange={handleTabChange}
           listClassName="mb-4 flex-wrap"
         />
       </div>

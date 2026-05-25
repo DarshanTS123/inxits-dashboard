@@ -5,6 +5,7 @@ import { lazy } from 'react';
 const DashboardOverview = lazy(() => import('../pages/dashboard/DashboardOverview').then((m) => ({ default: m.DashboardOverview })));
 const ClientsPage = lazy(() => import('../pages/clients/ClientsPage').then((m) => ({ default: m.ClientsPage })));
 const ClientDetailPage = lazy(() => import('../pages/clients/ClientDetailPage').then((m) => ({ default: m.ClientDetailPage })));
+const TransactionDetailPage = lazy(() => import('../pages/clients/TransactionDetailPage').then((m) => ({ default: m.TransactionDetailPage })));
 const PortfolioPage = lazy(() => import('../pages/portfolio/PortfolioPage').then((m) => ({ default: m.PortfolioPage })));
 const SupportPage = lazy(() => import('../pages/support/SupportPage').then((m) => ({ default: m.SupportPage })));
 const TransactionsPage = lazy(() => import('../pages/transactions/TransactionsPage').then((m) => ({ default: m.TransactionsPage })));
@@ -61,6 +62,11 @@ export const router = createBrowserRouter([
               {
                 path: '/clients/:id',
                 element: <ClientDetailPage />,
+                handle: { title: 'Clients' }
+              },
+              {
+                path: '/clients/:id/:transactionId',
+                element: <TransactionDetailPage />,
                 handle: { title: 'Clients' }
               },
               { path: '/portfolio', element: <PortfolioPage />, handle: { title: 'Portfolio Oversight' } },

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeftRight, ChevronDown, ChevronRight, Download } from 'lucide-react';
 
 import { Button } from '@components/ui/Button/Button';
@@ -26,33 +27,39 @@ const TransactionStatus = ({ status }) => {
   );
 };
 
-const TransactionRow = ({ transaction }) => (
-  <button
-    type="button"
-    className="flex w-full items-center gap-4 rounded-xl border border-stroke-divider bg-layer1 px-5 py-[18px] text-left transition-colors hover:bg-table-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20"
-    aria-label={`View ${transaction.schemeName} transaction`}
-  >
-    <div className="min-w-0 flex-1">
-      <p className="text-[15px] font-semibold leading-snug text-heading">
-        {transaction.schemeName}
-      </p>
-      <p className="mt-1.5 text-[13px] text-paragraph/80">
-        <span className="font-semibold text-heading">{transaction.amount}</span>{' '}
-        <span className="font-normal">({transaction.typeLabel})</span>
-      </p>
-    </div>
+const TransactionRow = ({ transaction }) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-    <div className="shrink-0">
-      <TransactionStatus status={transaction.status} />
-    </div>
+  return (
+    <button
+      type="button"
+      onClick={() => navigate(`/clients/${id}/${transaction.id}`)}
+      className="flex w-full items-center gap-4 rounded-xl border border-stroke-divider bg-layer1 px-5 py-[18px] text-left transition-colors hover:bg-table-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20"
+      aria-label={`View ${transaction.schemeName} transaction`}
+    >
+      <div className="min-w-0 flex-1">
+        <p className="text-[15px] font-semibold leading-snug text-heading">
+          {transaction.schemeName}
+        </p>
+        <p className="mt-1.5 text-[13px] text-paragraph/80">
+          <span className="font-semibold text-heading">{transaction.amount}</span>{' '}
+          <span className="font-normal">({transaction.typeLabel})</span>
+        </p>
+      </div>
 
-    <ChevronRight className="h-5 w-5 shrink-0 text-paragraph/60" aria-hidden />
-  </button>
-);
+      <div className="shrink-0">
+        <TransactionStatus status={transaction.status} />
+      </div>
+
+      <ChevronRight className="h-5 w-5 shrink-0 text-paragraph/60" aria-hidden />
+    </button>
+  );
+};
 
 const TypeFilterPills = ({ filters, activeType, onChange }) => (
   <div
-    className="flex flex-wrap items-center gap-2.5"
+    className="flex flex-wrap flex-1 items-center gap-2.5"
     role="group"
     aria-label="Transaction type filters"
   >
@@ -116,7 +123,7 @@ export const ClientDetailTransactionsTab = ({ transactionsTab }) => {
             }
             items={DOWNLOAD_ITEMS.map((item) => ({
               ...item,
-              onSelect: () => {},
+              onSelect: () => { },
             }))}
           />
 
@@ -142,7 +149,7 @@ export const ClientDetailTransactionsTab = ({ transactionsTab }) => {
           value={dateRangeValue}
           onChange={onDateRangeChange}
           align="end"
-          triggerClassName="h-9 w-full sm:w-auto sm:min-w-[220px]"
+          triggerClassName="h-9 w-full sm:w-auto sm:min-w-[150px]"
         />
       </div>
 
