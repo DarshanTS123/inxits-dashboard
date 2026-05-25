@@ -99,6 +99,12 @@ Examples present today:
   - `components/PortfolioInvestmentSummary.jsx`: embedded platform-split pie + investment sources table
   - `components/PortfolioAllocationCharts.jsx`: grid of allocation pies with per-chart colors from mock payload
   - `components/PortfolioHoldingsTable.jsx`: paginated holdings with status badges and star ratings
+- `features/support/*`: support management (ticket list, stats, filters)
+  - `SupportManagement.jsx`: orchestrator — data fetching, pagination/search state, section composition
+  - `api/supportApi.js`: queries `public/mock/support.json` using `privateApi`
+  - `components/SupportStats.jsx`: metric cards with row-based label/value layout
+  - `components/SupportFilters.jsx`: ticket count, search, and filters button
+  - `components/SupportTable.jsx`: `DataTable` for support tickets
 - `features/dashboard/*`: dashboard overview via `public/mock/dashboard.json`
 - `features/layout/*`: sidebar collapse/mobile open state
 

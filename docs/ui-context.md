@@ -312,6 +312,7 @@ It may NOT import from `features/*`, `lib/*`, `store/*`, or `routes/*`.
 For interactive components (buttons, nav items, inputs):
 
 - Use the shared `Button` component from `src/components/ui/Button/Button.jsx` for every button-like control in app code. Do not render raw `<button>` elements outside the `Button` primitive implementation.
+- **Icons**: Use `leftIcon` and `rightIcon` props to pass icon components (e.g. `leftIcon={Search}`). Do not manually render icons inside the button children.
 - Must include:
   - hover state
   - active state
@@ -322,7 +323,7 @@ Examples:
 
 - `Button` primary variant: `bg-btn-primary text-text-on-primary` (not `bg-primary`)
 - `Button`: `focus:ring-2 focus:ring-primary/20`, `active:scale-[0.98]`
-- `Input`: default `border-field-inactive`; focused `border-primary focus-within:ring-primary/20`
+- `Input`: default `border-field-inactive`; focused `border-primary focus-within:ring-primary/20`. Supports `leftIcon` and `rightIcon` props for built-in icon placement.
 
 **UI Rule I1**: Any clickable element must have a visible focus indicator (ring or outline) in keyboard navigation.
 
@@ -572,6 +573,8 @@ Patterns used:
   **UI Rule C2**: Do not import `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, or `CardFooter`. Use `Card` props and `children` only.
 
   **UI Rule C4**: Chart cards use `padding="md"` + `hoverable`; KPI and data tables use `padding="lg"`. Header filters/actions use the `action` prop — see [Spacing, layout & density](#spacing-layout--density).
+
+**UI Rule C5**: Simplify `Card` `className` by avoiding manual border or background overrides. The `Card` component handles its own architectural styling; typically only `rounded-xl` or layout-specific classes (e.g. `col-span-*`) should be passed.
 
 - **Badge**: Use for categorical labels (e.g., "Corporate", "Regulatory") or status pills.
   - Supports variants: `default`, `outline`, `success`, `warning`, `danger`, `info`.

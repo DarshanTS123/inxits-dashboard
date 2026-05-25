@@ -1,0 +1,151 @@
+{
+  "stats": [
+    {
+      "label": "Received Today",
+      "value": "6"
+    },
+    {
+      "label": "Open Tickets",
+      "value": "20",
+      "color": "blue"
+    },
+    {
+      "label": "Resolved",
+      "value": "30",
+      "color": "green"
+    }
+  ],
+  "tickets": [
+    {
+      "id": "SR-1023",
+      "client": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta@gmail.com"
+      },
+      "requestedOn": "15 Dec, 2024 11:11 am",
+      "reason": "Issue with portfolio statement",
+      "assignedRM": {
+        "name": "Ramesh Gupta",
+        "role": "RM Lead"
+      },
+      "status": "Open"
+    },
+    {
+      "id": "SR-1024",
+      "client": {
+        "name": "Bhavna Goyal",
+        "email": "name@gmail.com"
+      },
+      "requestedOn": "15 Dec, 2024 11:11 am",
+      "reason": "Clarification on SIP frequency",
+      "assignedRM": {
+        "name": "Ramesh Gupta",
+        "role": "RM Lead"
+      },
+      "status": "Open"
+    },
+    {
+      "id": "SR-1025",
+      "client": {
+        "name": "Mamta Lodhi",
+        "email": "mamta.lodhi@gmail.com"
+      },
+      "requestedOn": "15 Dec, 2024 11:11 am",
+      "reason": "KYC address update",
+      "assignedRM": {
+        "name": "Ramesh Gupta",
+        "role": "RM"
+      },
+      "status": "Resolved"
+    },
+    {
+      "id": "SR-1026",
+      "client": {
+        "name": "M. S. Subramaniam",
+        "email": "name@gmail.com"
+      },
+      "requestedOn": "15 Dec, 2024 11:11 am",
+      "reason": "Unable to login",
+      "assignedRM": {
+        "name": "Nandan Raikwar",
+        "role": "RM"
+      },
+      "status": "Resolved"
+    },
+    {
+      "id": "SR-1027",
+      "client": {
+        "name": "Nandan Raikwar",
+        "email": "name@gmail.com"
+      },
+      "requestedOn": "15 Dec, 2024 11:11 am",
+      "reason": "Request for redemption",
+      "assignedRM": {
+        "name": "Sunil Bhadouriya",
+        "role": "RM"
+      },
+      "status": "Open"
+    },
+    {
+      "id": "SR-1028",
+      "client": {
+        "name": "M. S. Subramaniam",
+        "email": "name@gmail.com"
+      },
+      "requestedOn": "15 Dec, 2024 11:11 am",
+      "reason": "Completed",
+      "assignedRM": {
+        "name": "Nandan Raikwar",
+        "role": "RM Lead"
+      },
+      "status": "Open"
+    },
+    {
+      "id": "SR-1029",
+      "client": {
+        "name": "Rahul Choudhary",
+        "email": "name@gmail.com"
+      },
+      "requestedOn": "15 Dec, 2024 11:11 am",
+      "reason": "KYC address update",
+      "assignedRM": {
+        "name": "Ramesh Gupta",
+        "role": "RM"
+      },
+      "status": "Open"
+    },
+    {
+      "id": "SR-1030",
+      "client": {
+        "name": "Shalini Jain",
+        "email": "name@gmail.com"
+      },
+      "requestedOn": "15 Dec, 2024 11:11 am",
+      "reason": "Unable to login",
+      "assignedRM": {
+        "name": "Sunil Bhadouriya",
+        "role": "RM"
+      },
+      "status": "Resolved"
+    },
+    {
+      "id": "SR-1031",
+      "client": {
+        "name": "M. S. Subramaniam",
+        "email": "name@gmail.com"
+      },
+      "requestedOn": "15 Dec, 2024 11:11 am",
+      "reason": "Issue with portfolio statement",
+      "assignedRM": {
+        "name": "Nandan Raikwar",
+        "role": "RM"
+      },
+      "status": "Open"
+    }
+  ],
+  "pagination": {
+    "total": 20,
+    "page": 1,
+    "limit": 10
+  }
+}

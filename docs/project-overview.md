@@ -89,6 +89,17 @@ The inXits Dashboard is a role-based internal web console for investment and ope
 - Domain config lives in `src/features/portfolio/portfolioConfig.js` (`PLATFORM_COLORS`, `investmentSourceColumns`).
 - Route title: **Portfolio Oversight** (`handle: { title: 'Portfolio Oversight' }`).
 
+### Support Management (`/support`)
+
+- Lean page: `src/pages/support/SupportPage.jsx` renders `src/features/support/SupportManagement.jsx`.
+- Data is fetched via `src/features/support/api/supportApi.js` (`useSupportData`) from `public/mock/support.json`.
+- Layout sections:
+  - **Support stats** (`SupportStats`): row-based cards for today's received, open, and resolved tickets with status dots.
+  - **Filters** (`SupportFilters`): ticket count, column-agnostic search, and filter controls.
+  - **Ticket table** (`SupportTable`): `DataTable` with ticket ID, client details, request reason, assigned RM, and status indicators.
+- Orchestrates pagination and search state at the feature layer, passing results to `Pagination` and `SupportTable`.
+- Route title: **Support Management** (`handle: { title: 'Support Management' }`).
+
 ### Data Workflows
 
 - Server reads and writes should use TanStack React Query and Axios clients.

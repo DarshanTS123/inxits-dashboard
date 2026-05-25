@@ -1,2 +1,5 @@
-import { PagePlaceholder } from '../../components/ui/PagePlaceholder';
-export const SupportPage = () => <PagePlaceholder title="Support Management" />;
+import { SupportManagement } from '@/features/support';
+
+export const SupportPage = () => {
+  return <SupportManagement />;
+};

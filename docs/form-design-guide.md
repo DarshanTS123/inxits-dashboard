@@ -140,8 +140,8 @@ The `Input` component (`src/components/ui/Input/Input.jsx`) handles:
   required               // Optional; shows red asterisk in label
   disabled               // Optional; prevents interaction
   error="Error message"  // Optional; shows error state and message
-  icon={<IconComponent />} // Optional; appears in prefix slot
-  iconPosition="left"    // or "right"; default is "left"
+  leftIcon={Icon}        // Optional; appears in prefix slot
+  rightIcon={Icon}       // Optional; appears in suffix slot
   {...register('fieldName')} // Spread react-hook-form registration
   className="..."        // Optional; extends classes
 />
