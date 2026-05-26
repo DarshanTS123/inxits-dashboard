@@ -7,8 +7,8 @@ export const useTransactionsManager = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [dateRange, setDateRange] = useState({
-    from: new Date(2025, 9, 1),
-    to: new Date(2025, 9, 25),
+    from: null,
+    to: null,
   });
 
   const { data, isLoading } = useTransactions({
