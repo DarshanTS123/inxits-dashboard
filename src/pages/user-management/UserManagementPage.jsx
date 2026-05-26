@@ -1,2 +1,5 @@
-import { PagePlaceholder } from '../../components/ui/PagePlaceholder';
-export const UserManagementPage = () => <PagePlaceholder title="User Management" />;
+import { UserManagement } from '@features/user-management';
+
+export const UserManagementPage = () => {
+  return <UserManagement />;
+};

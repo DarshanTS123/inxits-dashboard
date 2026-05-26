@@ -10,6 +10,7 @@ const PortfolioPage = lazy(() => import('../pages/portfolio/PortfolioPage').then
 const SupportPage = lazy(() => import('../pages/support/SupportPage').then((m) => ({ default: m.SupportPage })));
 const TransactionsPage = lazy(() => import('../pages/transactions/TransactionsPage').then((m) => ({ default: m.TransactionsPage })));
 const UserManagementPage = lazy(() => import('../pages/user-management/UserManagementPage').then((m) => ({ default: m.UserManagementPage })));
+const CreateUserPage = lazy(() => import('../pages/user-management/CreateUserPage').then((m) => ({ default: m.CreateUserPage })));
 const UniversePage = lazy(() => import('../pages/universe/UniversePage').then((m) => ({ default: m.UniversePage })));
 const ApplicationManagementPage = lazy(() => import('../pages/application-management/ApplicationManagementPage').then((m) => ({ default: m.ApplicationManagementPage })));
 const CompliancePage = lazy(() => import('../pages/compliance/CompliancePage').then((m) => ({ default: m.CompliancePage })));
@@ -73,6 +74,16 @@ export const router = createBrowserRouter([
               { path: '/support', element: <SupportPage />, handle: { title: 'Support Management' } },
               { path: '/transactions', element: <TransactionsPage />, handle: { title: 'Transactions' } },
               { path: '/user-management', element: <UserManagementPage />, handle: { title: 'User Management' } },
+              {
+                path: '/user-management/new',
+                element: <CreateUserPage />,
+                handle: { title: 'User Management' },
+              },
+              {
+                path: '/user-management/:id/edit',
+                element: <CreateUserPage />,
+                handle: { title: 'User Management' },
+              },
               { path: '/universe', element: <UniversePage />, handle: { title: 'Universe' } },
               {
                 path: '/application-management',

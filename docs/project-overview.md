@@ -89,6 +89,16 @@ The inXits Dashboard is a role-based internal web console for investment and ope
 - Domain config lives in `src/features/portfolio/portfolioConfig.js` (`PLATFORM_COLORS`, `investmentSourceColumns`).
 - Route title: **Portfolio Oversight** (`handle: { title: 'Portfolio Oversight' }`).
 
+### User Management (`/user-management`)
+
+- Lean page: `src/pages/user-management/UserManagementPage.jsx` renders `src/features/user-management/UserManagement.jsx`.
+- Data is fetched via `src/features/user-management/api/userManagement.js` (`useUsers`) from `public/mock/user-management.json`.
+- Layout sections:
+  - **Listing card** (`UserManagement`): `Card` titled "Listing" with search and "+ New User" action.
+  - **User table** (`UserManagementTable`): paginated `DataTable` with user name, email ID, RM type, role, RM count, created-by metadata, and row action menu.
+- Client-side search and pagination are orchestrated in `useUserManagement` (default 8 rows per page).
+- Route title: **User Management** (`handle: { title: 'User Management' }`).
+
 ### Support Management (`/support`)
 
 - Lean page: `src/pages/support/SupportPage.jsx` renders `src/features/support/SupportManagement.jsx`.
