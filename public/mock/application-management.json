@@ -1,0 +1,117 @@
+{
+  "navLastUpdated": "19 Sept 2025",
+  "riskProfiles": [
+    {
+      "id": 1,
+      "title": "Conservative",
+      "description": "Stable income, very low risk",
+      "noOfFunds": 12,
+      "riskLevel": "1-20",
+      "noOfRiskSlabs": 3,
+      "lastUpdated": "21 Sept, 2025 ; 02:32 pm"
+    },
+    {
+      "id": 2,
+      "title": "Moderately Conservative",
+      "description": "Stable income, very low risk",
+      "noOfFunds": 12,
+      "riskLevel": "21-40",
+      "noOfRiskSlabs": 3,
+      "lastUpdated": "21 Sept, 2025 ; 02:32 pm"
+    },
+    {
+      "id": 3,
+      "title": "Moderate",
+      "description": "Stable income, very low risk",
+      "noOfFunds": 12,
+      "riskLevel": "41-60",
+      "noOfRiskSlabs": 3,
+      "lastUpdated": "21 Sept, 2025 ; 02:32 pm"
+    },
+    {
+      "id": 4,
+      "title": "Moderately Aggressive",
+      "description": "Stable income, very low risk",
+      "noOfFunds": 12,
+      "riskLevel": "61-80",
+      "noOfRiskSlabs": 3,
+      "lastUpdated": "21 Sept, 2025 ; 02:32 pm"
+    },
+    {
+      "id": 5,
+      "title": "Aggressive",
+      "description": "Stable income, very low risk",
+      "noOfFunds": 12,
+      "riskLevel": "81-100",
+      "noOfRiskSlabs": 3,
+      "lastUpdated": "21 Sept, 2025 ; 02:32 pm"
+    }
+  ],
+  "mfCollections": [
+    {
+      "id": 1,
+      "title": "Start with Rs.100",
+      "description": "Small Step. Big Financial Future.",
+      "noOfFunds": "50",
+      "lastUpdated": "21 Sept, 2025 ; 02:32 pm"
+    },
+    {
+      "id": 2,
+      "title": "Smart Beta Fund",
+      "description": "Small Step. Big Financial Future.",
+      "noOfFunds": "09",
+      "lastUpdated": "21 Sept, 2025 ; 02:32 pm"
+    },
+    {
+      "id": 3,
+      "title": "Tax Saver Collection",
+      "description": "Small Step. Big Financial Future.",
+      "noOfFunds": "24",
+      "lastUpdated": "21 Sept, 2025 ; 02:32 pm"
+    },
+    {
+      "id": 4,
+      "title": "High Growth Picks",
+      "description": "Small Step. Big Financial Future.",
+      "noOfFunds": "18",
+      "lastUpdated": "21 Sept, 2025 ; 02:32 pm"
+    },
+    {
+      "id": 5,
+      "title": "Balanced Portfolio",
+      "description": "Small Step. Big Financial Future.",
+      "noOfFunds": "32",
+      "lastUpdated": "21 Sept, 2025 ; 02:32 pm"
+    },
+    {
+      "id": 6,
+      "title": "Dividend Yield Funds",
+      "description": "Small Step. Big Financial Future.",
+      "noOfFunds": "15",
+      "lastUpdated": "21 Sept, 2025 ; 02:32 pm"
+    }
+  ],
+  "popularFunds": [
+    {
+      "id": 1,
+      "title": "Equity",
+      "noOfCategories": 4,
+      "noOfFunds": 50,
+      "lastUpdated": "21 Sept, 2025 ; 02:32 pm"
+    },
+    {
+      "id": 2,
+      "title": "Debt",
+      "noOfCategories": 4,
+      "noOfFunds": 50,
+      "lastUpdated": "21 Sept, 2025 ; 02:32 pm"
+    },
+    {
+      "id": 3,
+      "title": "Hybrid",
+      "noOfCategories": 4,
+      "noOfFunds": 50,
+      "lastUpdated": "21 Sept, 2025 ; 02:32 pm"
+    }
+  ]
+}
