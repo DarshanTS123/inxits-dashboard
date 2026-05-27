@@ -3,6 +3,14 @@ import React from 'react';
 import { StarRating } from '@/components/ui/StarRating/StarRating';
 import { cn } from '@/utils/cn';
 
+function renderHeaderContent(column) {
+  if (typeof column.header === 'function') {
+    return column.header(column);
+  }
+
+  return column.header;
+}
+
 function renderCellContent(column, context) {
   const { row, value, rowIndex } = context;
 
@@ -210,7 +218,7 @@ function DataTable({
               key={column.id || column.accessorKey}
               className={cn(column.headerClassName, column.className)}
             >
-              {column.header}
+              {renderHeaderContent(column)}
             </TableHead>
           ))}
         </TableRow>

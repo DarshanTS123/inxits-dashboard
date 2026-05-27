@@ -1,2 +1,5 @@
-import { PagePlaceholder } from '../../components/ui/PagePlaceholder';
-export const UniversePage = () => <PagePlaceholder title="Universe" />;
+import { Universe } from '../../features/universe';
+
+export const UniversePage = () => {
+  return <Universe />;
+};

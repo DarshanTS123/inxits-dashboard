@@ -13,7 +13,7 @@ export function Modal({
   footer,
   className,
   contentClassName,
-  size = 'md', // sm | md | lg | full
+  size = 'md', // sm | md | lg | xl | 2xl | full
   closeLabel = 'Close modal',
   ...props
 }) {
@@ -21,6 +21,8 @@ export function Modal({
     sm: 'sm:max-w-sm h-fit max-h-[80vh] overflow-y-auto',
     md: 'sm:max-w-md h-fit max-h-[80vh] overflow-y-auto',
     lg: 'sm:max-w-xl h-fit max-h-[80vh] overflow-y-auto',
+    xl: 'sm:max-w-3xl h-fit max-h-[80vh] overflow-y-auto',
+    '2xl': 'sm:max-w-5xl h-fit max-h-[80vh] overflow-y-auto',
     full: 'max-w-none w-full h-full',
   };
 

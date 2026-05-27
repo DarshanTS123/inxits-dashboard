@@ -10,7 +10,7 @@ This document defines how UI is built in this repo: tokens, Tailwind usage, comp
 | Font sizes & weights | [Typography](#typography) |
 | `gap`, page layout, card padding | [Spacing, layout & density](#spacing-layout--density) |
 | Buttons, inputs, focus | [Interaction states](#interaction-states) |
-| `Card`, `Badge`, tables, tabs | [Component conventions](#component-conventions-repo-patterns) |
+| `Card`, `Badge`, `Chip`, tables, tabs | [Component conventions](#component-conventions-repo-patterns) |
 | Forms | `docs/form-design-guide.md` |
 | Charts | `docs/chart-architecture.md` |
 
@@ -296,6 +296,7 @@ Rules:
   - `PageLoader` and `PagePlaceholder` for route states
   - `Card` system for unified container aesthetics
   - `Badge` for categorical and status indicators
+  - `Chip` / `ChipGroup` for removable filter tags and applied-selection pills
   - `Breadcrumbs` for page hierarchy navigation
 
 **UI Rule C1 (enforceable)**: A file under `components/ui/*` may import only:
@@ -493,7 +494,7 @@ Patterns used:
 
   **Reference**: Client list uses the shared-panel pattern in `src/features/clients/index.jsx`; client detail uses per-tab content in `src/features/clients/components/ClientDetail.jsx`.
 
-### Cards and Badges
+### Cards, Badges, and Chips
 
 - **Card**: Use the `Card` component for all primary layout containers. It is **props + children only** — do not import `CardHeader`, `CardTitle`, `CardContent`, or `CardFooter`.
 - Define multiple cards as an **array of objects in the parent**, then map each entry to `<Card />`:
@@ -579,6 +580,31 @@ Patterns used:
 - **Badge**: Use for categorical labels (e.g., "Corporate", "Regulatory") or status pills.
   - Supports variants: `default`, `outline`, `success`, `warning`, `danger`, `info`.
   - All variants use feedback/background tokens (`bg-success/10 text-success`, etc.) — not Tailwind semantic color scales.
+
+- **Chip** / **ChipGroup**: Use for **removable applied filters** or other dismissible selection tags in toolbars and headers.
+  - Location: `src/components/ui/Chip/Chip.jsx`
+  - **Chip**: Single pill; pass `label` (or `children`) and optional `onRemove` to show the dismiss control.
+  - **ChipGroup**: Horizontal, scrollable row of chips — pass `items` with `{ id, label }` (or custom accessors) and `onRemove(item)`.
+  - Supports variants: `default` (filter toolbar style), `subtle`.
+  - Supports sizes: `sm`, `md`.
+  - Long labels truncate at `max-w-[180px]` by default; override with `labelClassName`.
+  - Do **not** use `Chip` for static status indicators — use `Badge` instead.
+  - Do **not** hand-roll pill markup in feature headers; compose `Chip` / `ChipGroup`.
+
+  **Filter toolbar pattern** (reference: `src/features/universe/components/UniverseHeader.jsx`):
+
+  ```jsx
+  import { ChipGroup } from '@components/ui/Chip/Chip';
+
+  <ChipGroup
+    items={filterChips}
+    onRemove={onRemoveFilter}
+  />
+  ```
+
+  Pair with a parent-defined **CLEAR ALL** text action when filters are active; keep filter state and chip derivation in the feature layer (e.g. `getFilterChips()` in `src/features/universe/utils/universeFilters.js`), not inside the UI primitive.
+
+  **UI Rule CH1**: Removable filter chips must use `Chip` / `ChipGroup`. Icon-only dismiss controls must set `removeAriaLabel` when `label` is not a plain string.
 
 ### Breadcrumbs
 
@@ -785,6 +811,50 @@ Used for form fields.
 | `className` | `string` | `-` | Container class. |
 | `inputClassName` | `string` | `-` | CSS class for the `input` element. |
 | `labelClassName` | `string` | `-` | CSS class for the label. |
+
+### Chip Component
+
+Used for removable filter tags and dismissible selection pills in toolbars.
+
+**Import:** `import { Chip, ChipGroup } from '@components/ui/Chip/Chip';`
+
+#### Chip props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `label` | `string` | `-` | Chip text (ignored if `children` is set). |
+| `children` | `React.ReactNode` | `-` | Custom chip content instead of `label`. |
+| `onRemove` | `() => void` | `-` | When provided, renders the dismiss (X) button. |
+| `variant` | `'default' \| 'subtle'` | `'default'` | Visual style (`default` for filter toolbars). |
+| `size` | `'sm' \| 'md'` | `'md'` | Height and typography. |
+| `removeAriaLabel` | `string` | auto from `label` | Accessible name for the dismiss button. |
+| `className` | `string` | `-` | Wrapper classes. |
+| `labelClassName` | `string` | `-` | Label truncation / width overrides. |
+
+#### ChipGroup props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `items` | `array` | `[]` | Chip data; renders nothing when empty. |
+| `onRemove` | `(item) => void` | `-` | Called with the item when its dismiss control is clicked. |
+| `getItemKey` | `(item) => string` | `item.id` | Stable React key. |
+| `getItemLabel` | `(item) => string` | `item.label` | Display text per chip. |
+| `className` | `string` | `-` | Scroll container classes. |
+| `chipClassName` | `string` | `-` | Classes applied to each `Chip`. |
+
+#### Example
+
+```jsx
+const chips = [
+  { id: 'equity-dividend-yield', label: 'Dividend Yield' },
+  { id: 'category-growth', label: 'Growth' },
+];
+
+<ChipGroup items={chips} onRemove={(chip) => removeFilter(chip)} />
+
+<Chip label="Read only tag" />
+<Chip label="Removable" onRemove={() => {}} size="sm" variant="subtle" />
+```
 
 ---
 
