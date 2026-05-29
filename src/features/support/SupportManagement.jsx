@@ -29,19 +29,19 @@ export const SupportManagement = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6 p-6 animate-in fade-in duration-500">
+    <div className="flex flex-col gap-6">
       <SupportStats stats={stats} loading={isLoading} />
-      
+
       <div className="space-y-4">
-        <SupportFilters 
-          totalTickets={pagination.total || 0} 
+        <SupportFilters
+          totalTickets={pagination.total || 0}
           query={filters.search}
           onQueryChange={handleSearch}
         />
-        
+
         <div className="overflow-hidden rounded-xl border border-stroke-divider bg-layer1">
           <SupportTable tickets={tickets} loading={isLoading} />
-          
+
           <div className="border-t border-stroke-divider bg-layer1 p-3">
             <Pagination
               page={filters.page}
