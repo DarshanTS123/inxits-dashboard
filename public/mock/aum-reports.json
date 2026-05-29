@@ -1,0 +1,57 @@
+{
+  "updatedAt": {
+    "cams": "29-05-2026 10:02 AM",
+    "kfintech": "29-05-2026 09:23 AM"
+  },
+  "amc": [
+    { "id": "amc-1", "name": "Aditya Birla Sun Life Mutual Fund", "equity": 500000, "hybrid": 200000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 700000, "allocation": 30 },
+    { "id": "amc-2", "name": "HDFC Mutual Fund", "equity": 300000, "hybrid": 150000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 450000, "allocation": 15 },
+    { "id": "amc-3", "name": "ICICI Prudential Mutual Fund", "equity": 400000, "hybrid": 250000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 650000, "allocation": 14 },
+    { "id": "amc-4", "name": "SBI Mutual Fund", "equity": 600000, "hybrid": 300000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 900000, "allocation": 13 },
+    { "id": "amc-5", "name": "Axis Mutual Fund", "equity": 250000, "hybrid": 100000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 350000, "allocation": 12 },
+    { "id": "amc-6", "name": "Union Mutual Fund", "equity": 100000, "hybrid": 50000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 150000, "allocation": 11 },
+    { "id": "amc-7", "name": "Franklin Templeton Mutual Fund", "equity": 750000, "hybrid": 400000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 1150000, "allocation": 8 },
+    { "id": "amc-8", "name": "Motilal Oswal Mutual Fund", "equity": 220000, "hybrid": 110000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 330000, "allocation": 9 },
+    { "id": "amc-9", "name": "Nippon India Mutual Fund", "equity": 530000, "hybrid": 280000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 810000, "allocation": 7 },
+    { "id": "amc-10", "name": "L&T Mutual Fund", "equity": 470000, "hybrid": 240000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 710000, "allocation": 6 },
+    { "id": "amc-11", "name": "Mirae Asset Mutual Fund", "equity": 380000, "hybrid": 190000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 570000, "allocation": 5 },
+    { "id": "amc-12", "name": "Kotak Mahindra Mutual Fund", "equity": 620000, "hybrid": 340000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 960000, "allocation": 8 },
+    { "id": "amc-13", "name": "DSP Mutual Fund", "equity": 290000, "hybrid": 130000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 420000, "allocation": 4 }
+  ],
+  "scheme": [
+    { "id": "sch-1", "name": "Aditya Birla Sun Life Frontline Equity Fund", "amcName": "Aditya Birla Sun Life Mutual Fund", "equity": 350000, "hybrid": 0, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 350000, "allocation": 12 },
+    { "id": "sch-2", "name": "Aditya Birla Sun Life Hybrid Equity Fund", "amcName": "Aditya Birla Sun Life Mutual Fund", "equity": 0, "hybrid": 200000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 200000, "allocation": 7 },
+    { "id": "sch-3", "name": "Aditya Birla Sun Life Tax Relief 96", "amcName": "Aditya Birla Sun Life Mutual Fund", "equity": 150000, "hybrid": 0, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 150000, "allocation": 5 },
+    { "id": "sch-4", "name": "HDFC Mid-Cap Opportunities Fund", "amcName": "HDFC Mutual Fund", "equity": 300000, "hybrid": 0, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 300000, "allocation": 10 },
+    { "id": "sch-5", "name": "HDFC Balanced Advantage Fund", "amcName": "HDFC Mutual Fund", "equity": 0, "hybrid": 150000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 150000, "allocation": 5 },
+    { "id": "sch-6", "name": "ICICI Prudential Bluechip Fund", "amcName": "ICICI Prudential Mutual Fund", "equity": 400000, "hybrid": 0, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 400000, "allocation": 14 },
+    { "id": "sch-7", "name": "ICICI Prudential Equity & Derivative Fund", "amcName": "ICICI Prudential Mutual Fund", "equity": 0, "hybrid": 250000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 250000, "allocation": 9 },
+    { "id": "sch-8", "name": "SBI Bluechip Fund", "amcName": "SBI Mutual Fund", "equity": 450000, "hybrid": 0, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 450000, "allocation": 15 },
+    { "id": "sch-9", "name": "SBI Equity Hybrid Fund", "amcName": "SBI Mutual Fund", "equity": 0, "hybrid": 300000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 300000, "allocation": 10 },
+    { "id": "sch-10", "name": "SBI Magnum Global Fund", "amcName": "SBI Mutual Fund", "equity": 150000, "hybrid": 0, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 150000, "allocation": 5 },
+    { "id": "sch-11", "name": "Axis Bluechip Fund", "amcName": "Axis Mutual Fund", "equity": 250000, "hybrid": 0, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 250000, "allocation": 9 },
+    { "id": "sch-12", "name": "Axis Arbitrage Fund", "amcName": "Axis Mutual Fund", "equity": 0, "hybrid": 100000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 100000, "allocation": 3 }
+  ],
+  "client": [
+    { "id": "cli-1", "name": "Aarav Mehta", "pan": "BHPPM8712C", "rmName": "Abhishek Gupta", "equity": 500000, "hybrid": 200000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 700000, "allocation": 10 },
+    { "id": "cli-2", "name": "Diya Sharma", "pan": "CKOPD4310E", "rmName": "Ajay Tyagi", "equity": 300000, "hybrid": 150000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 450000, "allocation": 6 },
+    { "id": "cli-3", "name": "Ishaan Verma", "pan": "DJKPL2109F", "rmName": "Anil Kumar", "equity": 400000, "hybrid": 250000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 650000, "allocation": 9 },
+    { "id": "cli-4", "name": "Ananya Iyer", "pan": "EMNPA5432G", "rmName": "Amit Singh", "equity": 600000, "hybrid": 300000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 900000, "allocation": 13 },
+    { "id": "cli-5", "name": "Kabir Kapoor", "pan": "FOPQB8765H", "rmName": "Meena Kumari", "equity": 250000, "hybrid": 100000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 350000, "allocation": 5 },
+    { "id": "cli-6", "name": "Meera Nair", "pan": "GQRSC1234I", "rmName": "Pooja Shah", "equity": 100000, "hybrid": 50000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 150000, "allocation": 2 },
+    { "id": "cli-7", "name": "Rohan Sen", "pan": "HSTUD5678J", "rmName": "Abhishek Gupta", "equity": 750000, "hybrid": 400000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 1150000, "allocation": 16 },
+    { "id": "cli-8", "name": "Riya Gupta", "pan": "IUVWE9012K", "rmName": "Ajay Tyagi", "equity": 220000, "hybrid": 110000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 330000, "allocation": 4 },
+    { "id": "cli-9", "name": "Aditya Roy", "pan": "JWXYF3456L", "rmName": "Anil Kumar", "equity": 530000, "hybrid": 280000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 810000, "allocation": 12 },
+    { "id": "cli-10", "name": "Sanya Malhotra", "pan": "KZYAG7890M", "rmName": "Amit Singh", "equity": 470000, "hybrid": 240000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 710000, "allocation": 10 }
+  ],
+  "rm": [
+    { "id": "rm-1", "name": "Abhishek Gupta", "type": "Primary", "clientCount": 12, "equity": 1250000, "hybrid": 600000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 1850000, "allocation": 27 },
+    { "id": "rm-2", "name": "Ajay Tyagi", "type": "Primary", "clientCount": 8, "equity": 520000, "hybrid": 260000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 780000, "allocation": 11 },
+    { "id": "rm-3", "name": "Anil Kumar", "type": "Secondary", "clientCount": 15, "equity": 930000, "hybrid": 530000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 1460000, "allocation": 21 },
+    { "id": "rm-4", "name": "Amit Singh", "type": "Primary", "clientCount": 10, "equity": 1070000, "hybrid": 540000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 1610000, "allocation": 23 },
+    { "id": "rm-5", "name": "Meena Kumari", "type": "Secondary", "clientCount": 6, "equity": 250000, "hybrid": 100000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 350000, "allocation": 5 },
+    { "id": "rm-6", "name": "Pooja Shah", "type": "Primary", "clientCount": 4, "equity": 100000, "hybrid": 50000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 150000, "allocation": 2 },
+    { "id": "rm-7", "name": "Rajesh V", "type": "Primary", "clientCount": 5, "equity": 380000, "hybrid": 190000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 570000, "allocation": 8 },
+    { "id": "rm-8", "name": "Sanjay Gupta", "type": "Secondary", "clientCount": 3, "equity": 90000, "hybrid": 40000, "arbitrage": 0, "debt": 0, "liquid": 0, "other": 0, "total": 130000, "allocation": 2 }
+  ]
+}

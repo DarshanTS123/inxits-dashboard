@@ -1,2 +1,7 @@
-import { PagePlaceholder } from '../../components/ui/PagePlaceholder';
-export const AUMReportsPage = () => <PagePlaceholder title="AUM Reports" />;
+import { AUMReports } from '@/features/aum-reports';
+
+export const AUMReportsPage = () => {
+  return <AUMReports />;
+};
+
+export default AUMReportsPage;

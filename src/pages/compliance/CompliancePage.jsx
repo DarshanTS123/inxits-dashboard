@@ -1,2 +1,7 @@
-import { PagePlaceholder } from '../../components/ui/PagePlaceholder';
-export const CompliancePage = () => <PagePlaceholder title="Compliance Report" />;
+import { ComplianceReport } from '@/features/compliance';
+
+export const CompliancePage = () => {
+  return <ComplianceReport />;
+};
+
+export default CompliancePage;

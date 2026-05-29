@@ -1,0 +1,247 @@
+{
+  "updatedAt": {
+    "cams": "18-12-2025 10:02 AM",
+    "kfintech": "18-12-2025 09:23 AM"
+  },
+  "records": {
+    "kyc": [
+      {
+        "id": "kyc-1",
+        "name": "Aarav Mehta",
+        "pan": "BHPPM8712C",
+        "email": "aarav.mehta@gmail.com",
+        "mobile": "+91 98123 45678",
+        "folio": "12349876",
+        "scheme": "Aditya Birla Sun Life Frontline Equity Fund",
+        "holding": "₹ 1,50,000",
+        "jt1Name": "-"
+      },
+      {
+        "id": "kyc-2",
+        "name": "Diya Sharma",
+        "pan": "CKOPD4310E",
+        "email": "diya.sharma@yahoo.com",
+        "mobile": "+91 97234 56789",
+        "folio": "34215678",
+        "scheme": "HDFC Mid-Cap Opportunities Fund",
+        "holding": "₹ 2,75,400",
+        "jt1Name": "Ramesh Sharma"
+      },
+      {
+        "id": "kyc-3",
+        "name": "Ishaan Verma",
+        "pan": "DJKPL2109F",
+        "email": "ishaan.v@outlook.com",
+        "mobile": "+91 96345 67890",
+        "folio": "56743210",
+        "scheme": "ICICI Prudential Bluechip Fund",
+        "holding": "₹ 85,200",
+        "jt1Name": "-"
+      },
+      {
+        "id": "kyc-4",
+        "name": "Ananya Iyer",
+        "pan": "EMNPA5432G",
+        "email": "ananya.iyer@gmail.com",
+        "mobile": "+91 95456 78901",
+        "folio": "78901234",
+        "scheme": "Nippon India Small Cap Fund",
+        "holding": "₹ 4,12,000",
+        "jt1Name": "Srinivas Iyer"
+      },
+      {
+        "id": "kyc-5",
+        "name": "Kabir Kapoor",
+        "pan": "FOPQB8765H",
+        "email": "kabir.k@gmail.com",
+        "mobile": "+91 94567 89012",
+        "folio": "90123456",
+        "scheme": "Parag Parikh Flexi Cap Fund",
+        "holding": "₹ 6,30,000",
+        "jt1Name": "-"
+      },
+      {
+        "id": "kyc-6",
+        "name": "Meera Nair",
+        "pan": "GQRSC1234I",
+        "email": "meera.nair@live.com",
+        "mobile": "+91 93678 90123",
+        "folio": "11223344",
+        "scheme": "SBI Bluechip Fund",
+        "holding": "₹ 3,25,000",
+        "jt1Name": "-"
+      },
+      {
+        "id": "kyc-7",
+        "name": "Rohan Sen",
+        "pan": "HSTUD5678J",
+        "email": "rohan.sen@gmail.com",
+        "mobile": "+91 92789 01234",
+        "folio": "55667788",
+        "scheme": "Mirae Asset Large Cap Fund",
+        "holding": "₹ 98,500",
+        "jt1Name": "Amit Sen"
+      },
+      {
+        "id": "kyc-8",
+        "name": "Riya Gupta",
+        "pan": "IUVWE9012K",
+        "email": "riya.g@hotmail.com",
+        "mobile": "+91 91890 12345",
+        "folio": "99001122",
+        "scheme": "Kotak Emerging Equity Fund",
+        "holding": "₹ 1,80,000",
+        "jt1Name": "-"
+      },
+      {
+        "id": "kyc-9",
+        "name": "Aditya Roy",
+        "pan": "JWXYF3456L",
+        "email": "aditya.roy@gmail.com",
+        "mobile": "+91 90901 23456",
+        "folio": "33445566",
+        "scheme": "Axis Bluechip Fund",
+        "holding": "₹ 5,40,000",
+        "jt1Name": "-"
+      },
+      {
+        "id": "kyc-10",
+        "name": "Sanya Malhotra",
+        "pan": "KZYAG7890M",
+        "email": "sanya.m@gmail.com",
+        "mobile": "+91 89012 34567",
+        "folio": "77889900",
+        "scheme": "DSP Midcap Fund",
+        "holding": "₹ 2,15,000",
+        "jt1Name": "Vijay Malhotra"
+      },
+      {
+        "id": "kyc-11",
+        "name": "Karan Johar",
+        "pan": "LBCDH1234N",
+        "email": "karan.johar@gmail.com",
+        "mobile": "+91 88123 45678",
+        "folio": "88990011",
+        "scheme": "Tata Digital India Fund",
+        "holding": "₹ 7,65,000",
+        "jt1Name": "-"
+      },
+      {
+        "id": "kyc-12",
+        "name": "Alia Bhatt",
+        "pan": "MCDEI5678O",
+        "email": "alia.b@gmail.com",
+        "mobile": "+91 87234 56789",
+        "folio": "22334455",
+        "scheme": "Canara Robeco Small Cap Fund",
+        "holding": "₹ 3,90,000",
+        "jt1Name": "Ranbir Bhatt"
+      }
+    ],
+    "kraFailed": [
+      {
+        "id": "kra-1",
+        "name": "Vikram Seth",
+        "pan": "NDEFJ9012P",
+        "email": "vikram.seth@gmail.com",
+        "mobile": "+91 86345 67890",
+        "folio": "44556677",
+        "scheme": "HDFC Flexi Cap Fund",
+        "holding": "₹ 4,20,000",
+        "jt1Name": "-"
+      },
+      {
+        "id": "kra-2",
+        "name": "Pooja Hegde",
+        "pan": "OFGKA3456Q",
+        "email": "pooja.h@yahoo.com",
+        "mobile": "+91 85456 78901",
+        "folio": "66778899",
+        "scheme": "SBI Focused Equity Fund",
+        "holding": "₹ 1,10,000",
+        "jt1Name": "Satish Hegde"
+      },
+      {
+        "id": "kra-3",
+        "name": "Siddharth Malhotra",
+        "pan": "PGHLB7890R",
+        "email": "sid.m@outlook.com",
+        "mobile": "+91 84567 89012",
+        "folio": "12123434",
+        "scheme": "UTI Mastershare Unit Scheme",
+        "holding": "₹ 2,95,000",
+        "jt1Name": "-"
+      },
+      {
+        "id": "kra-4",
+        "name": "Kiara Advani",
+        "pan": "QHIMC1234S",
+        "email": "kiara.a@gmail.com",
+        "mobile": "+91 83678 90123",
+        "folio": "56567878",
+        "scheme": "Franklin India Prima Fund",
+        "holding": "₹ 6,80,000",
+        "jt1Name": "Jagdeep Advani"
+      }
+    ],
+    "nominee": [
+      {
+        "id": "nom-1",
+        "name": "Ranveer Singh",
+        "pan": "RIJND5678T",
+        "email": "ranveer.s@gmail.com",
+        "mobile": "+91 82789 01234",
+        "folio": "90901212",
+        "scheme": "Aditya Birla Sun Life Frontline Equity Fund",
+        "holding": "₹ 8,40,000",
+        "jt1Name": "-"
+      },
+      {
+        "id": "nom-2",
+        "name": "Deepika Padukone",
+        "pan": "SJKOE9012U",
+        "email": "deepika.p@hotmail.com",
+        "mobile": "+91 81890 12345",
+        "folio": "34345656",
+        "scheme": "Parag Parikh Flexi Cap Fund",
+        "holding": "₹ 12,50,000",
+        "jt1Name": "Prakash Padukone"
+      },
+      {
+        "id": "nom-3",
+        "name": "Varun Dhawan",
+        "pan": "TKLPA3456V",
+        "email": "varun.d@gmail.com",
+        "mobile": "+91 80901 23456",
+        "folio": "78789090",
+        "scheme": "SBI Bluechip Fund",
+        "holding": "₹ 3,60,000",
+        "jt1Name": "-"
+      }
+    ],
+    "uccMismatch": [
+      {
+        "id": "ucc-1",
+        "name": "Rajkummar Rao",
+        "pan": "ULMPB7890W",
+        "email": "raj.rao@gmail.com",
+        "mobile": "+91 79890 12345",
+        "folio": "11224455",
+        "scheme": "Axis Growth Opportunities Fund",
+        "holding": "₹ 2,30,000",
+        "jt1Name": "-"
+      },
+      {
+        "id": "ucc-2",
+        "name": "Patralekha Paul",
+        "pan": "VMNQC1234X",
+        "email": "patralekha.p@live.com",
+        "mobile": "+91 78789 01234",
+        "folio": "66779900",
+        "scheme": "DSP Focus Fund",
+        "holding": "₹ 1,75,000",
+        "jt1Name": "Ajit Paul"
+      }
+    ]
+  }
+}

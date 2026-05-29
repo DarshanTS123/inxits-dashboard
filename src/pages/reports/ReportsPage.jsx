@@ -22,6 +22,7 @@ import {
   Sliders,
   Sparkles
 } from 'lucide-react';
+import { PagePlaceholder } from '@/components/ui/PagePlaceholder';
 
 // ==========================================
 // PREDEFINED SCHEMA PRESETS
@@ -315,10 +316,10 @@ const getDefaults = (schema) => {
 
 const buildZodSchema = (schema) => {
   const shape = {};
-  
+
   schema.forEach(field => {
     let validator;
-    
+
     if (field.type === 'email') {
       let emailValidator = z.string().trim().email('Invalid email address');
       if (field.required) {
@@ -327,20 +328,20 @@ const buildZodSchema = (schema) => {
         emailValidator = emailValidator.optional().or(z.literal(''));
       }
       validator = emailValidator;
-      
+
     } else if (field.type === 'number' || field.type === 'range') {
-      let numValidator = z.number({ 
+      let numValidator = z.number({
         required_error: `${field.label || field.name} is required`,
-        invalid_type_error: 'Must be a valid number' 
+        invalid_type_error: 'Must be a valid number'
       });
-      
+
       if (field.min !== undefined) {
         numValidator = numValidator.min(field.min, `Value must be at least ${field.min}`);
       }
       if (field.max !== undefined) {
         numValidator = numValidator.max(field.max, `Value must be at most ${field.max}`);
       }
-      
+
       let processed = z.preprocess((val) => {
         if (val === '' || val === null || val === undefined) {
           return undefined;
@@ -348,13 +349,13 @@ const buildZodSchema = (schema) => {
         const parsed = Number(val);
         return isNaN(parsed) ? undefined : parsed;
       }, numValidator);
-      
+
       if (!field.required) {
         processed = processed.optional();
       }
-      
+
       validator = processed;
-      
+
     } else if (field.type === 'checkbox' || field.type === 'switch') {
       let boolValidator = z.boolean();
       if (field.required) {
@@ -363,7 +364,7 @@ const buildZodSchema = (schema) => {
         boolValidator = boolValidator.optional();
       }
       validator = boolValidator;
-      
+
     } else if (field.type === 'file') {
       let fileValidator = z.any();
       if (field.required) {
@@ -372,7 +373,7 @@ const buildZodSchema = (schema) => {
         fileValidator = fileValidator.optional();
       }
       validator = fileValidator;
-      
+
     } else {
       // standard string inputs: text, password, date, textarea, select, radio, color
       let strValidator = z.string().trim();
@@ -383,10 +384,10 @@ const buildZodSchema = (schema) => {
       }
       validator = strValidator;
     }
-    
+
     shape[field.name] = validator;
   });
-  
+
   return z.object(shape);
 };
 
@@ -394,7 +395,7 @@ const checkCondition = (condition, formValues) => {
   if (!condition) return true;
   const { field, equals, notEquals } = condition;
   const targetValue = formValues?.[field];
-  
+
   if (equals !== undefined) return targetValue === equals;
   if (notEquals !== undefined) return targetValue !== notEquals;
   return true;
@@ -606,9 +607,9 @@ const CustomColor = React.forwardRef(({ label, error, helperText, required, valu
             </button>
           ))}
         </div>
-        
+
         <div className="hidden sm:block w-[1px] h-6 bg-stroke-divider mx-1" />
-        
+
         <div className="flex items-center gap-2 ml-auto sm:ml-0">
           <input
             type="color"
@@ -699,7 +700,7 @@ const CustomFile = React.forwardRef(({ label, error, helperText, required, value
       <label className="text-sm font-semibold text-text-label px-1">
         {label} {required && <span className="text-error font-bold">*</span>}
       </label>
-      
+
       {uploadedFile ? (
         <div className="flex items-center justify-between p-3.5 rounded-xl border border-primary/20 bg-primary/5 animate-in slide-in-from-bottom-2 duration-300">
           <div className="flex items-center gap-3">
@@ -755,7 +756,7 @@ const CustomFile = React.forwardRef(({ label, error, helperText, required, value
           </div>
         </div>
       )}
-      
+
       {helperText && !error && <span className="text-[11px] text-text-label/50 px-1 leading-normal">{helperText}</span>}
       {error && <span className="text-[11px] text-error font-medium px-1">{error}</span>}
     </div>
@@ -770,7 +771,7 @@ CustomFile.displayName = 'CustomFile';
 const DynamicFormRenderer = ({ schema, onSubmit, resetCounter }) => {
   const formSchema = useMemo(() => buildZodSchema(schema), [schema]);
   const defaultValues = useMemo(() => getDefaults(schema), [schema]);
-  
+
   const {
     register,
     handleSubmit,
@@ -1074,6 +1075,8 @@ export const ReportsPage = () => {
     setResetCounter(prev => prev + 1);
   };
 
+  return <PagePlaceholder title="Reports" />
+
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
       {/* Header Overview Banner */}
@@ -1098,7 +1101,7 @@ export const ReportsPage = () => {
 
       {/* Two Column Workspace */}
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
-        
+
         {/* LEFT COLUMN: JSON SCHEMA CONTROLLER */}
         <div className="xl:col-span-5 space-y-6">
           <div className="p-5 rounded-2xl bg-white/[0.02] border border-stroke-divider shadow-xl">
@@ -1149,7 +1152,7 @@ export const ReportsPage = () => {
                 rows={18}
                 className="w-full bg-transparent border-none outline-none focus:ring-0 p-4 font-mono text-[11px] leading-relaxed text-emerald-400/90 custom-scrollbar resize-none"
               />
-              
+
               {/* Floating Validation Overlay */}
               {jsonError ? (
                 <div className="absolute bottom-0 left-0 right-0 p-2 bg-error/90 backdrop-blur border-t border-error text-white text-[10px] font-semibold flex items-start gap-1.5 animate-in slide-in-from-bottom-2">
@@ -1178,13 +1181,13 @@ export const ReportsPage = () => {
 
         {/* RIGHT COLUMN: DYNAMIC RENDERER & RESULTS */}
         <div className="xl:col-span-7 space-y-6">
-          
+
           {/* RENDERED FORM CONTAINER */}
           <div className="p-6 rounded-2xl bg-white/[0.03] border border-stroke-divider shadow-2xl relative overflow-hidden backdrop-blur-md">
-            
+
             {/* Glowing background accent */}
             <div className="absolute -top-24 -right-24 w-48 h-48 rounded-full bg-primary/10 blur-3xl pointer-events-none" />
-            
+
             <div className="flex items-center justify-between border-b border-stroke-divider pb-4 mb-6">
               <h2 className="text-base font-bold text-heading flex items-center gap-2">
                 <LayoutGrid className="w-4 h-4 text-primary animate-pulse" />
@@ -1240,7 +1243,7 @@ export const ReportsPage = () => {
               </div>
             </div>
           )}
-          
+
         </div>
       </div>
     </div>
